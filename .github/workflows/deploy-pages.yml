@@ -20,10 +20,10 @@ jobs:
       NEXT_PUBLIC_SITE_URL: https://qoax-community.github.io/qoax-community-website
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Use Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
