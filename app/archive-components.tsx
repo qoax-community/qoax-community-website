@@ -66,7 +66,7 @@ export function ArchiveFooter() {
           </nav>
           <div>
             <a href="mailto:contact@qo.ax">contact@qo.ax ↗</a>
-            <a href="https://github.com/QOAX-COMMUNITY" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href="https://github.com/qoax-community" target="_blank" rel="noreferrer">GitHub ↗</a>
           </div>
         </div>
       </div>
