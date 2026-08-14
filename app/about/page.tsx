@@ -1,11 +1,9 @@
-import Image from "next/image";
 import { ArchiveFooter, ArchiveHeader, PageHeading } from "../archive-components";
 import styles from "../archive.module.css";
-import { siteAsset } from "../site-path";
 
 export const metadata = {
-  title: "About · QO.AX Community",
-  description: "QO.AX is an independent technology community based in Sofia, Bulgaria.",
+  title: "Why we do it · QOAX Community",
+  description: "QOAX is an independent technology community based in Sofia, Bulgaria.",
 };
 
 const principles = [
@@ -21,19 +19,19 @@ export default function AboutPage() {
       <ArchiveHeader />
       <main id="main-content">
         <PageHeading
-          index="04"
-          eyebrow="About QO.AX"
+          index="02"
+          eyebrow="Why we do it"
           title={<>A community with a<br /><em>bias toward making.</em></>}
-          copy="QO.AX connects technology, education, culture, and civic initiative. We learn by building, and we grow by sharing what we know."
+          copy="QOAX Community connects technology, education, culture, and civic initiative. We learn by building, and we grow by sharing what we know."
         />
 
-        <div className={styles.collection}>
+        <div className={styles.aboutBody}>
           <section className={styles.aboutStatement}>
-            <div className={styles.aboutMark}><Image src={siteAsset("/brand/qoax-mark.svg")} alt="" width={300} height={300} /></div>
+            <p>Community note / 001</p>
             <blockquote>The point is not to look innovative. The point is to leave people with more skill, more confidence, and something useful that did not exist before.</blockquote>
           </section>
 
-          <section className={styles.principleGrid} aria-label="QO.AX principles">
+          <section className={styles.principleGrid} aria-label="QOAX principles">
             {principles.map(([index, title, copy]) => (
               <article className={styles.principleCard} key={index}>
                 <span>{index}</span><h2>{title}</h2><p>{copy}</p>
@@ -41,9 +39,15 @@ export default function AboutPage() {
             ))}
           </section>
 
-          <section className={styles.timeline} aria-label="QO.AX lineage">
-            <div className={styles.timelineRow}><span>1–14 Jul 2026</span><p>More than 30 students join the QO.AX internship programme through partner technology schools.</p></div>
+          <section className={styles.timeline} aria-label="QOAX Community timeline">
+            <header><span>Field calendar</span><span>2026</span></header>
+            <div className={styles.timelineRow}><span>1–14 Jul 2026</span><p>More than 30 students join the QOAX internship programme through partner technology schools.</p></div>
             <div className={styles.timelineRow}><span>2–4 Oct 2026</span><p>Atanasoff48 brings the first SPGE John Atanasoff hackathon to the school’s STEM Centre.</p></div>
+          </section>
+
+          <section className={styles.contactPanel}>
+            <p>Have a public-interest project that needs practical technology support?</p>
+            <a href="mailto:contact@qo.ax">contact@qo.ax ↗</a>
           </section>
         </div>
       </main>

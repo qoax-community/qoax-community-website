@@ -51,7 +51,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         signal: "Upcoming",
         href: "https://atanasoff48.com/",
         partner: "SPGE John Atanasoff Student Council",
-        detail: "Atanasoff48 is organized by the school’s Student Council. QO.AX is part of the team behind its digital presence and practical delivery support. The first edition welcomes up to 16 teams of four, with free participation and three days to create and present a project.",
+        detail: "Atanasoff48 is organized by the school’s Student Council. QOAX is part of the team behind its digital presence and practical delivery support. The first edition welcomes up to 16 teams of four, with free participation and three days to create and present a project.",
       },
       {
         id: "internship-program-2026",
@@ -63,7 +63,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         priority: 5,
         signal: "30+ students",
         partner: "Partner technology schools in Bulgaria",
-        detail: "From 1 to 14 July 2026, more than 30 students worked in teams across a practical internship programme supported by QO.AX and partner schools. The programme connected technical mentorship, project ownership, peer work, and a real delivery rhythm.",
+        detail: "From 1 to 14 July 2026, more than 30 students worked in teams across a practical internship programme supported by QOAX and partner schools. The programme connected technical mentorship, project ownership, peer work, and a real delivery rhythm.",
         notice: "The exact student projects, teams, and outcomes will be published here soon.",
       },
       {

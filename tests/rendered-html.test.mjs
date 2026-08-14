@@ -7,16 +7,32 @@ async function render(pathname = "/") {
   return readFile(new URL(`../out/${relativePath}`, import.meta.url), "utf8");
 }
 
-test("exports the QO.AX Community home and index", async () => {
+test("exports the QOAX Community home and index", async () => {
   const [home, index, about] = await Promise.all([
     render("/"),
     render("/events/"),
     render("/about/"),
   ]);
 
-  assert.match(home, /QO\.AX Community/);
+  assert.match(home, /QOAX Community/);
+  assert.doesNotMatch(home, /QO\.AX Community/);
   assert.match(home, /public work first/i);
   assert.match(home, /30\+/);
+  assert.match(home, /Schools we work with/);
+  assert.match(home, /Private School St\. Sofia logo/);
+  assert.match(home, /Technology School Electronic Systems logo/);
+  assert.match(home, /SPGE John Atanasoff logo/);
+  assert.match(home, /PGVT A\. S\. Popov logo/);
+  assert.match(home, /Professional High School of Telecommunications logo/);
+  assert.match(home, /Algorithms and tournaments/);
+  assert.match(home, /Game development/);
+  assert.match(home, /Starting October 2026/);
+  assert.doesNotMatch(home, /\d{2}\.\d+° [NE]/);
+  assert.doesNotMatch(home, /42\.6977° N/);
+  assert.doesNotMatch(home, /23\.3219° E/);
+  assert.match(home, /qoax-q\.svg/);
+  assert.match(await readFile(new URL("../public/brand/qoax-logo.svg", import.meta.url), "utf8"), /fill-rule="evenodd"/);
+  assert.doesNotMatch(home, /qoax-mark\.svg/);
   assert.match(index, /Technology in service/);
   assert.match(about, /contact@qo\.ax/);
 });
@@ -46,7 +62,7 @@ test("exports only the requested non-profit project pages", async () => {
   assert.match(pages[3], /Non-profit/);
 });
 
-test("does not export Academy, profit, or journal sections", async () => {
+test("does not export separate Academy, profit, or journal routes", async () => {
   await assert.rejects(render("/academy/"));
   await assert.rejects(render("/portfolio/"));
   await assert.rejects(render("/blog/"));

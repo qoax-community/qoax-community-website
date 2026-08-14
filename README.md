@@ -1,6 +1,6 @@
-# QO.AX Community website
+# QOAX Community website
 
-The static, non-profit-only archive for QO.AX Community.
+The static, non-profit-only archive for QOAX Community.
 
 It documents:
 
