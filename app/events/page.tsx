@@ -5,8 +5,8 @@ import { nonprofitEntries } from "../archive-data";
 import styles from "../archive.module.css";
 
 export const metadata = {
-  title: "Fieldwork · QOAX Community",
-  description: "QOAX partnerships with schools, students, art, culture, and public-interest organizations.",
+  title: "Fieldwork · Qoax Community",
+  description: "Qoax partnerships with schools, students, art, culture, and public-interest organizations.",
 };
 
 export default function EventsPage() {

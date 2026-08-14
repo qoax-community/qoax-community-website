@@ -7,14 +7,14 @@ async function render(pathname = "/") {
   return readFile(new URL(`../out/${relativePath}`, import.meta.url), "utf8");
 }
 
-test("exports the QOAX Community home and index", async () => {
+test("exports the Qoax Community home and index", async () => {
   const [home, index, about] = await Promise.all([
     render("/"),
     render("/events/"),
     render("/about/"),
   ]);
 
-  assert.match(home, /QOAX Community/);
+  assert.match(home, /Qoax Community/);
   assert.doesNotMatch(home, /QO\.AX Community/);
   assert.match(home, /public work first/i);
   assert.match(home, /30\+/);

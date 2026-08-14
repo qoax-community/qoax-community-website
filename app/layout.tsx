@@ -6,24 +6,24 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "QOAX Community · Public work first",
+  title: "Qoax Community · Public work first",
   description:
-    "QOAX non-profit work with schools, students, artists, and public-interest organizations.",
-  keywords: ["QOAX", "community", "technology", "education", "Sofia", "open source"],
+    "Qoax non-profit work with schools, students, artists, and public-interest organizations.",
+  keywords: ["Qoax", "community", "technology", "education", "Sofia", "open source"],
   icons: {
     icon: siteAsset("/brand/qoax-q.svg"),
     shortcut: siteAsset("/brand/qoax-q.svg"),
   },
   openGraph: {
-    title: "QOAX Community · Public work first",
+    title: "Qoax Community · Public work first",
     description: "Schools, student programmes, art, and NGOs strengthened through practical technology.",
     type: "website",
     locale: "en_US",
-    siteName: "QOAX Community",
+    siteName: "Qoax Community",
   },
   twitter: {
     card: "summary",
-    title: "QOAX Community · Public work first",
+    title: "Qoax Community · Public work first",
     description: "Schools, students, art, and public-interest organizations.",
   },
 };

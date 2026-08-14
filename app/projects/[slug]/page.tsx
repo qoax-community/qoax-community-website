@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const { slug } = await params;
   const entry = getArchiveEntry(slug);
   if (!entry) return {};
-  return { title: `${entry.title} · QOAX Community`, description: entry.summary };
+  return { title: `${entry.title} · Qoax Community`, description: entry.summary };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -56,7 +56,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className={styles.caseFacts} aria-label="Project facts">
             <div><span>Date / horizon</span><strong>{entry.year}</strong></div>
             <div><span>Type</span><strong>{entry.project?.category ?? entry.subtitle}</strong></div>
-            <div><span>With</span><strong>{entry.partner ?? entry.project?.client ?? "QOAX Community"}</strong></div>
+            <div><span>With</span><strong>{entry.partner ?? entry.project?.client ?? "Qoax Community"}</strong></div>
             <div><span>Priority</span><strong>{entry.priority} / 5</strong></div>
           </div>
 
@@ -68,7 +68,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 {entry.detail
                   ? entry.detail
                   : entry.project
-                    ? `${entry.title} is documented here as part of QOAX Community’s non-profit work. The project keeps its own identity while staying connected to the wider network of schools, students, art, and public-interest organizations.`
+                    ? `${entry.title} is documented here as part of Qoax Community’s non-profit work. The project keeps its own identity while staying connected to the wider network of schools, students, art, and public-interest organizations.`
                     : "This field record documents a relationship, programme, or shared effort that helped the community network grow."}
               </p>
               {entry.notice && <p className={styles.caseNotice}>{entry.notice}</p>}
@@ -84,7 +84,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <Image src={entry.image} alt="" fill priority sizes="(max-width: 800px) 100vw, 42vw" />
               ) : (
                 <div className={styles.casePoster} aria-hidden="true">
-                  <span>QOAX / COMMUNITY</span>
+                  <span>Qoax / Community</span>
                   <strong>{entry.title.slice(0, 2).toUpperCase()}</strong>
                   <small>Sofia · Field record {recordNumber.toString().padStart(2, "0")}</small>
                 </div>

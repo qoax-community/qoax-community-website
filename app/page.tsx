@@ -37,7 +37,7 @@ export default function Home() {
           </div>
           <aside className={styles.heroBrief}>
             <span>Inside this issue</span>
-            <p>QOAX Community brings useful technology, mentorship, and practical support to schools, students, artists, and civic organizations.</p>
+            <p>Qoax Community brings useful technology, mentorship, and practical support to schools, students, artists, and civic organizations.</p>
             <dl>
               <div><dt>Open records</dt><dd>{nonprofitEntries.length.toString().padStart(2, "0")}</dd></div>
               <div><dt>Students / 2026</dt><dd>30+</dd></div>
@@ -62,7 +62,7 @@ export default function Home() {
             </div>
             <p>Long-term relationships, student programmes, and practical work shared with educators.</p>
           </div>
-          <ul className={styles.schoolLogoRow} aria-label="QOAX Community school partners">
+          <ul className={styles.schoolLogoRow} aria-label="Qoax Community school partners">
             {schoolPartners.map((school) => (
               <li className={school.wide ? styles.schoolLogoWide : undefined} key={school.name}>
                 {school.href ? (
@@ -79,7 +79,7 @@ export default function Home() {
 
         <section className={styles.academyFeature} aria-labelledby="academy-heading">
           <header className={styles.academyHeader}>
-            <p className={styles.kicker}><span>02</span>QOAX Academy</p>
+            <p className={styles.kicker}><span>02</span>Qoax Academy</p>
             <span>Starting October 2026</span>
           </header>
           <div className={styles.academyLead}>
@@ -104,8 +104,8 @@ export default function Home() {
             </article>
           </div>
           <footer className={styles.academyFooter}>
-            <p>Project-led classes run inside QOAX Studio, where every student builds work that runs, moves, and responds.</p>
-            <a href="https://qoax.academy/">Explore QOAX Academy <ArrowIcon diagonal /></a>
+            <p>Project-led classes run inside Qoax Studio, where every student builds work that runs, moves, and responds.</p>
+            <a href="https://qoax.academy/">Explore Qoax Academy <ArrowIcon diagonal /></a>
           </footer>
         </section>
 

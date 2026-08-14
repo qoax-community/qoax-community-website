@@ -25,8 +25,8 @@ export function ArrowIcon({ diagonal = false }: { diagonal?: boolean }) {
 export function ArchiveHeader() {
   return (
     <header className={styles.header}>
-      <Link className={styles.wordmark} href="/" aria-label="QOAX Community home">
-        <Image src={siteAsset("/brand/qoax-logo.svg")} alt="QOAX" width={294} height={97} priority />
+      <Link className={styles.wordmark} href="/" aria-label="Qoax Community home">
+        <Image src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} priority />
         <span>Community</span>
       </Link>
       <nav className={styles.navigation} aria-label="Primary navigation">
@@ -54,7 +54,7 @@ export function ArchiveFooter() {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerFlag}>
-        <span>QOAX / COMMUNITY</span>
+        <span>Qoax / Community</span>
         <span>Sofia, Bulgaria</span>
       </div>
       <div className={styles.footerMain}>
@@ -71,7 +71,7 @@ export function ArchiveFooter() {
         </div>
       </div>
       <div className={styles.footerBottom}>
-        <span>© {new Date().getFullYear()} QOAX Community</span>
+        <span>© {new Date().getFullYear()} Qoax Community</span>
         <span>Independent non-profit practice</span>
       </div>
     </footer>

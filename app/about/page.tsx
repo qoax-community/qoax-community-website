@@ -2,8 +2,8 @@ import { ArchiveFooter, ArchiveHeader, PageHeading } from "../archive-components
 import styles from "../archive.module.css";
 
 export const metadata = {
-  title: "Why we do it · QOAX Community",
-  description: "QOAX is an independent technology community based in Sofia, Bulgaria.",
+  title: "Why we do it · Qoax Community",
+  description: "Qoax is an independent technology community based in Sofia, Bulgaria.",
 };
 
 const principles = [
@@ -22,7 +22,7 @@ export default function AboutPage() {
           index="02"
           eyebrow="Why we do it"
           title={<>A community with a<br /><em>bias toward making.</em></>}
-          copy="QOAX Community connects technology, education, culture, and civic initiative. We learn by building, and we grow by sharing what we know."
+          copy="Qoax Community connects technology, education, culture, and civic initiative. We learn by building, and we grow by sharing what we know."
         />
 
         <div className={styles.aboutBody}>
@@ -31,7 +31,7 @@ export default function AboutPage() {
             <blockquote>The point is not to look innovative. The point is to leave people with more skill, more confidence, and something useful that did not exist before.</blockquote>
           </section>
 
-          <section className={styles.principleGrid} aria-label="QOAX principles">
+          <section className={styles.principleGrid} aria-label="Qoax principles">
             {principles.map(([index, title, copy]) => (
               <article className={styles.principleCard} key={index}>
                 <span>{index}</span><h2>{title}</h2><p>{copy}</p>
@@ -39,9 +39,9 @@ export default function AboutPage() {
             ))}
           </section>
 
-          <section className={styles.timeline} aria-label="QOAX Community timeline">
+          <section className={styles.timeline} aria-label="Qoax Community timeline">
             <header><span>Field calendar</span><span>2026</span></header>
-            <div className={styles.timelineRow}><span>1–14 Jul 2026</span><p>More than 30 students join the QOAX internship programme through partner technology schools.</p></div>
+            <div className={styles.timelineRow}><span>1–14 Jul 2026</span><p>More than 30 students join the Qoax internship programme through partner technology schools.</p></div>
             <div className={styles.timelineRow}><span>2–4 Oct 2026</span><p>Atanasoff48 brings the first SPGE John Atanasoff hackathon to the school’s STEM Centre.</p></div>
           </section>
 
