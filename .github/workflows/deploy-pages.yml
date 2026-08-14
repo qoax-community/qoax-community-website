@@ -16,8 +16,8 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BASE_PATH: /qoax-community-website
-      NEXT_PUBLIC_SITE_URL: https://qoax-community.github.io/qoax-community-website
+      NEXT_PUBLIC_BASE_PATH:
+      NEXT_PUBLIC_SITE_URL: https://qo.ax
     steps:
       - name: Check out source
         uses: actions/checkout@v5
