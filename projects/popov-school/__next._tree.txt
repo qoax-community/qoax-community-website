@@ -1,0 +1,3 @@
+:HL["/_next/static/chunks/02h4sq40asghj.css","style"]
+:HL["/_next/static/chunks/0p.1jvzl3dev8.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"projects","param":null,"prefetchHints":0,"slots":{"children":{"name":"slug","param":{"type":"d","key":"popov-school","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"PZsSs_H3JQdAQk0F2kjGW"}
