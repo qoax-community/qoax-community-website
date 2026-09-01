@@ -37,6 +37,28 @@ test("exports the Qoax Community home and index", async () => {
   assert.match(about, /contact@qo\.ax/);
 });
 
+test("exports public legal pages for Google OAuth app domain", async () => {
+  const [privacy, terms, gdpr] = await Promise.all([
+    render("/privacy/"),
+    render("/terms/"),
+    render("/gdpr/"),
+  ]);
+
+  for (const html of [privacy, terms, gdpr]) {
+    assert.match(html, /Сдружение КОАКС КОМЮНИТИ/);
+    assert.match(html, /208896893/);
+    assert.match(html, /contact@qo\.ax/);
+    assert.match(html, /<main class="[^"]*legalPage/);
+  }
+
+  assert.match(privacy, /Privacy Policy/);
+  assert.match(privacy, /Google sign-in and Gmail sending permissions/);
+  assert.match(terms, /Terms of Use/);
+  assert.match(terms, /OAuth permissions/);
+  assert.match(gdpr, /GDPR and Browser Storage Notice/);
+  assert.match(gdpr, /Email and link tracking/);
+});
+
 test("exports only the requested non-profit project pages", async () => {
   const projectSlugs = [
     "atanasoff48",

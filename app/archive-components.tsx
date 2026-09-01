@@ -10,6 +10,12 @@ const navigation = [
   ["Why we do it", "/about"],
 ] as const;
 
+const legalNavigation = [
+  ["Privacy", "/privacy"],
+  ["Terms", "/terms"],
+  ["GDPR", "/gdpr"],
+] as const;
+
 export function ArrowIcon({ diagonal = false }: { diagonal?: boolean }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
@@ -44,6 +50,7 @@ export function ArchiveHeader() {
           {navigation.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
           <a href="https://qoax.academy/">Academy ↗</a>
           <a href="mailto:contact@qo.ax">Contact ↗</a>
+          {legalNavigation.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
         </nav>
       </details>
     </header>
@@ -67,6 +74,7 @@ export function ArchiveFooter() {
           <div>
             <a href="mailto:contact@qo.ax">contact@qo.ax ↗</a>
             <a href="https://github.com/qoax-community" target="_blank" rel="noreferrer">GitHub ↗</a>
+            {legalNavigation.map(([label, href]) => <Link href={href} key={href}>{label} ↗</Link>)}
           </div>
         </div>
       </div>
