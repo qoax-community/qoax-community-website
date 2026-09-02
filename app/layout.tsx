@@ -11,8 +11,8 @@ export const metadata: Metadata = {
     "Qoax non-profit work with schools, students, artists, and public-interest organizations.",
   keywords: ["Qoax", "community", "technology", "education", "Sofia", "open source"],
   icons: {
-    icon: siteAsset("/brand/qoax-q.svg"),
-    shortcut: siteAsset("/brand/qoax-q.svg"),
+    icon: siteAsset("/brand/qoax-favicon-community.svg"),
+    shortcut: siteAsset("/brand/qoax-favicon-community.svg"),
   },
   openGraph: {
     title: "Qoax Community · Public work first",
