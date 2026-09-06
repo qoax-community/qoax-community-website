@@ -30,7 +30,7 @@ test("exports the Qoax Community home and index", async () => {
   assert.doesNotMatch(home, /\d{2}\.\d+° [NE]/);
   assert.doesNotMatch(home, /42\.6977° N/);
   assert.doesNotMatch(home, /23\.3219° E/);
-  assert.match(home, /qoax-q\.svg/);
+  assert.match(home, /qoax-logo\.svg/);
   assert.match(await readFile(new URL("../public/brand/qoax-logo.svg", import.meta.url), "utf8"), /fill-rule="evenodd"/);
   assert.doesNotMatch(home, /qoax-mark\.svg/);
   assert.match(index, /Technology in service/);
