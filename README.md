@@ -18,6 +18,12 @@ npm install
 npm run dev
 ```
 
+`npm install` also points git at `.githooks`, so every commit message is checked against [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) before the commit is created. The same check runs in CI on every pull request, over both the commits and the pull request title.
+
+- rejected messages are reported in full, one entry per broken rule, each with a fix
+- `git commit --no-verify` skips the local check — CI still runs it
+- the hook needs bash 4+ (`brew install bash` on macOS); without it the hook warns instead of blocking
+
 ## Static publishing
 
 - `npm run build` exports the complete site into `out/`.
