@@ -12,7 +12,8 @@
     "build:pages": "next build",
     "start": "npx serve out",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:commit-msg": "tests/commit-msg/run.sh"
   },
   "dependencies": {
     "next": "^16.3.4",
