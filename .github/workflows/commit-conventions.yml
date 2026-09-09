@@ -1,6 +1,12 @@
-# The check itself lives in qoax-community/qoax-reusables, which pins the
-# version of the hook every repository is checked against, so a new rule
-# reaches all of them in one pull request there.
+# The hook and the rules it enforces live in qoax-community/qoax-githooks. The
+# `v1` tag tracks the current major line, so a new rule reaches this
+# repository on its next run without a pull request here.
+#
+# Every other repository in the organization calls a shared workflow in
+# qoax-reusables, which decides that version centrally. This one calls the
+# action itself, because it is the organization's only public repository and a
+# public repository may not call a `workflow_call` workflow that lives in a
+# private one. The action is reachable because qoax-githooks is public too.
 name: Check commit conventions
 
 on:
@@ -24,4 +30,20 @@ concurrency:
 
 jobs:
   commit-conventions:
-    uses: qoax-community/qoax-reusables/.github/workflows/commit-conventions.yml@main
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      # The full history is needed: the range to check is resolved from the
+      # shas the event itself carries.
+      - name: Check out this repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+
+      # The commits this event added, plus the pull request title — with
+      # squash merging the title becomes the subject on main, so it is held to
+      # the same rules. The submodule pinned in this repository is not used:
+      # CI is the gate, and a repository should not be able to weaken its own
+      # gate by holding an older hook.
+      - name: Check commit messages and pull request title
+        uses: qoax-community/qoax-githooks@v1
