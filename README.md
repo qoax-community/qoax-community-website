@@ -42,6 +42,7 @@ title and every non-merge commit it carries.
 - `git commit --no-verify` skips the local check — CI still runs it
 - `git commit --cleanup=<mode>` on the command line is invisible to a hook, which sees only `commit.cleanup`. Under a mode the hook cannot know about, a `#` line may be judged as a comment and then stored as text; set `commit.cleanup` in your config if you use a non-default mode
 - the hook needs bash 4+ (`brew install bash` on macOS); without it the hook warns instead of blocking
+- Dependabot moves the submodule pin forward as the hook changes; `git config --global submodule.recurse true` makes `git pull` follow it, otherwise you keep running the hook version you first cloned
 - `.githooks/shared/scripts/check-messages.sh main..HEAD` checks a branch before you push it. The hook's own test suite lives in qoax-githooks and runs there
 
 ## Static publishing
