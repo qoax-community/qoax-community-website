@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f3429"/><stop offset="1" stop-color="#14201a"/></linearGradient>
+    <radialGradient id="r1" cx="0.8" cy="0.15" r="0.6"><stop offset="0" stop-color="#e29a2c" stop-opacity="0.4"/><stop offset="1" stop-color="#e29a2c" stop-opacity="0"/></radialGradient>
+    <radialGradient id="r2" cx="0.1" cy="0.9" r="0.7"><stop offset="0" stop-color="#839a8c" stop-opacity="0.45"/><stop offset="1" stop-color="#839a8c" stop-opacity="0"/></radialGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="rgba(255,255,255,0.14)"/></pattern>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <rect width="1200" height="900" fill="url(#r1)"/>
+  <rect width="1200" height="900" fill="url(#r2)"/>
+  <rect width="1200" height="900" fill="url(#dots)"/>
+  <g fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="6" stroke-linecap="round">
+    <path d="M200 220h140v100h-140M200 420h140v-100M340 320h120"/>
+    <path d="M200 520h140v100h-140M200 720h140v-100M340 620h120"/>
+    <path d="M460 320v300M460 470h140"/>
+    <path d="M1000 220h-140v100h140M1000 420h-140v-100M860 320h-120"/>
+    <path d="M1000 520h-140v100h140M1000 720h-140v-100M860 620h-120"/>
+    <path d="M740 320v300M740 470h-140"/>
+  </g>
+  <rect x="540" y="440" width="120" height="60" rx="12" fill="#e29a2c"/>
+  <g transform="translate(600 300)" fill="#f2f5f1">
+    <path d="M-60-140h120v40c0 40-25 70-60 78-35-8-60-38-60-78z"/>
+    <path d="M-90-130h30v20h-18c-10 0-12 20 0 30h14v22c-30-6-46-30-46-56z" opacity="0.9"/>
+    <path d="M90-130h-30v20h18c10 0 12 20 0 30h-14v22c30-6 46-30 46-56z" opacity="0.9"/>
+    <rect x="-12" y="-24" width="24" height="34" />
+    <rect x="-40" y="8" width="80" height="16" rx="4"/>
+  </g>
+  <text x="600" y="820" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="34" fill="rgba(255,255,255,0.7)" letter-spacing="6">CS2 · LEAGUE OF LEGENDS · FMI</text>
+</svg>

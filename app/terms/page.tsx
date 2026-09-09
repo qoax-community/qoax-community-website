@@ -5,7 +5,7 @@ import { legalDocument } from "../legal-data";
 const document = legalDocument("terms");
 
 export const metadata: Metadata = {
-  title: `${document.title} · Qoax Community`,
+  title: document.title,
   description: document.description,
 };
 

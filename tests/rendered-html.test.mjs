@@ -31,6 +31,17 @@ test("exports the Qoax Community home and index", async () => {
   assert.doesNotMatch(home, /42\.6977° N/);
   assert.doesNotMatch(home, /23\.3219° E/);
   assert.match(home, /qoax-logo\.svg/);
+  // New design: no newspaper conceit, self-hosted webfonts, clear primary actions.
+  assert.doesNotMatch(home, /Community paper/);
+  assert.doesNotMatch(home, /Fieldwork ledger/);
+  assert.match(home, /Get in touch/);
+  // NASA Space Apps is hidden until the local event is official.
+  assert.doesNotMatch(home, /NASA Space Apps Challenge/);
+  assert.match(home, /apple-touch-icon\.png/);
+  assert.match(home, /og\.png/);
+  assert.match(home, /\/_next\/static\/media\/[^"]+\.woff2/);
+  assert.doesNotMatch(home, /fonts\.googleapis\.com/);
+  assert.match(home, /<meta name="viewport" content="width=device-width, initial-scale=1"/);
   assert.match(await readFile(new URL("../public/brand/qoax-logo.svg", import.meta.url), "utf8"), /fill-rule="evenodd"/);
   assert.doesNotMatch(home, /qoax-mark\.svg/);
   assert.match(index, /Technology in service/);
@@ -69,12 +80,20 @@ test("exports only the requested non-profit project pages", async () => {
     "john-atanasoff-school",
     "popov-school",
     "telecommunications-schools-bulgaria",
+    "fmi-game-jam",
+    "fmi-esports-tournament-2027",
   ];
 
   const pages = await Promise.all(projectSlugs.map((slug) => render(`/projects/${slug}/`)));
   for (const html of pages) {
     assert.match(html, /Why it belongs here/);
   }
+
+  const [gameJam, tournament] = pages.slice(-2);
+  assert.match(gameJam, /Faculty of Mathematics and Informatics/);
+  assert.match(tournament, /Counter-Strike 2/);
+  assert.match(tournament, /League of Legends/);
+  assert.match(tournament, /March 2027/);
 
   assert.match(pages[0], /2–4 Oct 2026/);
   assert.match(pages[0], /atanasoff48\.com/);
@@ -88,4 +107,6 @@ test("does not export separate Academy, profit, or journal routes", async () => 
   await assert.rejects(render("/academy/"));
   await assert.rejects(render("/portfolio/"));
   await assert.rejects(render("/blog/"));
+  // NASA Space Apps stays hidden until the local event is official.
+  await assert.rejects(render("/projects/nasa-space-apps-2026/"));
 });
