@@ -1,0 +1,12 @@
+# The shared hook is pinned by commit, which is what makes a checkout
+# reproducible and what stops it changing under anyone. The cost is that
+# nothing updates on its own, so let Dependabot open the bump.
+version: 2
+updates:
+  - package-ecosystem: gitsubmodule
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      # Conventional Commits, because the hook checks Dependabot too.
+      prefix: chore
