@@ -1,0 +1,7 @@
+# The url is relative, and git resolves it against this repository's own
+# remote. So a clone over ssh fetches the submodule over ssh and a clone over
+# https fetches it over https, without either being hardcoded here — both are
+# in use, and an absolute url would force one on everybody.
+[submodule ".githooks/shared"]
+	path = .githooks/shared
+	url = ../qoax-githooks.git
