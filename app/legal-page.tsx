@@ -58,6 +58,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
                     {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
                   </ul>
                 )}
+                {section.links && <ul>{section.links.map((link) => <li key={link.href}><a href={link.href}>{link.label}</a></li>)}</ul>}
               </section>
             ))}
           </article>

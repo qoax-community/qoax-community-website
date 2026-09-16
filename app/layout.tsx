@@ -7,6 +7,7 @@ import { googleSiteVerification, socialLinks } from "./social-links";
 import { brandAlternateNames } from "./brand-names";
 import { legalEntity } from "./legal-data";
 import { siteAsset } from "./site-path";
+import { AnalyticsConsent } from "./analytics-consent";
 
 const literata = Literata({
   subsets: ["latin", "cyrillic"],
@@ -143,6 +144,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <a className="skip-link" href="#main-content">Skip to main content</a>
         {children}
+        <AnalyticsConsent />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
