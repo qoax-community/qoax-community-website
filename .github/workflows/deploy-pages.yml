@@ -18,6 +18,16 @@ jobs:
     env:
       NEXT_PUBLIC_BASE_PATH:
       NEXT_PUBLIC_SITE_URL: https://qo.ax
+      # Social channels: leave empty to hide, fill with a full URL and push to show.
+      NEXT_PUBLIC_SOCIAL_FACEBOOK: ""
+      NEXT_PUBLIC_SOCIAL_INSTAGRAM: ""
+      NEXT_PUBLIC_SOCIAL_LINKEDIN: ""
+      NEXT_PUBLIC_SOCIAL_YOUTUBE: ""
+      NEXT_PUBLIC_SOCIAL_TIKTOK: ""
+      NEXT_PUBLIC_SOCIAL_DISCORD: ""
+      NEXT_PUBLIC_SOCIAL_VIBER: ""
+      # Google Search Console HTML-tag token (content value only). Empty = no tag.
+      NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ""
     steps:
       - name: Check out source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09

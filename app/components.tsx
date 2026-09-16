@@ -2,21 +2,19 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ArchiveEntry } from "./archive-data";
-import { kindLabels } from "./archive-tree-data";
+import { brandAliasLine, brandPronunciation } from "./brand-names";
 import { legalEntity } from "./legal-data";
 import { siteAsset } from "./site-path";
 import styles from "./site.module.css";
+import ed from "./editorial.module.css";
+import { socialLinks } from "./social-links";
+import { NavLinks } from "./nav-links";
 
 export const CONTACT_EMAIL = "contact@qo.ax";
 export const ACADEMY_URL = "https://qoax.academy/";
 export const GITHUB_URL = "https://github.com/qoax-community";
 
-export const primaryNavigation = [
-  ["Events", "/#upcoming"],
-  ["Our work", "/events"],
-  ["Schools", "/#schools"],
-  ["About", "/about"],
-] as const;
+export { primaryNavigation } from "./nav-links";
 
 export const legalNavigation = [
   ["Privacy", "/privacy"],
@@ -195,93 +193,42 @@ export function EntryVisual({ entry, priority = false, sizes }: { entry: Archive
   );
 }
 
-export function RecordCard({ entry, priority = false }: { entry: ArchiveEntry; priority?: boolean }) {
-  return (
-    <Link className={styles.card} href={`/projects/${entry.slug}`}>
-      <div className={styles.cardMedia}>
-        <EntryVisual entry={entry} priority={priority} sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 33vw" />
-      </div>
-      <div className={styles.cardBody}>
-        <div className={styles.cardTags}>
-          <Tag tone={toneForEntry(entry)}>{entry.signal ?? kindLabels[entry.kind]}</Tag>
-          <span className={styles.cardYear}>{entry.year}</span>
-        </div>
-        <h3 className={styles.cardTitle}>{entry.title}</h3>
-        <p className={styles.cardCopy}>{entry.summary}</p>
-        <span className={styles.cardFooter}>
-          <span>{entry.partner}</span>
-          <ArrowRight />
-        </span>
-      </div>
-    </Link>
-  );
-}
-
-export function EventCard({ entry }: { entry: ArchiveEntry }) {
-  const [day, month] = entry.calendar ?? ["TBA", ""];
-  return (
-    <Link className={styles.eventCard} href={`/projects/${entry.slug}`}>
-      <div className={styles.cardTags}>
-        <Tag tone={toneForEntry(entry)}>{entry.signal ?? kindLabels[entry.kind]}</Tag>
-        <span className={styles.cardYear}>{kindLabels[entry.kind]}</span>
-      </div>
-      <div className={styles.eventDate}>
-        <strong>{day}</strong>
-        <span>{month}</span>
-      </div>
-      <h3>{entry.title}</h3>
-      <p>{entry.summary}</p>
-      <span className={styles.eventFooter}>
-        <span>{entry.location ?? entry.partner}</span>
-        <ArrowRight />
-      </span>
-    </Link>
-  );
-}
-
 /* ---------- Header / Footer ---------- */
 
-function NavLinks({ onDark = false }: { onDark?: boolean }) {
-  return (
-    <>
-      {primaryNavigation.map(([label, href]) => (
-        <Link className={onDark ? undefined : styles.navLink} href={href} key={href}>{label}</Link>
-      ))}
-      <a className={onDark ? undefined : styles.navLink} href={ACADEMY_URL} rel="noreferrer" target="_blank">
-        Academy <ArrowUpRight size={14} />
-      </a>
-    </>
-  );
-}
+const footerCommunity = [
+  ["Events", "/events"],
+  ["Our work", "/work"],
+  ["Schools", "/schools"],
+  ["Journal", "/blog"],
+] as const;
 
 export function SiteHeader() {
   return (
-    <header className={styles.header}>
-      <div className={styles.headerInner}>
-        <Link className={styles.brand} href="/" aria-label="Qoax Community home">
-          <Image src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} priority />
-          <span className={styles.brandTag}>Community</span>
+    <header className={ed.top}>
+      <div className={`${ed.wrap} ${ed.topInner}`}>
+        <Link className={ed.brand} href="/" aria-label="Qoax Community home">
+          <Image className={ed.brandBadge} src={siteAsset("/brand/qoax-favicon-community.svg")} alt="" width={96} height={96} priority />
+          <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} priority />
+          <span className={ed.brandName}>Community</span>
         </Link>
 
-        <nav className={styles.nav} aria-label="Primary navigation">
+        <nav className={ed.nav} aria-label="Primary navigation">
           <NavLinks />
         </nav>
 
-        <div className={styles.headerActions}>
-          <Button href={`mailto:${CONTACT_EMAIL}`} variant="primary" small>
-            Get in touch
-          </Button>
-          <details className={styles.menu}>
-            <summary className={styles.menuButton} aria-label="Open menu">
-              <MenuIcon size={22} className={styles.menuOpenIcon} />
-              <CloseIcon size={22} className={styles.menuCloseIcon} />
+        <div className={ed.topRight}>
+          <a className={`${ed.btnGhost} ${ed.btnSmall}`} href={`mailto:${CONTACT_EMAIL}`}>
+            <MailIcon size={15} /> {CONTACT_EMAIL}
+          </a>
+          <details className={ed.menu}>
+            <summary className={ed.menuButton} aria-label="Open menu">
+              <MenuIcon size={18} /> Menu
             </summary>
-            <nav className={styles.menuPanel} aria-label="Mobile navigation">
-              <NavLinks onDark />
-              <a href={`mailto:${CONTACT_EMAIL}`}>Contact</a>
-              <div className={styles.menuLegal}>
-                {legalNavigation.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
-              </div>
+            <nav className={ed.menuPanel} aria-label="Mobile navigation">
+              <NavLinks plain />
+              <div className={ed.menuDivider} />
+              <a href={`mailto:${CONTACT_EMAIL}`}>Get in touch</a>
+              {legalNavigation.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
             </nav>
           </details>
         </div>
@@ -292,78 +239,53 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.footerInner}>
-        <div className={styles.footerBrand}>
-          <Link href="/" aria-label="Qoax Community home" className={styles.footerLogo}>
-            <Image src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} />
-            <span>Community</span>
-          </Link>
-          <p>
-            An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school programmes,
-            plus useful technology for artists and civic organizations. Built with people, shared openly.
-          </p>
-          <a className={styles.footerMail} href={`mailto:${CONTACT_EMAIL}`}>
-            <MailIcon size={16} /> {CONTACT_EMAIL}
-          </a>
-        </div>
-
-        <div className={styles.footerCols}>
-          <div className={styles.footerCol}>
-            <h3>Explore</h3>
-            <nav aria-label="Footer navigation">
-              {primaryNavigation.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
-              <a href={ACADEMY_URL} rel="noreferrer" target="_blank">Qoax Academy <ArrowUpRight size={13} /></a>
-            </nav>
+    <footer className={ed.foot}>
+      <div className={ed.wrap}>
+        <div className={ed.footGrid}>
+          <div className={ed.footBrand}>
+            <Link className={ed.brand} href="/" aria-label="Qoax Community home">
+              <Image className={ed.brandBadge} src={siteAsset("/brand/qoax-favicon-community.svg")} alt="" width={96} height={96} />
+            <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} />
+              <span className={ed.brandName}>Community</span>
+            </Link>
+            <p>
+              An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school programmes,
+              plus useful technology for artists and civic organisations. Public work first.
+            </p>
+            <p>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            </p>
           </div>
-          <div className={styles.footerCol}>
+
+          <div className={ed.footCol}>
             <h3>Community</h3>
-            <nav aria-label="Community links">
-              <Link href="/projects/atanasoff48">Atanasoff48</Link>
-              <Link href="/projects/fmi-game-jam">FMI Game Jam</Link>
-              <Link href="/projects/fmi-esports-tournament-2027">Gaming Tournament</Link>
-              <a href={GITHUB_URL} rel="noreferrer" target="_blank">GitHub <ArrowUpRight size={13} /></a>
-            </nav>
+            <ul>
+              {footerCommunity.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}
+            </ul>
           </div>
-          <div className={styles.footerCol}>
-            <h3>Legal</h3>
-            <nav aria-label="Legal navigation">
-              {legalNavigation.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
-            </nav>
+          <div className={ed.footCol}>
+            <h3>Organisation</h3>
+            <ul>
+              <li><Link href="/about">About</Link></li>
+              <li><Link href="/faq">FAQ</Link></li>
+              <li><a href={GITHUB_URL} rel="noreferrer" target="_blank">GitHub ↗</a></li>
+              {socialLinks.map((link) => (
+                <li key={link.id}><a href={link.url} rel="noreferrer" target="_blank">{link.label} ↗</a></li>
+              ))}
+              {legalNavigation.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}
+            </ul>
           </div>
         </div>
-      </div>
 
-      <div className={styles.footerBottom}>
-        <span>© {new Date().getFullYear()} Qoax Community. {legalEntity.nameEn}, UIC {legalEntity.uic}.</span>
-        <span>Sofia, Bulgaria</span>
+        <div className={ed.footLegal}>
+          <span>
+            {`© ${new Date().getFullYear()} Qoax Community. ${legalEntity.nameEn}, UIC ${legalEntity.uic}. `}
+            <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}.`}</span>
+            {" Sofia, Bulgaria."}
+          </span>
+          <span>{`Qoax is pronounced “${brandPronunciation}”. Also written as ${brandAliasLine}.`}</span>
+        </div>
       </div>
     </footer>
-  );
-}
-
-/* ---------- Page hero (inner pages) ---------- */
-
-export function PageHero({
-  eyebrow,
-  title,
-  copy,
-  children,
-}: {
-  eyebrow: string;
-  title: ReactNode;
-  copy?: string;
-  children?: ReactNode;
-}) {
-  return (
-    <section className={styles.pageHero}>
-      <div className={styles.heroBackdrop} aria-hidden="true" />
-      <div className={styles.container}>
-        <p className={styles.eyebrow}>{eyebrow}</p>
-        <h1 className={styles.pageTitle}>{title}</h1>
-        {copy && <p className={styles.pageLead}>{copy}</p>}
-        {children}
-      </div>
-    </section>
   );
 }
