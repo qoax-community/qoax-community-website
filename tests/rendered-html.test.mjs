@@ -208,6 +208,24 @@ test("exports public legal pages for Google OAuth app domain", async () => {
   assert.match(terms, /OAuth permissions/);
   assert.match(gdpr, /GDPR and Browser Storage Notice/);
   assert.match(gdpr, /Email and link tracking/);
+  for (const html of [privacy, gdpr]) {
+    assert.match(html, /Google Analytics/);
+    assert.match(html, /16 September 2026/);
+    assert.match(html, /180 days/);
+    assert.match(html, /withdraw/i);
+  }
+  assert.doesNotMatch(gdpr, /If QOAX later adds non-essential analytics/);
+  assert.doesNotMatch(privacy, /Google, only when Google sign-in/);
+});
+
+test("static HTML offers consent and settings without loading or preconnecting to Google", async () => {
+  for (const route of ["/", "/privacy/", "/gdpr/", "/about/", "/blog/", "/schools/"]) {
+    const html = await render(route);
+    assert.match(html, /Cookie settings/);
+    assert.match(html, /Accept analytics/);
+    assert.match(html, /Reject analytics/);
+    assert.doesNotMatch(html, /<(?:script|link)[^>]+(?:src|href)="https?:\/\/[^" ]*(?:googletagmanager|google-analytics)\./);
+  }
 });
 
 test("exports only the requested non-profit project pages", async () => {

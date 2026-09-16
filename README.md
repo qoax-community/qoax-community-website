@@ -18,7 +18,7 @@ There is no database, API, server application, Academy catalogue, or commercial 
 
 - Next.js (App Router) with `output: "export"`; every route is prerendered to `out/`.
 - Plain CSS: design tokens in `app/globals.css`, all component styles in `app/site.module.css`.
-- Fonts (Inter, Manrope) are downloaded at build time by `next/font` and self-hosted; no runtime third-party requests.
+- Fonts are downloaded at build time by `next/font` and self-hosted. Google Analytics is the optional runtime third-party integration and loads only after consent.
 - Content lives in `app/archive-tree-data.ts` (records, including events with dates, stories, and galleries), `app/data.ts` (project details), and `app/legal-data.ts` (legal documents).
 - Event pages get a live countdown from `app/countdown.tsx`; `upcomingEvents()` drives the home page hero and the events rail.
 - FMI posters in `public/events/` are original SVGs.
@@ -50,6 +50,31 @@ title and every non-merge commit it carries.
 - `npm run build` exports the complete site into `out/`.
 - `npm test` builds and verifies every public route.
 - every push to `main` rebuilds and force-replaces `gh-pages` with only the generated static files.
+
+## Optional analytics
+
+GA4 stream `G-P7F0DM83L3` is managed by `app/analytics.ts` and the consent banner
+in `app/analytics-consent.tsx`. Do not add a second Google tag to the layout or
+enable an independently injected tag: that would bypass the consent gate.
+
+- Basic consent mode: no Google script, measurement requests or consent pings before acceptance.
+- Both choices are available with equal prominence; the footer's Cookie settings button reopens them.
+- Choices expire after 180 days. Invalid or expired storage fails closed; blocked storage falls back to the current page only.
+- Google signals and ad personalisation are disabled; all advertising consent remains denied.
+- Host-only Analytics cookies expire after 180 days, without sliding renewal. Withdrawal disables measurement immediately, deletes the two Analytics cookies, and reloads when the denial is saved to unload Google's listeners.
+- Browser history measurement is handled by GA4's enhanced measurement setting, not a second manual page-view emitter. In GA4 Admin, keep page views on browser-history changes enabled for Next.js navigation.
+
+Account-level settings are not controlled by the tag. In Google Analytics Admin,
+review the data-processing terms, keep advertising/Google signals and unnecessary
+data sharing disabled, and set user/event retention to **2 months**, with
+**Reset on new activity off**. Verify the actual settings in the account; this
+repository does not claim to have changed them. The privacy notice distinguishes
+browser expiry from Google-side retention and links to Google's terms.
+
+For a smoke test, clear `qoax.analytics-consent.v1` and check the browser Network
+panel: no `googletagmanager.com` or `google-analytics.com` requests before consent
+or after rejecting; accepting loads one tag; Cookie settings → Reject analytics
+removes `_ga` / `_ga_P7F0DM83L3`, and the reloaded page makes no Analytics requests.
 
 ## Contact
 

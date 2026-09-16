@@ -9,6 +9,7 @@ import styles from "./site.module.css";
 import ed from "./editorial.module.css";
 import { socialLinks } from "./social-links";
 import { NavLinks } from "./nav-links";
+import { CookieSettingsButton } from "./analytics-consent";
 
 export const CONTACT_EMAIL = "contact@qo.ax";
 export const ACADEMY_URL = "https://qoax.academy/";
@@ -273,6 +274,7 @@ export function SiteFooter() {
                 <li key={link.id}><a href={link.url} rel="noreferrer" target="_blank">{link.label} ↗</a></li>
               ))}
               {legalNavigation.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}
+              <li><CookieSettingsButton /></li>
             </ul>
           </div>
         </div>
