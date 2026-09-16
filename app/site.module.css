@@ -1024,6 +1024,13 @@ a.logoCard:hover .logoCaption { opacity: 1; }
 
 .footerMail:hover { text-decoration: underline; }
 
+.footerBrand .footerAlias {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
 .footerCols {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

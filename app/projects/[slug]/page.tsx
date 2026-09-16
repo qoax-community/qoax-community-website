@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../../seo";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -31,11 +32,12 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const { slug } = await params;
   const entry = getArchiveEntry(slug);
   if (!entry) return {};
-  return {
+  return pageMetadata({
     title: entry.title,
     description: entry.summary,
-    openGraph: entry.image && !entry.image.endsWith(".svg") ? { images: [{ url: entry.image }] } : undefined,
-  };
+    path: `/projects/${entry.slug}/`,
+    image: entry.image,
+  });
 }
 
 const stateLabel = { unlocked: "Completed", growing: "Active", locked: "Planned" } as const;
@@ -66,7 +68,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className={styles.container}>
           <nav className={styles.breadcrumb} aria-label="Breadcrumb">
             <Link href="/">Home</Link><span aria-hidden="true">/</span>
-            <Link href="/events">Our work</Link><span aria-hidden="true">/</span>
+            <Link href="/work">Our work</Link><span aria-hidden="true">/</span>
             <span>{entry.title}</span>
           </nav>
 
@@ -213,7 +215,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className={styles.container}>
             <div className={styles.sectionHead} style={{ marginBottom: 24 }}>
               <h2 id="related-heading" style={{ fontSize: 26 }}>More from the community</h2>
-              <Link className={styles.textLink} href="/events">All {archiveEntries.length} records <ArrowRight size={16} /></Link>
+              <Link className={styles.textLink} href="/work">All {archiveEntries.length} records <ArrowRight size={16} /></Link>
             </div>
             <div className={styles.relatedGrid}>
               {related.map((candidate) => (

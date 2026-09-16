@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "../seo";
 import { LegalPage } from "../legal-page";
 import { legalDocument } from "../legal-data";
 
 const document = legalDocument("terms");
 
 export const metadata: Metadata = {
-  title: document.title,
-  description: document.description,
+  ...pageMetadata({
+    title: document.title,
+    description: document.description,
+    path: "/terms/",
+  }),
 };
 
 export default function TermsPage() {
