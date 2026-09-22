@@ -203,14 +203,16 @@ test("exports public legal pages for Google OAuth app domain", async () => {
   }
 
   assert.match(privacy, /Privacy Policy/);
-  assert.match(privacy, /Google sign-in and Gmail sending permissions/);
+  assert.match(privacy, /Gmail sending permissions are requested separately/);
   assert.match(terms, /Terms of Use/);
   assert.match(terms, /OAuth permissions/);
   assert.match(gdpr, /GDPR and Browser Storage Notice/);
   assert.match(gdpr, /Email and link tracking/);
   for (const html of [privacy, gdpr]) {
     assert.match(html, /Google Analytics/);
-    assert.match(html, /16 September 2026/);
+    assert.match(html, /22 September 2026/);
+    assert.match(html, /3 години \(1095 дни\)/);
+    assert.match(html, /2026-09-22-v3/);
     assert.match(html, /180 days/);
     assert.match(html, /withdraw/i);
   }
