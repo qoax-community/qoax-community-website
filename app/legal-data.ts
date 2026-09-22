@@ -25,17 +25,29 @@ export const legalEntity = {
   sourceUrl: "https://papagal.bg/eik/208896893/efb0",
 } as const;
 
+const questionnairePrivacy = {
+  title: "QOAX Community · Въпросници и вътрешна аналитика",
+  paragraphs: [
+    "При попълване на въпросник в crm.qo.ax Google потвърждава имейла Ви. Записваме името, имейла, Google идентификатора, изпратените отговори, въпросите към момента на подаване, датата и версията на информацията за личните данни. Достъп има оторизираният екип на QOAX Community. При проучвания за обучения целта включва сравнение на интереса по училища през учебните години, планиране на бъдещи курсове и подобряване на програмите.",
+    "Отговорите се пазят до 3 години (1095 дни) от подаването, освен ако във въпросника е посочен по-кратък срок. Това е максимална продуктова настройка, а не универсален законов срок; преглеждаме необходимостта ежегодно и заличаваме данните по-рано, когато целта отпадне или е приложимо искане за изтриване. След изтичане автоматичното почистване ги премахва от активната база. Участието е доброволно, а съгласието за обработване на отговорите не разрешава рекламни съобщения.",
+    "Незадължителната вътрешна аналитика се включва само след съгласие. Записва посещение, успешен Google вход, започване и успешно изпращане: вид събитие, време, въпросник и хеш на случаен браузърен идентификатор. В тези записи няма имейл, отговори, IP адрес или данни за устройство. Новите събития се пазят до 3 години (1095 дни) от записването за сравнение на използването през учебните години и подобряване на формите. Във въпросниците няма Google Analytics или рекламни тракери; аналитиката на публичния qo.ax сайт е отделна.",
+    "Можете да продължите с Google без незадължителна аналитика и да промените избора от Настройки на аналитиката във формата. Google входът сам по себе си не дава съгласие. Необходимите бисквитки поддържат входа до 2 часа, връщането от Google до 10 минути и избора за браузърна аналитика до 180 дни. Разрешението за имейл аналитика е отделно за въпросника и потвърдения имейл, до 90 дни. Тези срокове за запомняне на избора не са срокове за изтриване на вече събраната статистика.",
+    "Поканите към въпросници съдържат пренасочващи линкове и изображение. Броячите за отваряния и кликове се променят само след разрешение за потвърдения имейл на получателя; първоначалният клик преди съгласие не се добавя впоследствие. Самите заявки с идентификатор достигат инфраструктурата и без съгласие. Имейл статистиката е свързана с получателя и не е анонимна; автоматични проверки и кешове могат да повлияят на броячите. Посоченият тригодишен срок за събитията във формата не определя срока за цялата CRM кореспонденция.",
+    "Оттеглянето спира бъдещото незадължително отчитане. За достъп, поправка, изтриване, ограничаване, преносимост или оттегляне на съгласието за отговорите пишете на contact@qo.ax. Можете да подадете жалба до КЗЛД. Промяна на настройките не удължава автоматично вече обещан срок за събрани данни. Версия на информацията за въпросниците: 2026-09-22-v3.",
+  ],
+};
+
 export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
   privacy: {
     id: "privacy",
     title: "Privacy Policy",
     description: "How Qoax Community collects, uses and protects data across qo.ax public pages and connected internal services.",
-    updated: "Last updated: 16 September 2026",
+    updated: "Last updated: 22 September 2026",
     summary: [
       "We collect only the information needed to operate public pages, answer messages, run community programmes and protect the service.",
       "We do not sell personal data, run behavioural advertising or build advertising profiles.",
       "Google Analytics runs on the public website only after you accept analytics. Rejecting analytics does not restrict access to the site. You can withdraw consent through Cookie settings in the footer.",
-      "Google sign-in and Gmail sending permissions are used only when an authorized QOAX user chooses them for a connected QOAX service.",
+      "Google sign-in is used when a user chooses it, including questionnaire respondents. Gmail sending permissions are requested separately from authorized QOAX staff, never from questionnaire respondents.",
       "Requests about personal data can be sent to contact@qo.ax or to the registered address below.",
     ],
     sections: [
@@ -96,6 +108,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
           "Analytics data is retained for website usage comparisons and content improvement. User-level and event-level records are subject to the retention and deletion settings in our Google Analytics property; aggregated standard reports can remain available longer. Contact contact@qo.ax for the applicable retention details or a personal-data request. Withdrawing consent stops future measurement; it does not automatically delete earlier records held by Google.",
         ],
       },
+      questionnairePrivacy,
       {
         title: "7. Your rights",
         paragraphs: [
@@ -193,7 +206,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
     id: "gdpr",
     title: "GDPR and Browser Storage Notice",
     description: "Practical data protection, cookies and browser storage notice for qo.ax.",
-    updated: "Last updated: 16 September 2026",
+    updated: "Last updated: 22 September 2026",
     summary: [
       "The public qo.ax website uses optional Google Analytics cookies only after you accept analytics. Advertising features are disabled.",
       "Static pages may use ordinary browser cache. Connected applications may use sessions, tokens and local preferences needed for the requested service.",
@@ -225,6 +238,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
           "These records are used to prioritize follow-up, understand whether a message was received and keep a practical audit trail for the outreach workflow.",
         ],
       },
+      questionnairePrivacy,
       {
         title: "4. Data protection requests",
         paragraphs: [
