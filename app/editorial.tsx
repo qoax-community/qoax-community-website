@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { ArchiveEntry } from "./archive-data";
 import { kindLabels } from "./archive-tree-data";
 import { ArrowRight, ArrowUpRight, CONTACT_EMAIL, SiteFooter, SiteHeader } from "./components";
-import { brandPronunciation } from "./brand-names";
 import { authors, readingTime, shortDate, type Post } from "./blog-data";
 import { parseInline, type Block, type Inline } from "./journal-markdown";
 import ed from "./editorial.module.css";
@@ -124,24 +123,6 @@ export function SecHead({
       </div>
       {action && <div className={ed.secHeadAction}>{action}</div>}
     </div>
-  );
-}
-
-/* ---------- Alias strip ---------- */
-
-const aliases = ["Коакс", "Куакс", "КОАКС Комюнити", "Kuaks", "Koaks", "Quax", "qo.ax"];
-
-export function AliasStrip() {
-  return (
-    <section className={ed.alias} aria-label="Other spellings of Qoax">
-      <ul className={`${ed.wrap} ${ed.aliasInner}`}>
-        <li><span className={ed.aliasLabel}>Also written</span></li>
-        {aliases.map((alias) => (
-          <li key={alias} lang={/[А-Яа-я]/.test(alias) ? "bg" : undefined}>{alias}</li>
-        ))}
-        <li>{`Pronounced “${brandPronunciation}”`}</li>
-      </ul>
-    </section>
   );
 }
 

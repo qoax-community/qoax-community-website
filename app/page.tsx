@@ -4,7 +4,7 @@ import { Countdown } from "./countdown";
 import { archiveEntries, nonprofitEntries } from "./archive-data";
 import { upcomingEvents } from "./archive-tree-data";
 import { sortedPosts } from "./blog-data";
-import { AliasStrip, Btn, Cta, PostCard, RecordRow, SecHead, Shell } from "./editorial";
+import { Btn, Cta, PostCard, RecordRow, SecHead, Shell } from "./editorial";
 import { schoolPartners } from "./schools-data";
 import { siteAsset } from "./site-path";
 import ed from "./editorial.module.css";
@@ -68,8 +68,6 @@ export default function Home() {
           )}
         </div>
       </section>
-
-      <AliasStrip />
 
       {/* 01 Upcoming */}
       <section className={ed.sec} aria-labelledby="upcoming-title" id="upcoming">

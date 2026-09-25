@@ -206,9 +206,9 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       },
       {
         id: "fmi-esports-tournament-2027",
-        title: "Qoax × FMI Gaming Tournament",
+        title: "Qoax × SUGAMING Gaming Tournament",
         subtitle: "Counter-Strike 2 and League of Legends",
-        summary: "A student esports tournament with Sofia University’s FMI in early March 2027: 5v5 brackets in Counter-Strike 2 and League of Legends, casted finals, and a weekend for teams to meet in person.",
+        summary: "A student esports tournament with SUGAMING in early March 2027: 5v5 brackets in Counter-Strike 2 and League of Legends, casted finals, and a weekend for teams to meet in person.",
         year: "Early March 2027",
         startsAt: "2027-03-01T00:00:00+02:00",
         calendar: ["Mar", "2027"],
@@ -218,10 +218,10 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         signal: "Announced",
         mark: "GG",
         image: "/events/fmi-tournament.svg",
-        partner: "Sofia University, Faculty of Mathematics and Informatics (FMI)",
+        partner: "SUGAMING",
         location: "FMI, Sofia University, Sofia",
         facts: [["Games", "CS2 · LoL"], ["Format", "5v5 brackets"], ["Entry", "Free"]],
-        detail: "Esports is where a lot of students first learn teamwork, communication under pressure, and the discipline of practice. Together with the Faculty of Mathematics and Informatics at Sofia University, Qoax Community is organizing a student tournament in Counter-Strike 2 and League of Legends at the start of March 2027, with online qualifiers and in-person finals at FMI.",
+        detail: "Esports is where a lot of students first learn teamwork, communication under pressure, and the discipline of practice. Together with SUGAMING, Qoax Community is organizing a student tournament in Counter-Strike 2 and League of Legends at the start of March 2027, with online qualifiers and in-person finals at FMI.",
         notice: "Registration opens in early 2027. Team sign-ups, rules, and the exact dates will be published here.",
         story: [
           {

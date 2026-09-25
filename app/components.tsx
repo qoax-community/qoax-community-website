@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ArchiveEntry } from "./archive-data";
-import { brandAliasLine, brandPronunciation } from "./brand-names";
 import { legalEntity } from "./legal-data";
 import { siteAsset } from "./site-path";
 import styles from "./site.module.css";
@@ -285,7 +284,6 @@ export function SiteFooter() {
             <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}.`}</span>
             {" Sofia, Bulgaria."}
           </span>
-          <span>{`Qoax is pronounced “${brandPronunciation}”. Also written as ${brandAliasLine}.`}</span>
         </div>
       </div>
     </footer>
