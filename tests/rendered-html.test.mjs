@@ -51,7 +51,7 @@ test("exports the Qoax Community home and index", async () => {
   }
   assert.match(home, /01 — Upcoming/);
   assert.match(home, /02 — Journal/);
-  assert.match(home, /Also written/);
+  assert.doesNotMatch(home, /Also written/);
   assert.match(home, /Коакс Комюнити/);
   assert.match(home, /aria-current="page"/);
 });
@@ -120,7 +120,7 @@ test("publishes the FAQ and the About page with searchable structure", async () 
   assert.match(faq, /"@type":"BreadcrumbList"/);
   assert.match(faq, /Куакс/);
   assert.doesNotMatch(faq, /Academy|Академия/);
-  assert.match(faq, /id="spelling"/);
+  assert.match(faq, /id="koaks-komyuniti"/);
   assert.match(faq, /<link rel="canonical" href="https:\/\/qo\.ax\/faq\/"\/?>/);
   assert.equal((faq.match(/<h1[\s>]/g) ?? []).length, 1);
 
@@ -159,8 +159,12 @@ test("publishes the legal name, brand spellings, and SEO signals on every page",
   for (const html of [home, about, events]) {
     assert.match(html, /Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893/);
     assert.match(html, /QOAX COMMUNITY association, UIC 208896893/);
-    // Latin and Cyrillic spellings and common misspellings of the name.
-    assert.match(html, /Коакс, Куакс, КОАКС Комюнити, Kuaks, Koaks, Quax/);
+    // Search aliases stay in metadata and never appear in visible page copy.
+    assert.match(html, /<meta name="keywords" content="[^"]*Куакс[^"]*Kuaks/);
+    const body = html.split("<body")[1]
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "")
+      .replace(/<[^>]+>/g, "");
+    assert.doesNotMatch(body, /Also written|Pronounced|Куакс|Kuaks|Koaks|Quax/);
     assert.match(html, /<script type="application\/ld\+json">/);
   }
 
@@ -171,7 +175,7 @@ test("publishes the legal name, brand spellings, and SEO signals on every page",
   assert.match(home, /"value":"208896893"/);
   assert.match(home, /"alternateName":\[[^\]]*"Куакс"[^\]]*\]/);
   assert.match(home, /<meta name="robots" content="index, follow"/);
-  assert.match(about, /Also written as/);
+  assert.doesNotMatch(about, /Also written as/);
 
   assert.match(robots, /User-Agent: \*/i);
   assert.match(robots, /Allow: \//);
@@ -254,6 +258,8 @@ test("exports only the requested non-profit project pages", async () => {
   assert.match(tournament, /Counter-Strike 2/);
   assert.match(tournament, /League of Legends/);
   assert.match(tournament, /March 2027/);
+  assert.match(tournament, /Qoax × SUGAMING Gaming Tournament/);
+  assert.doesNotMatch(tournament, /Qoax × FMI Gaming Tournament/);
 
   assert.match(pages[0], /2–4 Oct 2026/);
   assert.match(pages[0], /atanasoff48\.com/);

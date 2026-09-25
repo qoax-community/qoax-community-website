@@ -8,7 +8,7 @@ import ed from "../editorial.module.css";
 export const metadata: Metadata = {
   ...pageMetadata({
     title: "Events · Hackathons, game jams, and tournaments",
-    description: "Upcoming and past Qoax Community events in Sofia, Bulgaria: the Atanasoff48 school hackathon, the FMI Game Jam, and the Qoax × FMI gaming tournament.",
+    description: "Upcoming and past Qoax Community events in Sofia, Bulgaria: the Atanasoff48 school hackathon, the FMI Game Jam, and the Qoax × SUGAMING gaming tournament.",
     path: "/events/",
   }),
 };

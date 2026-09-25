@@ -10,8 +10,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "FAQ · Questions about Qoax Community (Коакс, Куакс) answered",
-    description: "How to spell Qoax (Коакс, Куакс, Kuaks), whether Qoax is a company, which events and schools we work with, and how to contact us.",
+    title: "FAQ · Questions about Qoax Community answered",
+    description: "What Qoax does, which events and schools we work with, and how to contact us.",
     path: "/faq/",
     keywords: ["Qoax FAQ", "Коакс", "Куакс", "Kuaks", "Qoax Community Sofia"],
   }),
@@ -59,12 +59,7 @@ export default function FaqPage() {
         }
         label={`FAQ · Често задавани въпроси · ${faqItems.length} questions`}
         title={<>Questions about Qoax, <em>answered plainly.</em></>}
-        copy="How the name is spelled, what the association does, which events we run, and how to work with us. If your question is missing, write to us and we will add it."
-        aside={
-          <p className={ed.mono}>
-            {`Also answers for: `}<span lang="bg">Коакс, Куакс, Коакс Комюнити</span>
-          </p>
-        }
+        copy="What the association does, which events we run, and how to work with us. If your question is missing, write to us and we will add it."
       />
 
       <section className={ed.sec} aria-label="Frequently asked questions">

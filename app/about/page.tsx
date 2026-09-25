@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { pageMetadata } from "../seo";
 import Link from "next/link";
 import { ACADEMY_URL, CONTACT_EMAIL, GITHUB_URL } from "../components";
-import { brandAliasLine, brandPronunciation } from "../brand-names";
 import { aboutFaqIds, faqItems } from "../faq-data";
 import { Btn, Cta, Inlines, PageHead, SecHead, Shell } from "../editorial";
 import { legalEntity } from "../legal-data";
@@ -12,8 +11,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "About Qoax Community (Коакс Комюнити, Куакс) · Non-profit in Sofia",
-    description: "What Qoax Community is: an independent non-profit technology association in Sofia, Bulgaria (Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893), also written Коакс, Куакс, Kuaks. Who is behind it, how we work, and what happens in 2026–2027.",
+    title: "About Qoax Community · Non-profit in Sofia",
+    description: "What Qoax Community is: an independent non-profit technology association in Sofia, Bulgaria (Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893). Who is behind it, how we work, and what happens in 2026–2027.",
     path: "/about/",
     keywords: ["About Qoax", "Qoax Community", "Коакс Комюнити", "Куакс", "Kuaks", "non-profit Sofia", "technology community Bulgaria"],
   }),
@@ -59,7 +58,7 @@ const timeline = [
   },
   {
     date: "Early March 2027",
-    title: "Qoax × FMI Gaming Tournament",
+    title: "Qoax × SUGAMING Gaming Tournament",
     copy: "Counter-Strike 2 and League of Legends brackets with in-person finals at FMI.",
     href: "/projects/fmi-esports-tournament-2027",
   },
@@ -106,7 +105,7 @@ export default function AboutPage() {
             <span aria-current="page">About</span>
           </nav>
         }
-        label="About · Коакс Комюнити · Куакс"
+        label="About"
         title={<>A community with a <em>bias toward making.</em></>}
         copy="Qoax Community connects technology, education, culture, and civic initiative in Sofia, Bulgaria. We learn by building, and we grow by sharing what we know."
       />
@@ -117,7 +116,6 @@ export default function AboutPage() {
             <div><dt>What</dt><dd>Independent non-profit technology community</dd></div>
             <div><dt>Where</dt><dd>Sofia, Bulgaria</dd></div>
             <div><dt>Registered</dt><dd>{`${legalEntity.registrationDate} · UIC ${legalEntity.uic}`}</dd></div>
-            <div><dt>Also written as</dt><dd lang="bg">Коакс, Куакс, КОАКС Комюнити, Kuaks, Koaks, Quax</dd></div>
             <div><dt>Contact</dt><dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd></div>
           </dl>
         </div>
@@ -151,11 +149,8 @@ export default function AboutPage() {
               put on its first hackathon. We document each of these as a public record under{" "}
               <Link href="/events">Events</Link> and <Link href="/work">Our work</Link>.
             </p>
-            <p>
-              {`The name is pronounced “${brandPronunciation}” and is registered in Bulgarian as КОАКС. You will also see it written as ${brandAliasLine}. All of them mean the same community at qo.ax.`}
-            </p>
             <p lang="bg">
-              Коакс Комюнити (Куакс) е независимо сдружение с нестопанска цел в София. Организираме хакатони, гейм
+              Коакс Комюнити е независимо сдружение с нестопанска цел в София. Организираме хакатони, гейм
               джамове и турнири с училища и университети и разработваме софтуер за граждански и културни
               организации.
             </p>
@@ -226,7 +221,6 @@ export default function AboutPage() {
           <dl className={ed.kv}>
             <div className={ed.kvRow}><dt>Registered name</dt><dd lang="bg">{legalEntity.nameBg}</dd></div>
             <div className={ed.kvRow}><dt>English name</dt><dd>{legalEntity.nameEn}</dd></div>
-            <div className={ed.kvRow}><dt>Also written as</dt><dd>{brandAliasLine}</dd></div>
             <div className={ed.kvRow}><dt>UIC / ЕИК</dt><dd>{legalEntity.uic}</dd></div>
             <div className={ed.kvRow}><dt>Registered</dt><dd>{legalEntity.registrationDate}</dd></div>
             <div className={ed.kvRow}><dt>Address</dt><dd>{legalEntity.addressEn}</dd></div>

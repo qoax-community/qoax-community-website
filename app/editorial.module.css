@@ -45,7 +45,7 @@
 
 .brand {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   gap: 12px;
   color: var(--ink);
 }
@@ -53,7 +53,7 @@
 .brand:hover { color: var(--ink); }
 
 .brandBadge { width: 34px; height: 34px; border-radius: 9px; align-self: center; flex: none; }
-.brandLogo { width: 118px; height: auto; align-self: center; }
+.brandLogo { width: 118px; height: auto; }
 
 .brandName {
   font-family: var(--font-serif);
@@ -363,34 +363,6 @@
 }
 
 .countdownLabel { composes: mono; display: block; margin-top: 6px; font-size: 11px; }
-
-/* Alias strip ------------------------------------------------------ */
-.alias {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 14px 0;
-}
-
-.aliasInner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 14px;
-  font-size: 14px;
-  color: var(--ink-2);
-}
-
-.aliasInner > li { display: inline-flex; align-items: center; gap: 14px; }
-
-.aliasInner > li:not(:last-child)::after {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--amber);
-}
-
-.aliasLabel { composes: mono; color: var(--muted); }
 
 /* Ruled rows ------------------------------------------------------- */
 .rows { border-top: 1.5px solid var(--ink); }

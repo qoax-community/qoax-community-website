@@ -6,7 +6,7 @@ It documents:
 
 - Atanasoff48 at SPGE John Atanasoff, 2–4 October 2026
 - the FMI Game Jam at Sofia University (dates to be announced)
-- the Qoax × FMI Gaming Tournament (Counter-Strike 2 and League of Legends), early March 2027
+- the Qoax × SUGAMING Gaming Tournament (Counter-Strike 2 and League of Legends), early March 2027
 - the 1–14 July 2026 internship programme for 30+ students
 - partnerships with TUES, SPGE John Atanasoff, Popov School, and telecommunications schools in Bulgaria
 - Venus Labyrinth and InfoCareerCenter
