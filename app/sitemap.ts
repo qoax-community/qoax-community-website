@@ -20,10 +20,13 @@ const staticRoutes: Array<{ path: string; priority: number; changeFrequency: Met
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  // Only posts carry a real modification date. A build timestamp on every URL
+  // tells crawlers nothing, so other routes omit lastmod; the home page and the
+  // journal index take the newest post's date.
+  const latestPost = sortedPosts[0];
+  const latest = latestPost ? new Date(`${latestPost.updated ?? latestPost.published}T00:00:00Z`) : undefined;
   const projectRoutes: MetadataRoute.Sitemap = archiveEntries.map((entry) => ({
     url: `${siteUrl}/projects/${entry.slug}/`,
-    lastModified,
     changeFrequency: "monthly",
     priority: 0.6,
   }));
@@ -36,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticRoutes.map(({ path, priority, changeFrequency }) => ({
       url: `${siteUrl}${path}`,
-      lastModified,
+      ...(latest && (path === "/" || path === "/blog/") ? { lastModified: latest } : {}),
       changeFrequency,
       priority,
     })),

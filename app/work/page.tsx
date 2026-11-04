@@ -17,21 +17,21 @@ const groups: Array<{ number: string; label: string; title: React.ReactNode; cop
   {
     number: "01",
     label: "Programmes and events",
-    title: <>Run with students <em>and their schools.</em></>,
+    title: "Run with students and their schools",
     copy: "Hackathons, game jams, tournaments, and the summer internship programme.",
     kinds: ["event", "programme"],
   },
   {
     number: "02",
     label: "Culture and civic organisations",
-    title: <>Technology where the <em>experience</em> comes first.</>,
+    title: "Software for civic and cultural organisations",
     copy: "Technical stewardship for artists and non-profits: installations, websites, and the unglamorous work of keeping them running.",
     kinds: ["culture", "ngo"],
   },
   {
     number: "03",
     label: "Partner schools",
-    title: <>Long-term <em>relationships.</em></>,
+    title: "Long-term partnerships",
     copy: "Technology schools across Bulgaria whose students take part in our programmes.",
     kinds: ["school"],
   },
@@ -42,7 +42,7 @@ export default function WorkPage() {
     <Shell>
       <PageHead
         label={`Our work · ${nonprofitEntries.length} records`}
-        title={<>Technology in service of <em>shared causes.</em></>}
+        title="Our work"
         copy="The complete index of our non-profit work: school partnerships, student programmes, art, culture, and projects for public-interest organisations. Newest and most active first."
       />
 

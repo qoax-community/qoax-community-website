@@ -51,9 +51,15 @@ const timeline = [
     external: true,
   },
   {
-    date: "Dates to be announced",
+    date: "December 2026 · planned",
+    title: "John Atanasoff Game Jam",
+    copy: "An event for creating games at SPGE John Atanasoff. Exact dates and participation details will be announced.",
+    href: "/projects/john-atanasoff-game-jam-2026",
+  },
+  {
+    date: "Completed",
     title: "FMI Game Jam",
-    copy: "A game jam with the Faculty of Mathematics and Informatics at Sofia University.",
+    copy: "The game jam at the Faculty of Mathematics and Informatics, Sofia University, has taken place. Photos are coming in the next few days.",
     href: "/projects/fmi-game-jam",
   },
   {
@@ -61,6 +67,12 @@ const timeline = [
     title: "Qoax × SUGAMING Gaming Tournament",
     copy: "Counter-Strike 2 and League of Legends brackets with in-person finals at FMI.",
     href: "/projects/fmi-esports-tournament-2027",
+  },
+  {
+    date: "March–April 2027 · planned",
+    title: "Telecommunications School Hackathon",
+    copy: "A hackathon at the Professional High School of Telecommunications in Sofia. Exact dates are still being arranged.",
+    href: "/projects/telecommunications-hackathon-2027",
   },
 ];
 
@@ -106,7 +118,7 @@ export default function AboutPage() {
           </nav>
         }
         label="About"
-        title={<>A community with a <em>bias toward making.</em></>}
+        title="About Qoax"
         copy="Qoax Community connects technology, education, culture, and civic initiative in Sofia, Bulgaria. We learn by building, and we grow by sharing what we know."
       />
 
@@ -133,8 +145,7 @@ export default function AboutPage() {
       <section className={ed.sec} aria-labelledby="what-is-qoax-title" id="what-is-qoax">
         <div className={`${ed.wrap} ${ed.split}`}>
           <div className={ed.splitAside}>
-            <p className={ed.mono}>01 — Who we are</p>
-            <h2 id="what-is-qoax-title">What is <em>Qoax Community?</em></h2>
+            <h2 id="what-is-qoax-title">What is Qoax Community?</h2>
           </div>
           <div className={ed.prose}>
             <p>
@@ -164,11 +175,10 @@ export default function AboutPage() {
 
       <section className={ed.sec} aria-labelledby="how-we-work-title" id="how-we-work">
         <div className={ed.wrap}>
-          <SecHead number="02" label="How we work" id="how-we-work-title" title={<>Four <em>commitments.</em></>} />
+          <SecHead number="02" label="How we work" id="how-we-work-title" title="How we work" />
           <ul className={ed.cols4}>
-            {principles.map(([title, copy], index) => (
+            {principles.map(([title, copy]) => (
               <li className={ed.cell} key={title}>
-                <span className={ed.mono}>{(index + 1).toString().padStart(2, "0")}</span>
                 <h3>{title}</h3>
                 <p>{copy}</p>
               </li>
@@ -180,8 +190,7 @@ export default function AboutPage() {
       <section className={ed.sec} aria-labelledby="timeline-title" id="timeline">
         <div className={`${ed.wrap} ${ed.split}`}>
           <div className={ed.splitAside}>
-            <p className={ed.mono}>03 — 2026 to 2027</p>
-            <h2 id="timeline-title">The year <em>ahead.</em></h2>
+            <h2 id="timeline-title">2026 to 2027</h2>
           </div>
           <dl className={ed.timeline}>
             {timeline.map((item) => (
@@ -208,8 +217,7 @@ export default function AboutPage() {
       <section className={ed.sec} aria-labelledby="organisation-title" id="organisation">
         <div className={`${ed.wrap} ${ed.split}`}>
           <div className={ed.splitAside}>
-            <p className={ed.mono}>04 — The organisation</p>
-            <h2 id="organisation-title">A registered <em>non-profit association.</em></h2>
+            <h2 id="organisation-title">The organisation</h2>
             <p style={{ marginTop: 16, color: "var(--ink-2)" }}>
               Qoax Community operates as a Bulgarian non-profit association. There is no commercial portfolio, no
               paid catalogue, and no advertising on this site: everything here is public work.
@@ -235,14 +243,13 @@ export default function AboutPage() {
             number="05"
             label="Questions"
             id="questions-title"
-            title={<>Asked <em>often.</em></>}
+            title="Common questions"
             copy="The short answers. The full list, with Bulgarian summaries, is on the FAQ page."
             action={<Btn href="/faq" variant="ghost" small>All questions</Btn>}
           />
           <div className={ed.qList}>
-            {teaser.map((item, index) => (
+            {teaser.map((item) => (
               <article className={ed.q} key={item.id}>
-                <span className={ed.qNum} aria-hidden="true">{(index + 1).toString().padStart(2, "0")}</span>
                 <div>
                   <h3><Link href={`/faq/#${item.id}`}>{item.question}</Link></h3>
                   <div className={ed.qBody}><p><Inlines source={item.answer[0]} /></p></div>

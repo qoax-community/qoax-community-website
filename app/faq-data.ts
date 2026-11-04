@@ -75,7 +75,7 @@ export const faqGroups: FaqGroup[] = [
         id: "which-events",
         question: "What events does Qoax run?",
         answer: [
-          "In the 2026–2027 season: Atanasoff48, a 48-hour hackathon at SPGE John Atanasoff on 2–4 October 2026; the FMI Game Jam with the Faculty of Mathematics and Informatics at Sofia University; the Qoax × SUGAMING Gaming Tournament in early March 2027; and the summer Internship Programme for students from partner schools.",
+          "In the 2026–2027 season: Atanasoff48, a 48-hour hackathon at SPGE John Atanasoff on 2–4 October 2026; the John Atanasoff Game Jam planned for December 2026; the Telecommunications School Hackathon planned for March–April 2027; the completed FMI Game Jam at the Faculty of Mathematics and Informatics, Sofia University, with photos coming in the next few days; the Qoax × SUGAMING Gaming Tournament in early March 2027; and the summer Internship Programme for students from partner schools. Exact dates and participation details for the two planned school events will be announced once confirmed.",
           "Every event has a record page with dates, partners, and what we are responsible for. See [all events](/events/).",
         ],
       },

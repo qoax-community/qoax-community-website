@@ -215,3 +215,10 @@ export function relatedPosts(post: Post, count = 3) {
     })
     .slice(0, count);
 }
+
+/** Category sections on /blog/ only help once there are enough posts to browse. */
+export const groupPostsByCategory = sortedPosts.length > 8;
+
+export function categoryAnchor(category: string) {
+  return category.toLowerCase().replace(/\s+/g, "-");
+}

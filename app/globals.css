@@ -1,26 +1,32 @@
 :root {
   /* Paper */
-  --bg: #f7f6f2;
-  --bg-soft: #efede6;
-  --surface: #f7f6f2;
-  --line: #d9d5c9;
-  --line-strong: #c3beaf;
+  --bg: #f7f7f5;
+  --bg-soft: #f0f0ed;
+  --surface: #ffffff;
+  --line: #e9e8e4;
+  --line-strong: #d4d3ce;
 
-  /* Ink */
-  --ink: #14201a;
-  --ink-2: #3b4640;
-  --muted: #68746d;
+  /* Ink: warm neutral, no green cast */
+  --ink: #1c1c1a;
+  --ink-2: #3f3f3b;
+  --muted: #6b6a65;
 
-  /* Brand greens (from the logo) */
-  --green-950: #16251d;
-  --green-900: #1c3126;
-  --green-800: #213a2c;
-  --green-700: #2f5544;
-  --green-600: #3f6652;
-  --green-400: #6f8d7d;
-  --green-300: #839a8c;
-  --green-100: #dfe8e2;
-  --green-50: #eef3ef;
+  /* Former green scale, now warm neutrals (footer keeps the brand green) */
+  --green-950: #1c1c1a;
+  --green-900: #262624;
+  --green-800: #1c1c1a;
+  --green-700: #3f3f3b;
+  --green-600: #57564f;
+  --green-400: #a3a29b;
+  --green-300: #c4c3bc;
+  --green-100: #efeee9;
+  --green-50: #f3f2ee;
+  --brand-green: #16251d;
+
+  /* Status */
+  --ok: #1f7a4d;
+  --ok-soft: #e6f2ec;
+  --card: #ffffff;
 
   /* Accent */
   --amber: #e29a2c;
@@ -29,24 +35,24 @@
   --amber-900: #7a4d05;
 
   /* Type */
-  --font-sans: var(--font-plex-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: var(--font-literata), Georgia, "Times New Roman", serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
-  --font-display: var(--font-serif);
+  --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-serif: var(--font-sans);
+  --font-mono: var(--font-sans);
+  --font-display: var(--font-sans);
 
   /* Shape: hairlines instead of shadows */
-  --radius-sm: 4px;
+  --radius-sm: 6px;
   --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
   --shadow-sm: none;
   --shadow-md: none;
   --shadow-lg: none;
 
   /* Layout */
-  --container: 1240px;
-  --gutter: clamp(20px, 5vw, 48px);
-  --section: clamp(56px, 7vw, 96px);
+  --container: 1120px;
+  --gutter: clamp(16px, 4vw, 24px);
+  --section: clamp(36px, 5vw, 56px);
 }
 
 *,
@@ -67,7 +73,7 @@ body {
   color: var(--ink);
   background: var(--bg);
   font-family: var(--font-sans);
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1.55;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -77,20 +83,20 @@ body {
 
 h1, h2, h3, h4 {
   margin: 0;
-  font-family: var(--font-serif);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   text-wrap: balance;
 }
 
-h1 em, h2 em { font-style: italic; font-weight: 400; color: var(--green-800); }
+h1 em, h2 em { font-style: normal; font-weight: inherit; color: inherit; }
 
 p { margin: 0; text-wrap: pretty; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 dl, dd, dt, figure, blockquote { margin: 0; }
 a { color: var(--ink); text-decoration: none; }
-a:hover { color: var(--green-800); }
+a:hover { color: var(--ink); }
 img { display: block; max-width: 100%; }
 button { font: inherit; }
 button, summary, a { -webkit-tap-highlight-color: transparent; }
@@ -100,8 +106,8 @@ time { font-variant-numeric: tabular-nums; }
 
 :focus-visible {
   outline: 2px solid var(--amber);
-  outline-offset: 3px;
-  border-radius: 2px;
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 ::selection { color: var(--bg); background: var(--green-800); }
@@ -114,7 +120,7 @@ time { font-variant-numeric: tabular-nums; }
   padding: 12px 18px;
   color: var(--bg);
   background: var(--green-900);
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   transform: translateY(-200%);
@@ -131,4 +137,24 @@ time { font-variant-numeric: tabular-nums; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+::selection { color: var(--ink); background: var(--amber-100); }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+a { text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--amber); }
+
+h1 { font-weight: 650; letter-spacing: -0.025em; }
+h2, h3 { font-weight: 650; letter-spacing: -0.012em; }
+
+:focus-visible { outline-color: #9a6310; }
+
+@media print {
+  body > div > header, body > div > footer, nav, .skip-link { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  a { color: #000; text-decoration: underline; }
+  main a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; color: #444; }
+  img { max-width: 60% !important; }
+  h1, h2, h3 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
 }

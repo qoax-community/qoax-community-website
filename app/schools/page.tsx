@@ -40,7 +40,7 @@ export default function SchoolsPage() {
     <Shell>
       <PageHead
         label={`School network · ${schoolPartners.length} schools`}
-        title={<>Schools we <em>work with.</em></>}
+        title="Schools we work with"
         copy="Technology schools whose students took part in the 2026 internship programme or whose student councils run events with us. The list is short on purpose. We would rather work well with a few schools than lightly with many."
       />
 
@@ -87,7 +87,7 @@ export default function SchoolsPage() {
             number="01"
             label="How a partnership works"
             id="ways-title"
-            title={<>Two ways schools <em>work with us.</em></>}
+            title="How a partnership works"
           />
           <div className={ed.cols2}>
             {ways.map((way) => (
@@ -110,7 +110,7 @@ export default function SchoolsPage() {
             number="02"
             label="School records"
             id="records-title"
-            title={<>Each partnership, <em>documented.</em></>}
+            title="School records"
             copy="What we did together, when, and what came of it."
           />
           <div className={ed.rows}>{schoolRecords.map((entry) => <RecordRow entry={entry} key={entry.slug} />)}</div>

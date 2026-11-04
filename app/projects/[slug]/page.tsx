@@ -3,23 +3,9 @@ import { pageMetadata } from "../../seo";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Button,
-  CalendarIcon,
-  CONTACT_EMAIL,
-  EntryVisual,
-  PinIcon,
-  SiteFooter,
-  SiteHeader,
-  Tag,
-  toneForEntry,
-  UsersIcon,
-} from "../../components";
-import { Countdown } from "../../countdown";
+import { Button, CONTACT_EMAIL, EntryVisual, SiteFooter, SiteHeader } from "../../components";
 import { archiveEntries, getArchiveEntry } from "../../archive-data";
-import { isUpcoming, kindLabels } from "../../archive-tree-data";
+import { kindLabels } from "../../archive-tree-data";
 import styles from "../../site.module.css";
 
 type ProjectPageProps = { params: Promise<{ slug: string }> };
@@ -49,7 +35,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const liveUrl = entry.href ?? entry.project?.href;
   const isEvent = entry.kind === "event";
-  const hasCountdown = isUpcoming(entry);
+  const isCompletedEvent = isEvent && entry.state === "unlocked";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
+  const pageUrl = `${siteUrl}/projects/${entry.slug}/`;
+  const eventSchema =
+    isEvent && entry.startsAt
+      ? {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          "@id": `${pageUrl}#event`,
+          name: entry.title,
+          description: entry.summary,
+          url: pageUrl,
+          startDate: entry.startsAt.slice(0, 10),
+          eventStatus: "https://schema.org/EventScheduled",
+          organizer: { "@id": `${siteUrl}/#organization` },
+          ...(entry.location ? { location: { "@type": "Place", name: entry.location, address: entry.location } } : {}),
+          ...(entry.image ? { image: `${siteUrl}${entry.image}` } : {}),
+        }
+      : undefined;
   const related = archiveEntries
     .filter((candidate) => candidate.slug !== entry.slug)
     .sort((a, b) => Number(b.kind === entry.kind) - Number(a.kind === entry.kind))
@@ -75,29 +79,31 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <article>
             <header className={styles.projectHero}>
               <div>
-                <div className={styles.projectTags}>
-                  <Tag tone={toneForEntry(entry)}>{entry.signal ?? kindLabels[entry.kind]}</Tag>
-                  <Tag>{kindLabels[entry.kind]}</Tag>
-                  {isEvent && <Tag>{entry.year}</Tag>}
-                </div>
+                <p className={styles.projectMeta}>
+                  <span className={entry.state === "growing" && isEvent ? styles.projectMetaLive : undefined}>{entry.signal ?? stateLabel[entry.state]}</span>
+                  <span aria-hidden="true"> · </span>
+                  {kindLabels[entry.kind]}
+                </p>
                 <h1 className={styles.projectTitle}>{entry.title}</h1>
                 <p className={styles.projectSubtitle}>{entry.subtitle}</p>
                 <p className={styles.projectSummary}>{entry.summary}</p>
                 <div className={styles.projectActions}>
                   {liveUrl && (
                     <Button href={liveUrl} external>
-                      {isEvent ? "Register" : "Visit"} · {new URL(liveUrl).hostname.replace(/^www\./, "")} <ArrowUpRight size={16} />
+                      {isEvent && !isCompletedEvent ? "Register" : "Visit"} · {new URL(liveUrl).hostname.replace(/^www\./, "")}
                     </Button>
                   )}
                   <Button href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(entry.title)}`} variant={liveUrl ? "secondary" : "primary"}>
-                    {isEvent ? "Join as a school or partner" : "Ask about this work"}
+                    {isCompletedEvent ? "Ask about this event" : isEvent ? "Join as a school or partner" : "Ask about this work"}
                   </Button>
                 </div>
               </div>
-              <div className={styles.projectVisual}>
-                <EntryVisual entry={entry} priority sizes="(max-width: 960px) 100vw, 45vw" />
-                {entry.imageCredit && <span className={styles.projectVisualCredit}>{entry.imageCredit}</span>}
-              </div>
+              {(entry.image || entry.logo) && (
+                <div className={styles.projectVisual}>
+                  <EntryVisual entry={entry} priority sizes="(max-width: 960px) 100vw, 45vw" />
+                  {entry.imageCredit && <span className={styles.projectVisualCredit}>{entry.imageCredit}</span>}
+                </div>
+              )}
             </header>
 
             <dl className={styles.facts} aria-label="Key facts">
@@ -109,8 +115,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
             <div className={styles.projectBody}>
               <section className={styles.prose} aria-labelledby="why-heading">
-                <p className={styles.eyebrow}>{isEvent ? "About the event" : "Why it belongs here"}</p>
-                <h2 id="why-heading">{isEvent ? entry.subtitle : entry.branch.thesis}</h2>
+                <h2 id="why-heading">{isEvent ? "About the event" : "Why it belongs here"}</h2>
                 <p>{narrative}</p>
                 {entry.notice && <p className={styles.notice}>{entry.notice}</p>}
 
@@ -151,38 +156,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   </section>
                 )}
 
-                {isEvent && (
-                  <p style={{ marginTop: 28 }}>
-                    <span className={styles.eyebrow} style={{ marginBottom: 0 }}>Why it belongs here</span>
-                  </p>
-                )}
-                {isEvent && <p>{entry.branch.thesis}</p>}
               </section>
 
               <aside>
-                <div className={styles.sideCard}>
-                  <h3>At a glance</h3>
-                  <ul className={styles.sideList}>
-                    <li><CalendarIcon size={16} /><span>{entry.year}</span></li>
-                    {entry.location && <li><PinIcon size={16} /><span>{entry.location}</span></li>}
-                    <li><UsersIcon size={16} /><span>{entry.partner ?? entry.project?.client ?? "Qoax Community"}</span></li>
-                  </ul>
-                  {hasCountdown && entry.startsAt && (
-                    <div className={styles.sideCountdown}>
-                      <Countdown target={entry.startsAt} label={`Time until ${entry.title}`} />
-                    </div>
-                  )}
-                  {entry.facts && (
-                    <div className={styles.projectTags} style={{ marginTop: 16 }}>
-                      {entry.facts.map(([label, value]) => <Tag key={label}>{label}: {value}</Tag>)}
-                    </div>
-                  )}
-                  {entry.project?.tech && (
-                    <div className={styles.projectTags} style={{ marginTop: 16 }}>
-                      {entry.project.tech.map((item) => <Tag key={item}>{item}</Tag>)}
-                    </div>
-                  )}
-                </div>
+                {(entry.facts || entry.project?.tech) && (
+                  <div className={styles.sideCard}>
+                    <h3>Details</h3>
+                    <dl className={styles.sideKv}>
+                      {entry.facts?.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+                      {entry.project?.tech && <div><dt>Built with</dt><dd>{entry.project.tech.join(", ")}</dd></div>}
+                    </dl>
+                  </div>
+                )}
 
                 {entry.links && (
                   <div className={styles.sideCard}>
@@ -190,7 +175,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <div className={styles.sideLinks}>
                       {entry.links.map(([label, href]) => (
                         <a href={href} key={href} rel="noreferrer" target="_blank">
-                          <span>{label}</span><ArrowUpRight size={16} />
+                          <span>{label}</span><span aria-hidden="true">↗</span>
                         </a>
                       ))}
                     </div>
@@ -198,9 +183,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 )}
 
                 <div className={styles.sideCard}>
-                  <h3>{isEvent ? "Bring your team" : "Get involved"}</h3>
+                  <h3>{isCompletedEvent ? "About this event" : isEvent ? "Bring your team" : "Get involved"}</h3>
                   <p>
-                    {isEvent
+                    {isCompletedEvent
+                      ? "For questions about the completed event, contact the Qoax team directly."
+                      : isEvent
                       ? "Schools, student clubs, and universities that want to send teams or help organize can reach us directly."
                       : "Students, teachers, and organizations connected to this work can reach the Qoax team directly."}
                   </p>
@@ -215,15 +202,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div className={styles.container}>
             <div className={styles.sectionHead} style={{ marginBottom: 24 }}>
               <h2 id="related-heading" style={{ fontSize: 26 }}>More from the community</h2>
-              <Link className={styles.textLink} href="/work">All {archiveEntries.length} records <ArrowRight size={16} /></Link>
+              <Link className={styles.textLink} href="/work">All {archiveEntries.length} records</Link>
             </div>
             <div className={styles.relatedGrid}>
               {related.map((candidate) => (
                 <Link className={styles.relatedCard} href={`/projects/${candidate.slug}`} key={candidate.slug}>
-                  <Tag tone={toneForEntry(candidate)}>{candidate.signal ?? kindLabels[candidate.kind]}</Tag>
+                  <span className={styles.relatedKind}>{candidate.signal ?? kindLabels[candidate.kind]}</span>
                   <strong>{candidate.title}</strong>
                   <p>{candidate.subtitle}</p>
-                  <ArrowUpRight />
                 </Link>
               ))}
             </div>
@@ -231,6 +217,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </section>
       </main>
       <SiteFooter />
+      {eventSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }} />}
     </div>
   );
 }

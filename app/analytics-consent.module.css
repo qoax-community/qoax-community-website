@@ -18,12 +18,12 @@
 }
 .copy { flex: 1; }
 .eyebrow { font: 11px var(--font-mono); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 8px; }
-.copy h2 { font-size: 25px; margin-bottom: 12px; }
+.copy h2 { font-size: 17px; margin-bottom: 6px; }
 .copy p { font-size: 14px; line-height: 1.5; }
 .copy .details { font-size: 12px; margin-top: 10px; }
 .details a { text-decoration: underline; text-underline-offset: 3px; }
 .actions { display: flex; flex-direction: column; gap: 10px; min-width: 175px; }
-.choice { cursor: pointer; min-height: 44px; padding: 10px 18px; border: 1px solid var(--green-800); border-radius: var(--radius-sm); background: var(--green-800); color: var(--bg); font-size: 14px; font-weight: 500; }
+.choice { cursor: pointer; min-height: 44px; padding: 10px 18px; border: 1px solid var(--green-800); border-radius: var(--radius-sm); background: var(--green-800); color: var(--bg); font-size: 14px; font-weight: 600; }
 .choice:hover { background: var(--green-950); }
 .settings, .close { cursor: pointer; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; text-decoration: underline; text-underline-offset: 3px; }
 .settings { min-height: 44px; font: inherit; }

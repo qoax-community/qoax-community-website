@@ -5,7 +5,9 @@ The static, non-profit-only public site for Qoax Community at [qo.ax](https://qo
 It documents:
 
 - Atanasoff48 at SPGE John Atanasoff, 2–4 October 2026
-- the FMI Game Jam at Sofia University (dates to be announced)
+- the John Atanasoff Game Jam at SPGE John Atanasoff, planned for December 2026 (exact dates to be confirmed)
+- the Telecommunications School Hackathon at the Professional High School of Telecommunications, Sofia, planned for March–April 2027 (exact dates to be confirmed)
+- the completed FMI Game Jam at Sofia University, with photos coming soon
 - the Qoax × SUGAMING Gaming Tournament (Counter-Strike 2 and League of Legends), early March 2027
 - the 1–14 July 2026 internship programme for 30+ students
 - partnerships with TUES, SPGE John Atanasoff, Popov School, and telecommunications schools in Bulgaria
