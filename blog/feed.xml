@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Qoax Community Journal</title>
+    <link>https://qo.ax/blog/</link>
+    <atom:link href="https://qo.ax/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Notes from the work of Qoax Community (Коакс Комюнити): events, programmes, and the software we build for public-interest organisations in Bulgaria.</description>
+    <language>en</language>
+    <item>
+      <title>Atanasoff48: the first 48-hour hackathon at SPGE John Atanasoff</title>
+      <link>https://qo.ax/blog/atanasoff48-2026/</link>
+      <guid isPermaLink="true">https://qo.ax/blog/atanasoff48-2026/</guid>
+      <pubDate>Wed, 04 Nov 2026 09:00:00 GMT</pubDate>
+      <dc:creator>Qoax Community</dc:creator>
+      <category>Events</category>
+      <description>62 participants in 16 teams had 48 hours to build a project and present it. Notes on the first edition and what comes next.</description>
+    </item>
+    <item>
+      <title>The 2026/27 season: six events, one calendar</title>
+      <link>https://qo.ax/blog/season-2026-27/</link>
+      <guid isPermaLink="true">https://qo.ax/blog/season-2026-27/</guid>
+      <pubDate>Wed, 04 Nov 2026 09:00:00 GMT</pubDate>
+      <dc:creator>Qoax Community</dc:creator>
+      <category>Programmes</category>
+      <description>Game jams, a hackathon, a tournament, and an open day between November 2026 and March 2027, with what is confirmed and what is still being decided.</description>
+    </item>
+    <item>
+      <title>SUGAMING Jam 2026: three days, seven games</title>
+      <link>https://qo.ax/blog/sugaming-jam-2026/</link>
+      <guid isPermaLink="true">https://qo.ax/blog/sugaming-jam-2026/</guid>
+      <pubDate>Wed, 04 Nov 2026 09:00:00 GMT</pubDate>
+      <dc:creator>Qoax Community</dc:creator>
+      <category>Events</category>
+      <description>A weekend of making games in teams at the Faculty of Mathematics and Informatics, Sofia University. Seven games were published at the end.</description>
+    </item>
+  </channel>
+</rss>
