@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import type { ArchiveEntry } from "./archive-data";
 import { kindLabels } from "./archive-tree-data";
-import { ArrowRight, ArrowUpRight, CONTACT_EMAIL, SiteFooter, SiteHeader } from "./components";
+import { CONTACT_EMAIL, SiteFooter, SiteHeader } from "./components";
 import { authors, readingTime, shortDate, type Post } from "./blog-data";
 import { parseInline, type Block, type Inline } from "./journal-markdown";
 import ed from "./editorial.module.css";
@@ -86,7 +86,6 @@ export function Btn({
     return (
       <a className={className} href={href} rel={href.startsWith("http") ? "noreferrer" : undefined} target={href.startsWith("http") ? "_blank" : undefined}>
         {children}
-        {href.startsWith("http") && <ArrowUpRight size={14} />}
       </a>
     );
   }
@@ -100,8 +99,6 @@ export function Btn({
 /* ---------- Section head: "01 — Upcoming" ---------- */
 
 export function SecHead({
-  number,
-  label,
   title,
   copy,
   action,
@@ -117,7 +114,6 @@ export function SecHead({
   return (
     <div className={ed.secHead}>
       <div>
-        <p className={ed.mono}>{number ? `${number} — ${label}` : label}</p>
         <h2 id={id}>{title}</h2>
         {copy && <p>{copy}</p>}
       </div>
@@ -133,24 +129,23 @@ export function RecordRow({ entry }: { entry: ArchiveEntry }) {
   return (
     <Link className={ed.row} href={`/projects/${entry.slug}`}>
       <div className={ed.rowDate}>
-        {entry.calendar ? `${day} ${month}` : entry.year}
+        {entry.startsAt ? (
+          <time dateTime={entry.startsAt.slice(0, 10)}>{entry.calendar ? `${day} ${month}` : entry.year}</time>
+        ) : (
+          entry.calendar ? `${day} ${month}` : entry.year
+        )}
         {entry.calendar && <small>{entry.year.match(/\d{4}/)?.[0] ?? entry.year}</small>}
       </div>
       <div>
         <h3 className={ed.rowTitle}>{entry.title}</h3>
         <p className={ed.rowExcerpt}>{entry.summary}</p>
-        <div className={ed.rowTags}>
-          <span className={entry.state === "growing" && entry.kind === "event" ? ed.tagAmber : ed.tag}>
-            {entry.signal ?? kindLabels[entry.kind]}
-          </span>
-          {entry.partner && <span className={ed.tag}>{entry.partner}</span>}
-        </div>
       </div>
       <div className={ed.rowMeta}>
-        {kindLabels[entry.kind]}
+        <span className={entry.state === "growing" && entry.kind === "event" ? ed.rowStatusLive : ed.rowStatus}>
+          {entry.signal ?? kindLabels[entry.kind]}
+        </span>
         <small>{entry.location ?? entry.partner}</small>
       </div>
-      <div className={ed.rowEnd}><ArrowRight size={18} /></div>
     </Link>
   );
 }
@@ -174,7 +169,7 @@ export function Byline({ post, withDate = true }: { post: Post; withDate?: boole
       <Ava authorSlug={post.authorSlug} />
       <span>
         {author.name}
-        {withDate && <small>{` · ${shortDate(post.published)} · ${readingTime(post)} min`}</small>}
+        {withDate && <small>{" · "}<time dateTime={post.published}>{shortDate(post.published)}</time>{` · ${readingTime(post)} min`}</small>}
       </span>
     </div>
   );
@@ -196,15 +191,12 @@ export function PostRow({ post }: { post: Post }) {
   return (
     <Link className={`${ed.row} ${ed.jrow}`} href={`/blog/${post.slug}`}>
       <div className={ed.rowDate}>
-        {shortDate(post.published)}
+        <time dateTime={post.published}>{shortDate(post.published)}</time>
         <small>{`${readingTime(post)} min read`}</small>
       </div>
       <div>
         <h3 className={ed.rowTitle}>{post.title}</h3>
         <p className={ed.rowExcerpt}>{post.excerpt}</p>
-        <div className={ed.rowTags}>
-          {post.tags.slice(0, 4).map((tag) => <span className={ed.tag} key={tag}>{tag}</span>)}
-        </div>
       </div>
       <div className={ed.rowMeta}>{post.category}</div>
       <div className={ed.byline}>
@@ -218,7 +210,6 @@ export function PostRow({ post }: { post: Post }) {
 /* ---------- Page header for interior pages ---------- */
 
 export function PageHead({
-  label,
   title,
   copy,
   aside,
@@ -235,7 +226,6 @@ export function PageHead({
       {crumbs}
       <div className={ed.head}>
         <div>
-          <p className={ed.mono}>{label}</p>
           <h1>{title}</h1>
         </div>
         <div className={ed.headAside}>
@@ -262,7 +252,6 @@ export function Cta({
     <section className={ed.cta}>
       <div className={`${ed.wrap} ${ed.ctaInner}`}>
         <div>
-          <p className={ed.mono}>Get in touch</p>
           <h2>{title}</h2>
           <p>{copy}</p>
         </div>

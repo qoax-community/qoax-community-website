@@ -18,7 +18,6 @@ test("exports the Qoax Community home and index", async () => {
   assert.match(home, /Qoax Community/);
   assert.doesNotMatch(home, /QO\.AX Community/);
   assert.match(home, /public work first/i);
-  assert.match(home, /30\+/);
   assert.match(home, /Schools we work with/);
   assert.match(home, /Private School St\. Sofia logo/);
   assert.match(home, /Technology School Electronic Systems logo/);
@@ -29,7 +28,7 @@ test("exports the Qoax Community home and index", async () => {
   assert.doesNotMatch(home, /42\.6977° N/);
   assert.doesNotMatch(home, /23\.3219° E/);
   assert.match(home, /qoax-logo\.svg/);
-  // New design: no newspaper conceit, self-hosted webfonts, clear primary actions.
+  // Plain design: no newspaper conceit, system sans font stack, clear primary actions.
   assert.doesNotMatch(home, /Community paper/);
   assert.doesNotMatch(home, /Fieldwork ledger/);
   assert.match(home, /Get in touch/);
@@ -37,26 +36,27 @@ test("exports the Qoax Community home and index", async () => {
   assert.doesNotMatch(home, /NASA Space Apps Challenge/);
   assert.match(home, /apple-touch-icon\.png/);
   assert.match(home, /og\.png/);
-  assert.match(home, /\/_next\/static\/media\/[^"]+\.woff2/);
+  assert.doesNotMatch(home, /\.woff2/);
   assert.doesNotMatch(home, /fonts\.googleapis\.com/);
   assert.match(home, /<meta name="viewport" content="width=device-width, initial-scale=1"/);
   assert.match(await readFile(new URL("../public/brand/qoax-logo.svg", import.meta.url), "utf8"), /fill-rule="evenodd"/);
   assert.doesNotMatch(home, /qoax-mark\.svg/);
-  assert.match(index, /Technology in service/);
+  assert.match(index, /<h1>Our work<\/h1>/);
   assert.match(events, /Atanasoff48/);
   assert.match(about, /contact@qo\.ax/);
-  // Editorial redesign: one H1 per page, self-hosted serif and mono, numbered sections.
+  // Plain redesign: one H1 per page, plain section titles without numbered eyebrows.
   for (const html of [home, index, about, events]) {
     assert.equal((html.match(/<h1[\s>]/g) ?? []).length, 1);
   }
-  assert.match(home, /01 — Upcoming/);
-  assert.match(home, /02 — Journal/);
+  assert.doesNotMatch(home, /\d{2} — [A-Z]/);
+  assert.match(home, /Upcoming events/);
+  assert.match(home, /<h2[^>]*>Journal<\/h2>/);
   assert.doesNotMatch(home, /Also written/);
   assert.match(home, /Коакс Комюнити/);
   assert.match(home, /aria-current="page"/);
 });
 
-test("exports an empty journal that is ready for the first Markdown posts", async () => {
+test("exports the journal with its first Markdown posts", async () => {
   const [home, journal, feed, schools] = await Promise.all([
     render("/"),
     render("/blog/"),
@@ -65,20 +65,33 @@ test("exports an empty journal that is ready for the first Markdown posts", asyn
   ]);
 
   assert.match(journal, /Notes from/);
-  assert.match(journal, /First posts coming soon/);
+  const titles = [
+    "Atanasoff48: the first 48-hour hackathon at SPGE John Atanasoff",
+    "The 2026/27 season: six events, one calendar",
+    "SUGAMING Jam 2026: three days, seven games",
+  ];
+  for (const title of titles) {
+    assert.ok(journal.includes(title), `journal lists ${title}`);
+  }
+  assert.doesNotMatch(journal, /First posts coming soon/);
   // Team introductions are held back until the first journal post about the people is published.
   assert.doesNotMatch(journal, /Emil Momchev|Angel Penchev|Ema Komitova/);
   assert.equal((journal.match(/<h1[\s>]/g) ?? []).length, 1);
-  assert.match(home, /First posts coming soon/);
-  assert.match(home, /href="\/blog\/feed\.xml"/);
+  assert.ok(titles.some((title) => home.includes(title)), "home links a journal post");
+  assert.match(home, /href="(https:\/\/qo\.ax)?\/blog\/feed\.xml"/);
 
   assert.match(feed, /<rss version="2\.0"/);
   assert.match(feed, /<link>https:\/\/qo\.ax\/blog\/<\/link>/);
-  assert.doesNotMatch(feed, /<item>/);
+  assert.equal((feed.match(/<item>/g) ?? []).length, 3);
 
-  // The static export needs one journal path; the placeholder must stay out of search results.
-  const placeholder = await render("/blog/coming-soon/");
-  assert.match(placeholder, /name="robots" content="noindex"/);
+  // Posts are articles with one H1; the placeholder route is gone and the 404 stays out of search.
+  const post = await render("/blog/sugaming-jam-2026/");
+  assert.match(post, /"@type":"BlogPosting"/);
+  assert.match(post, /<meta property="og:type" content="article"/);
+  assert.equal((post.match(/<h1[\s>]/g) ?? []).length, 1);
+  await assert.rejects(render("/blog/coming-soon/"));
+  const notFound = await readFile(new URL("../out/404.html", import.meta.url), "utf8");
+  assert.match(notFound, /name="robots" content="noindex, follow"/);
 
   // Anything about the Academy lives on qoax.academy; qo.ax only carries the opening date.
   for (const html of [home, journal]) assert.doesNotMatch(html, /Academy|Академия/);
@@ -185,7 +198,8 @@ test("publishes the legal name, brand spellings, and SEO signals on every page",
   assert.match(sitemap, /<loc>https:\/\/qo\.ax\/projects\/atanasoff48\/<\/loc>/);
   assert.match(sitemap, /<loc>https:\/\/qo\.ax\/blog\/<\/loc>/);
   assert.match(sitemap, /<loc>https:\/\/qo\.ax\/faq\/<\/loc>/);
-  assert.doesNotMatch(sitemap, /\/blog\/[a-z0-9-]+\//);
+  assert.match(sitemap, /<loc>https:\/\/qo\.ax\/blog\/sugaming-jam-2026\/<\/loc>/);
+  assert.doesNotMatch(sitemap, /\/blog\/coming-soon\//);
   assert.doesNotMatch(sitemap, /\/academy\//);
   assert.match(sitemap, /<loc>https:\/\/qo\.ax\/work\/<\/loc>/);
   assert.match(sitemap, /<loc>https:\/\/qo\.ax\/schools\/<\/loc>/);
@@ -250,16 +264,27 @@ test("exports only the requested non-profit project pages", async () => {
 
   const pages = await Promise.all(projectSlugs.map((slug) => render(`/projects/${slug}/`)));
   for (const html of pages) {
-    assert.match(html, /Why it belongs here/);
+    assert.match(html, /Why it belongs here|About the event/);
   }
 
   const [gameJam, tournament] = pages.slice(-2);
   assert.match(gameJam, /Faculty of Mathematics and Informatics/);
   assert.match(tournament, /Counter-Strike 2/);
   assert.match(tournament, /League of Legends/);
-  assert.match(tournament, /March 2027/);
+  assert.match(tournament, /Mar 2027/);
+  assert.match(gameJam, /Completed/);
+  assert.match(gameJam, /Seven games were published/);
+  assert.match(gameJam, /In pictures/);
+  assert.doesNotMatch(gameJam, /Dates to be announced|Bring your team|Join as a school or partner|role="timer"/);
   assert.match(tournament, /Qoax × SUGAMING Gaming Tournament/);
   assert.doesNotMatch(tournament, /Qoax × FMI Gaming Tournament/);
+  const events = await render("/events/");
+  const pastEvents = events.match(/<section[^>]*aria-labelledby="past-title"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(pastEvents, "Past events section is rendered");
+  assert.match(pastEvents, /SUGAMING Jam/);
+  assert.doesNotMatch(pastEvents, /Qoax × SUGAMING Gaming Tournament/);
+  assert.doesNotMatch(events, /FMI Game Jam/);
+  assert.doesNotMatch(await render("/"), /FMI Game Jam/);
 
   assert.match(pages[0], /2–4 Oct 2026/);
   assert.match(pages[0], /atanasoff48\.com/);
@@ -292,12 +317,13 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/about/"], /<meta property="og:url" content="https:\/\/qo\.ax\/about\/"/);
   // Records with a raster image preview with their own picture; SVG-only records use the site card.
   assert.match(rendered["/projects/nsicc/"], /<meta property="og:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
-  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og\.png"/);
-  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="FMI Game Jam[^"]*· Qoax Community"/);
+  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:image" content="https:\/\/qo\.ax\/journal\/sugaming-jam-2026\.jpg"/);
+  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Jam · Qoax Community"/);
   assert.match(rendered["/projects/nsicc/"], /<meta name="twitter:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
   // Root pages use the default card at 1200x630.
   assert.match(rendered["/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og\.png"/);
   assert.match(rendered["/"], /<meta property="og:image:width" content="1200"/);
+  assert.match(rendered["/"], /<meta property="og:url" content="https:\/\/qo\.ax\/"/);
   // schema.org sameAs keeps GitHub even with no social channels configured.
   assert.match(rendered["/"], /"sameAs":\["https:\/\/github\.com\/qoax-community"\]/);
 });

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Literata } from "next/font/google";
 import "./globals.css";
 import { GITHUB_URL } from "./components";
 import { defaultOgImage } from "./seo";
@@ -8,28 +7,6 @@ import { brandAlternateNames } from "./brand-names";
 import { legalEntity } from "./legal-data";
 import { siteAsset } from "./site-path";
 import { AnalyticsConsent } from "./analytics-consent";
-
-const literata = Literata({
-  subsets: ["latin", "cyrillic"],
-  display: "swap",
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-literata",
-});
-
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin", "cyrillic"],
-  display: "swap",
-  weight: ["400", "500", "600"],
-  variable: "--font-plex-sans",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin", "cyrillic"],
-  display: "swap",
-  weight: ["400", "500"],
-  variable: "--font-plex-mono",
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 
@@ -82,6 +59,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Qoax Community",
+    url: "/",
     images: [defaultOgImage],
   },
   twitter: {
@@ -140,7 +118,7 @@ const webSiteSchema = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${literata.variable} ${plexSans.variable} ${plexMono.variable}`}>
+    <html lang="en">
       <body>
         <a className="skip-link" href="#main-content">Skip to main content</a>
         {children}

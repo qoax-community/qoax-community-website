@@ -41,54 +41,15 @@ function iconAttributes({ size = 18, className }: IconProps) {
   };
 }
 
-export function ArrowRight(props: IconProps) {
-  return <svg {...iconAttributes(props)}><path d="M5 12h14M13 6l6 6-6 6" /></svg>;
-}
-
-export function ArrowUpRight(props: IconProps) {
-  return <svg {...iconAttributes(props)}><path d="M7 17 17 7M8 7h9v9" /></svg>;
-}
-
-export function MenuIcon(props: IconProps) {
+function MenuIcon(props: IconProps) {
   return <svg {...iconAttributes(props)}><path d="M4 7h16M4 12h16M4 17h16" /></svg>;
 }
 
-export function CloseIcon(props: IconProps) {
-  return <svg {...iconAttributes(props)}><path d="M6 6l12 12M18 6 6 18" /></svg>;
-}
-
-export function CalendarIcon(props: IconProps) {
-  return (
-    <svg {...iconAttributes(props)}>
-      <rect x="3" y="5" width="18" height="16" rx="2" />
-      <path d="M3 10h18M8 3v4M16 3v4" />
-    </svg>
-  );
-}
-
-export function PinIcon(props: IconProps) {
-  return (
-    <svg {...iconAttributes(props)}>
-      <path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" />
-      <circle cx="12" cy="9.5" r="2.5" />
-    </svg>
-  );
-}
-
-export function MailIcon(props: IconProps) {
+function MailIcon(props: IconProps) {
   return (
     <svg {...iconAttributes(props)}>
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <path d="m3 7 9 6 9-6" />
-    </svg>
-  );
-}
-
-export function UsersIcon(props: IconProps) {
-  return (
-    <svg {...iconAttributes(props)}>
-      <circle cx="9" cy="8" r="3.5" />
-      <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4.5-6.2" />
     </svg>
   );
 }
@@ -129,52 +90,6 @@ export function Button({
   return <Link className={className} href={href}>{children}</Link>;
 }
 
-export type TagTone = "neutral" | "accent" | "live";
-
-export function Tag({ children, tone = "neutral" }: { children: ReactNode; tone?: TagTone }) {
-  const className = [
-    styles.tag,
-    tone === "accent" && styles.tagAccent,
-    tone === "live" && styles.tagLive,
-  ]
-    .filter(Boolean)
-    .join(" ");
-  return <span className={className}>{children}</span>;
-}
-
-export function SectionHead({
-  eyebrow,
-  title,
-  copy,
-  action,
-  id,
-  align = "start",
-}: {
-  eyebrow?: string;
-  title: ReactNode;
-  copy?: string;
-  action?: ReactNode;
-  id?: string;
-  align?: "start" | "center";
-}) {
-  return (
-    <div className={`${styles.sectionHead} ${align === "center" ? styles.sectionHeadCenter : ""}`}>
-      <div>
-        {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
-        <h2 id={id}>{title}</h2>
-        {copy && <p className={styles.lead}>{copy}</p>}
-      </div>
-      {action && <div className={styles.sectionAction}>{action}</div>}
-    </div>
-  );
-}
-
-export function toneForEntry(entry: ArchiveEntry): TagTone {
-  if (entry.signal === "Upcoming") return "live";
-  if (entry.state === "growing") return "accent";
-  return "neutral";
-}
-
 export function EntryVisual({ entry, priority = false, sizes }: { entry: ArchiveEntry; priority?: boolean; sizes: string }) {
   if (entry.image) {
     return <Image src={entry.image} alt="" fill priority={priority} sizes={sizes} />;
@@ -206,10 +121,8 @@ export function SiteHeader() {
   return (
     <header className={ed.top}>
       <div className={`${ed.wrap} ${ed.topInner}`}>
-        <Link className={ed.brand} href="/" aria-label="Qoax Community home">
-          <Image className={ed.brandBadge} src={siteAsset("/brand/qoax-favicon-community.svg")} alt="" width={96} height={96} priority />
+        <Link className={ed.brand} href="/" aria-label="Qoax home">
           <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} priority />
-          <span className={ed.brandName}>Community</span>
         </Link>
 
         <nav className={ed.nav} aria-label="Primary navigation">
@@ -243,10 +156,8 @@ export function SiteFooter() {
       <div className={ed.wrap}>
         <div className={ed.footGrid}>
           <div className={ed.footBrand}>
-            <Link className={ed.brand} href="/" aria-label="Qoax Community home">
-              <Image className={ed.brandBadge} src={siteAsset("/brand/qoax-favicon-community.svg")} alt="" width={96} height={96} />
-            <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} />
-              <span className={ed.brandName}>Community</span>
+            <Link className={ed.brand} href="/" aria-label="Qoax home">
+              <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo-light.svg")} alt="Qoax" width={294} height={97} />
             </Link>
             <p>
               An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school programmes,

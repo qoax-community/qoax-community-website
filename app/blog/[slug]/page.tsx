@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArchiveEntry } from "../../archive-data";
-import { authors, formatDate, getPost, postPreviewImage, posts, readingTime, relatedPosts, shortDate, wordCount } from "../../blog-data";
+import { authors, categoryAnchor, formatDate, groupPostsByCategory, getPost, postPreviewImage, posts, readingTime, relatedPosts, shortDate, wordCount } from "../../blog-data";
 import { pageMetadata } from "../../seo";
 import { Ava, Btn, ContentBlock, PostCard, Shell } from "../../editorial";
 import ed from "../../editorial.module.css";
@@ -107,7 +107,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 <Ava authorSlug={post.authorSlug} large />
                 <div>
                   <strong>{author.name}</strong>
-                  <span>{author.affiliation}</span>
+                  {author.affiliation !== author.name && <span>{author.affiliation}</span>}
                 </div>
               </div>
               <dl className={`${ed.kv} ${ed.postKv}`}>
@@ -115,7 +115,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 {post.updated && (
                   <div className={ed.kvRow}><dt>Updated</dt><dd><time dateTime={post.updated}>{formatDate(post.updated)}</time></dd></div>
                 )}
-                <div className={ed.kvRow}><dt>Category</dt><dd><Link href={`/blog/#${post.category.toLowerCase().replace(/\s+/g, "-")}`}>{post.category}</Link></dd></div>
+                <div className={ed.kvRow}><dt>Category</dt><dd>{groupPostsByCategory ? <Link href={`/blog/#${categoryAnchor(post.category)}`}>{post.category}</Link> : post.category}</dd></div>
                 {record && (
                   <div className={ed.kvRow}><dt>Record</dt><dd><Link href={`/projects/${record.slug}`}>{record.title}</Link></dd></div>
                 )}
@@ -148,14 +148,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               </section>
             ))}
             <p className={ed.mono} style={{ marginTop: 40 }}>
-              {`Written by ${author.name} · ${author.affiliation} · ${shortDate(post.published)}`}
+              {`Written by ${[author.name, author.affiliation].filter((value, i, all) => all.indexOf(value) === i).join(" · ")} · ${shortDate(post.published)}`}
             </p>
           </div>
 
           <aside className={ed.side}>
             <div>
               <h2>Tags</h2>
-              <div className={ed.sideTags}>{post.tags.map((tag) => <span className={ed.tag} key={tag}>{tag}</span>)}</div>
+              <p className={ed.sideTagList}>{post.tags.join(", ")}</p>
             </div>
             {record && (
               <div>
@@ -189,8 +189,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <div className={ed.wrap}>
             <div className={ed.secHead}>
               <div>
-                <p className={ed.mono}>More from the journal</p>
-                <h2 id="more-title">Keep <em>reading.</em></h2>
+                <h2 id="more-title">More from the journal</h2>
               </div>
               <div className={ed.secHeadAction}><Btn href="/blog" variant="ghost" small>All posts</Btn></div>
             </div>

@@ -45,8 +45,6 @@ export default function FaqPage() {
     ],
   };
 
-  const numbering = new Map(faqItems.map((item, index) => [item.id, index + 1]));
-
   return (
     <Shell>
       <PageHead
@@ -58,35 +56,32 @@ export default function FaqPage() {
           </nav>
         }
         label={`FAQ · Често задавани въпроси · ${faqItems.length} questions`}
-        title={<>Questions about Qoax, <em>answered plainly.</em></>}
+        title="Frequently asked questions"
         copy="What the association does, which events we run, and how to work with us. If your question is missing, write to us and we will add it."
       />
 
       <section className={ed.sec} aria-label="Frequently asked questions">
         <div className={`${ed.wrap} ${ed.faqGrid}`}>
           <nav className={ed.faqToc} aria-label="Question groups">
-            <h2>Groups</h2>
+            <h2>On this page</h2>
             <ol>
-              {faqGroups.map((group, index) => (
+              {faqGroups.map((group) => (
                 <li key={group.id}>
-                  <a href={`#${group.id}`}>{`${(index + 1).toString().padStart(2, "0")} — ${group.title}`}</a>
+                  <a href={`#${group.id}`}>{group.title}</a>
                 </li>
               ))}
             </ol>
           </nav>
 
           <div>
-            {faqGroups.map((group, groupIndex) => (
+            {faqGroups.map((group) => (
               <section className={ed.faqGroup} aria-labelledby={`${group.id}-title`} id={group.id} key={group.id}>
-                <p className={ed.mono}>{`${(groupIndex + 1).toString().padStart(2, "0")} — ${group.title}`}</p>
                 <h2 id={`${group.id}-title`}>{group.title}</h2>
                 {group.intro && <p>{group.intro}</p>}
                 <div>
                   {group.items.map((item) => {
-                    const number = numbering.get(item.id) ?? 0;
                     return (
                       <article className={ed.q} id={item.id} key={item.id}>
-                        <span className={ed.qNum} aria-hidden="true">{number.toString().padStart(2, "0")}</span>
                         <div>
                           <h3><a href={`#${item.id}`}>{item.question}</a></h3>
                           <div className={ed.qBody}>
@@ -105,7 +100,7 @@ export default function FaqPage() {
       </section>
 
       <Cta
-        title={<>Still have a question? <em>Ask us directly.</em></>}
+        title="Still have a question?"
         copy={`Write to ${CONTACT_EMAIL}. We reply to every message, and the questions people ask most end up on this page.`}
         secondary={<Btn href="/about" variant="ghost">About Qoax</Btn>}
       />

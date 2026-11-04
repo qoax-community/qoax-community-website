@@ -46,7 +46,6 @@ export function AnalyticsConsent() {
     <section className={styles.banner} aria-labelledby="analytics-consent-title" aria-describedby="analytics-consent-description"
       onKeyDown={(event) => { if (event.key === "Escape" && choice !== null) close(); }}>
       <div className={styles.copy}>
-        <p className={styles.eyebrow}>Your privacy</p>
         <h2 id="analytics-consent-title" ref={heading} tabIndex={-1}>Optional analytics</h2>
         <p id="analytics-consent-description">
           With your permission, we use Google Analytics cookies to understand visits and improve this site.
