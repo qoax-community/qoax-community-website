@@ -360,3 +360,10 @@ test("links upcoming events to the stream and never fakes a recording for past o
   const home = await render("/");
   assert.doesNotMatch(home, /heroPhoto|heroMedia/);
 });
+
+test("keeps the primary button text white on hover and tap", async () => {
+  // The global a:hover colour outranks .buttonPrimary, which made the NASA
+  // "Register" link dark on dark after a tap on phones.
+  const css = await readFile(new URL("../app/site.module.css", import.meta.url), "utf8");
+  assert.match(css, /\.buttonPrimary:hover\s*\{[^}]*color:\s*#fff/);
+});
