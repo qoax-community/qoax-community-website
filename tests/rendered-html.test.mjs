@@ -35,7 +35,8 @@ test("exports the Qoax Community home and index", async () => {
   // NASA Space Apps is hidden until the local event is official.
   assert.doesNotMatch(home, /NASA Space Apps Challenge/);
   assert.match(home, /apple-touch-icon\.png/);
-  assert.match(home, /og\.png/);
+  assert.match(home, /og-2026-11\.png/);
+  assert.doesNotMatch(home, /taught and built with people/);
   assert.doesNotMatch(home, /\.woff2/);
   assert.doesNotMatch(home, /fonts\.googleapis\.com/);
   assert.match(home, /<meta name="viewport" content="width=device-width, initial-scale=1"/);
@@ -324,7 +325,7 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Jam · Qoax Community"/);
   assert.match(rendered["/projects/nsicc/"], /<meta name="twitter:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
   // Root pages use the default card at 1200x630.
-  assert.match(rendered["/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og\.png"/);
+  assert.match(rendered["/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og-2026-11\.png"/);
   assert.match(rendered["/"], /<meta property="og:image:width" content="1200"/);
   assert.match(rendered["/"], /<meta property="og:url" content="https:\/\/qo\.ax\/"/);
   // schema.org sameAs keeps GitHub even with no social channels configured.
