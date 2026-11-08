@@ -1140,6 +1140,10 @@ a.school:hover { border-color: var(--line-strong); }
 .cols2, .cols4 { gap: 12px; border-top: 0; }
 .cell { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
 .cell h3 { font-size: 16px; }
+/* Cards with a button: the button sits at the bottom right, so buttons line up
+   across a row even when the copy above them has different lengths. */
+.cellWithAction { display: flex; flex-direction: column; }
+.cellAction { display: flex; justify-content: flex-end; margin-top: auto; padding-top: 16px; }
 .split h2 { font-size: 22px; }
 .prose { font-size: 15px; }
 .prose h2 { font-size: 20px; }
@@ -1295,8 +1299,11 @@ a.school:hover { border-color: var(--line-strong); }
 
 /* Quiet design touch: warm neutrals, ink hairlines, nothing loud */
 .foot { background: var(--brand-green); }
-.navLink[aria-current="page"] { background: transparent; color: var(--ink); box-shadow: inset 0 -2px 0 var(--amber); border-radius: 0; }
+/* Hover and active share the same 6px rounded highlight; the active link adds
+   a short amber bar a few pixels below it, so the highlight keeps its shape. */
 .navLink:hover { background: var(--bg-soft); }
+.navLink[aria-current="page"] { background: var(--bg-soft); color: var(--ink); box-shadow: none; border-radius: 6px; }
+.navLink[aria-current="page"]::after { display: block; left: 11px; right: 11px; bottom: -6px; height: 2px; border-radius: 2px; background: var(--amber); }
 .btn { background: var(--ink); border-color: var(--ink); }
 .btn:hover { background: #33332f; border-color: #33332f; }
 .btnGhost { background: #fff; border-color: var(--line-strong); color: var(--ink); }

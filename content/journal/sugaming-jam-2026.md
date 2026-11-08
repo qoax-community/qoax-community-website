@@ -30,10 +30,3 @@ A game is a complete product in miniature: code, art, sound, rules, and a person
 
 It is also the format for most of our season. Next are [Sofia Game Jam](/projects/sofia-game-jam-2026/) on 20 to 22 November and the [TUES Game Jam](/projects/tues-game-jam-2026/) at the end of November.
 
-::: bg
-SUGAMING Game Jam се проведе от 16 до 18 октомври 2026 г. във Факултета по математика и информатика на Софийския университет. Организатор беше клуб SUGAMING, общност за млади разработчици на игри.
-
-Темата беше **Хаотичен бизнес**. Бяха предадени седем игри и всички са в [страницата на джама в itch.io](https://itch.io/jam/sugaming-jam-2026/entries).
-
-В последния ден всеки отбор представи играта си пред залата, а един от отборите получи наградата за най-добра игра.
-:::

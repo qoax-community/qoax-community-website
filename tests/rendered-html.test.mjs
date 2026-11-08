@@ -31,8 +31,9 @@ test("exports the Qoax Community home and index", async () => {
   assert.doesNotMatch(home, /Community paper/);
   assert.doesNotMatch(home, /Fieldwork ledger/);
   assert.match(home, /Get in touch/);
-  // NASA Space Apps is hidden until the local event is official.
-  assert.doesNotMatch(home, /NASA Space Apps Challenge/);
+  // NASA Space Apps Sofia is official and listed; unannounced jam themes stay private.
+  assert.match(home, /NASA Space Apps Challenge/);
+  assert.doesNotMatch(home, /supposed to do that/);
   assert.match(home, /apple-touch-icon\.png/);
   assert.match(home, /og-2026-11\.png/);
   assert.doesNotMatch(home, /taught and built with people|Public work first/);
@@ -67,7 +68,7 @@ test("exports the journal with its first Markdown posts", async () => {
   assert.match(journal, /Notes from/);
   const titles = [
     "Atanasoff48: the first 48-hour hackathon at SPGE John Atanasoff",
-    "The 2026/27 season: six events, one calendar",
+    "The 2026/27 season: seven events, one calendar",
     "SUGAMING Game Jam 2026: three days, seven games",
   ];
   for (const title of titles) {
@@ -120,9 +121,8 @@ test("parses the journal template so new posts can be written in Markdown", asyn
     ["plan", "what-happened", "what-we-would-change"],
   );
   const blocks = sections.flatMap((section) => section.blocks);
-  const bg = blocks.find((block) => block.type === "bg");
-  assert.ok(bg, "expects a grouped Bulgarian block");
-  assert.ok(bg.blocks.some((block) => block.type === "paragraph" && block.lang === "bg"), "expects a Bulgarian paragraph");
+  // The site is English-only until full EN/BG localisation exists: no partial Bulgarian blocks.
+  assert.ok(!blocks.some((block) => block.type === "bg"), "the template has no partial Bulgarian block");
   assert.ok(blocks.some((block) => block.type === "list"), "expects a bullet list");
   assert.ok(blocks.some((block) => block.type === "quote"), "expects a quote");
 });
@@ -146,11 +146,15 @@ test("publishes the FAQ and the About page with searchable structure", async () 
   assert.match(about, /id="what-is-qoax"/);
   assert.doesNotMatch(about, /id="people"/);
   assert.match(about, /id="organisation"/);
-  assert.match(about, /id="questions"/);
+  // The FAQ lives on one page; About links to it instead of repeating questions.
+  assert.doesNotMatch(about, /id="questions"|which-events/);
   assert.match(about, /href="\/faq\/"/);
-  assert.match(about, /id="questions"[\s\S]*which-events/);
+  assert.doesNotMatch(about, /lang="bg">Коакс Комюнити е|founding note/);
+  // The timeline reads names and dates from the archive records.
+  assert.match(about, /href="\/projects\/fmi-game-jam\/">SUGAMING Game Jam</);
+  assert.doesNotMatch(about, />FMI Game Jam<|SU Jam/);
   assert.doesNotMatch(about, /Learning programme/);
-  assert.match(about, /26 October 2026/);
+  assert.match(about, /26 Oct 2026/);
   assert.match(about, /href="https:\/\/qoax\.academy\/"[^>]*>Qoax Academy opens(<!-- -->)? ↗<\/a>/);
   assert.doesNotMatch(about, /Related initiative|Learning programme|Коакс Академия/);
   assert.match(about, /contact@qo\.ax/);
@@ -205,7 +209,7 @@ test("publishes the legal name, brand spellings, and SEO signals on every page",
   assert.doesNotMatch(sitemap, /\/academy\//);
   assert.match(sitemap, /<loc>https:\/\/qo\.ax\/work\/<\/loc>/);
   assert.match(sitemap, /<loc>https:\/\/qo\.ax\/schools\/<\/loc>/);
-  assert.doesNotMatch(sitemap, /nasa-space-apps-2026/);
+  assert.match(sitemap, /<loc>https:\/\/qo\.ax\/projects\/nasa-space-apps-2026\/<\/loc>/);
 });
 
 test("exports public legal pages for Google OAuth app domain", async () => {
@@ -300,8 +304,9 @@ test("exports only the requested non-profit project pages", async () => {
 
 test("does not export profit or hidden routes", async () => {
   await assert.rejects(render("/portfolio/"));
-  // NASA Space Apps stays hidden until the local event is official.
-  await assert.rejects(render("/projects/nasa-space-apps-2026/"));
+  const nasa = await render("/projects/nasa-space-apps-2026/");
+  assert.match(nasa, /Incubator @ Sofia Tech Park/);
+  assert.doesNotMatch(await render("/projects/tues-game-jam-2026/"), /supposed to do that/);
 });
 
 test("gives every page a complete link preview and keeps social channels behind env vars", async () => {

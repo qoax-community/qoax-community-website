@@ -91,13 +91,13 @@ export default function SchoolsPage() {
           />
           <div className={ed.cols2}>
             {ways.map((way) => (
-              <article className={ed.cell} key={way.number}>
+              <article className={`${ed.cell} ${ed.cellWithAction}`} key={way.number}>
                 <span className={ed.mono}>{way.number}</span>
                 <h3>{way.title}</h3>
                 <p>{way.copy}</p>
-                <p style={{ marginTop: 16 }}>
+                <div className={ed.cellAction}>
                   <Btn href={way.href} variant="ghost" small>{way.action}</Btn>
-                </p>
+                </div>
               </article>
             ))}
           </div>

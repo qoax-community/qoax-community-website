@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { pageMetadata } from "../seo";
 import Link from "next/link";
 import { ACADEMY_URL, CONTACT_EMAIL, GITHUB_URL } from "../components";
-import { aboutFaqIds, faqItems } from "../faq-data";
-import { Btn, Cta, Inlines, PageHead, SecHead, Shell } from "../editorial";
+import { getArchiveEntry } from "../archive-data";
+import { Btn, Cta, PageHead, SecHead, Shell } from "../editorial";
 import { legalEntity } from "../legal-data";
 import ed from "../editorial.module.css";
 
@@ -25,67 +25,52 @@ const principles = [
   ["Publish", "Honest notes that keep the constraints, mistakes, recoveries, and decisions visible."],
 ] as const;
 
-const timeline = [
+type TimelineItem = { date: string; title: string; copy: string; href?: string; external?: boolean };
+
+/**
+ * Event and programme rows come from the archive data, so names and dates
+ * match the record pages. Only organisational milestones without a record
+ * page are written here.
+ */
+const timelineSource: (string | TimelineItem)[] = [
+  "internship-program-2026",
   {
-    date: "1-14 July 2026",
-    title: "Internship Programme 2026",
-    copy: "More than 30 students from partner technology schools work in teams with Qoax mentors.",
-    href: "/projects/internship-program-2026",
-  },
-  {
-    date: "24 July 2026",
+    date: "24 Jul 2026",
     title: "Association registered",
     copy: `${legalEntity.nameEn} is registered in Sofia as an independent non-profit.`,
   },
+  "atanasoff48",
+  "fmi-game-jam",
   {
-    date: "2-4 October 2026",
-    title: "Atanasoff48",
-    copy: "The first SPGE John Atanasoff hackathon comes to the school’s STEM Centre.",
-    href: "/projects/atanasoff48",
-  },
-  {
-    date: "26 October 2026",
+    date: "26 Oct 2026",
     title: "Qoax Academy opens",
     copy: "Everything about the Academy is on qoax.academy.",
     href: ACADEMY_URL,
     external: true,
   },
-  {
-    date: "December 2026 · planned",
-    title: "John Atanasoff Game Jam",
-    copy: "An event for creating games at SPGE John Atanasoff. Exact dates and participation details will be announced.",
-    href: "/projects/john-atanasoff-game-jam-2026",
-  },
-  {
-    date: "Completed",
-    title: "FMI Game Jam",
-    copy: "The game jam at the Faculty of Mathematics and Informatics, Sofia University, has taken place. Photos are coming in the next few days.",
-    href: "/projects/fmi-game-jam",
-  },
-  {
-    date: "Early March 2027",
-    title: "Qoax × SUGAMING Gaming Tournament",
-    copy: "Counter-Strike 2 and League of Legends brackets with in-person finals at FMI.",
-    href: "/projects/fmi-esports-tournament-2027",
-  },
-  {
-    date: "March-April 2027 · planned",
-    title: "Telecommunications School Hackathon",
-    copy: "A hackathon at the Professional High School of Telecommunications in Sofia. Exact dates are still being arranged.",
-    href: "/projects/telecommunications-hackathon-2027",
-  },
+  "nasa-space-apps-2026",
+  "sofia-game-jam-2026",
+  "tues-game-jam-2026",
+  "john-atanasoff-game-jam-2026",
+  "fmi-esports-tournament-2027",
+  "john-atanasoff-open-day-2027",
+  "telecommunications-hackathon-2027",
 ];
+
+const timeline: TimelineItem[] = timelineSource.flatMap((item) => {
+  if (typeof item !== "string") return [item];
+  const entry = getArchiveEntry(item);
+  return entry ? [{ date: entry.year, title: entry.title, copy: entry.summary, href: `/projects/${entry.slug}/` }] : [];
+});
 
 const jumpLinks = [
   ["what-is-qoax", "What is Qoax?"],
   ["how-we-work", "How we work"],
   ["timeline", "2026-2027"],
   ["organisation", "The organisation"],
-  ["questions", "Questions"],
 ] as const;
 
 export default function AboutPage() {
-  const teaser = aboutFaqIds.map((id) => faqItems.find((item) => item.id === id)).filter((item): item is NonNullable<typeof item> => Boolean(item));
   const url = `${siteUrl}/about/`;
 
   const aboutSchema = {
@@ -160,15 +145,10 @@ export default function AboutPage() {
               put on its first hackathon. We document each of these as a public record under{" "}
               <Link href="/events">Events</Link> and <Link href="/work">Our work</Link>.
             </p>
-            <p lang="bg">
-              Коакс Комюнити е независимо сдружение с нестопанска цел в София. Организираме хакатони, гейм
-              джамове и турнири с училища и университети и разработваме софтуер за граждански и културни
-              организации.
+            <p>
+              Questions about the name, events, and working with us are answered on the{" "}
+              <Link href="/faq/">FAQ page</Link>.
             </p>
-            <blockquote className={ed.pull}>
-              <p>The point is not to look innovative. The point is to leave people with more skill, more confidence, and something useful that did not exist before.</p>
-              <footer>Qoax Community, founding note</footer>
-            </blockquote>
           </div>
         </div>
       </section>
@@ -198,7 +178,7 @@ export default function AboutPage() {
                 <dt>{item.date}</dt>
                 <dd>
                   <strong>
-                    {"external" in item && item.external ? (
+                    {item.external ? (
                       <a href={item.href} rel="noreferrer" target="_blank">{item.title} ↗</a>
                     ) : item.href ? (
                       <Link href={item.href}>{item.title}</Link>
@@ -234,29 +214,6 @@ export default function AboutPage() {
             <div className={ed.kvRow}><dt>Address</dt><dd>{legalEntity.addressEn}</dd></div>
             <div className={ed.kvRow}><dt>Contact</dt><dd><a href={`mailto:${legalEntity.contactEmail}`}>{legalEntity.contactEmail}</a></dd></div>
           </dl>
-        </div>
-      </section>
-
-      <section className={ed.sec} aria-labelledby="questions-title" id="questions">
-        <div className={ed.wrap}>
-          <SecHead
-            number="05"
-            label="Questions"
-            id="questions-title"
-            title="Common questions"
-            copy="The short answers. The full list, with Bulgarian summaries, is on the FAQ page."
-            action={<Btn href="/faq" variant="ghost" small>All questions</Btn>}
-          />
-          <div className={ed.qList}>
-            {teaser.map((item) => (
-              <article className={ed.q} key={item.id}>
-                <div>
-                  <h3><Link href={`/faq/#${item.id}`}>{item.question}</Link></h3>
-                  <div className={ed.qBody}><p><Inlines source={item.answer[0]} /></p></div>
-                </div>
-              </article>
-            ))}
-          </div>
         </div>
       </section>
 
