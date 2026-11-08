@@ -17,7 +17,6 @@ test("exports the Qoax Community home and index", async () => {
 
   assert.match(home, /Qoax Community/);
   assert.doesNotMatch(home, /QO\.AX Community/);
-  assert.match(home, /public work first/i);
   assert.match(home, /Schools we work with/);
   assert.match(home, /Private School St\. Sofia logo/);
   assert.match(home, /Technology School Electronic Systems logo/);
@@ -36,7 +35,7 @@ test("exports the Qoax Community home and index", async () => {
   assert.doesNotMatch(home, /NASA Space Apps Challenge/);
   assert.match(home, /apple-touch-icon\.png/);
   assert.match(home, /og-2026-11\.png/);
-  assert.doesNotMatch(home, /taught and built with people/);
+  assert.doesNotMatch(home, /taught and built with people|Public work first/);
   assert.doesNotMatch(home, /\.woff2/);
   assert.doesNotMatch(home, /fonts\.googleapis\.com/);
   assert.match(home, /<meta name="viewport" content="width=device-width, initial-scale=1"/);
