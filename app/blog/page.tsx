@@ -10,7 +10,7 @@ import ed from "../editorial.module.css";
 export const metadata: Metadata = {
   ...pageMetadata({
     title: "Journal · Notes from the work",
-    description: "The Qoax Community journal: short, honest write-ups by the people who did the work about hackathons, the internship programme, and the software we build for NGOs and artists in Bulgaria.",
+    description: "The Qoax Community journal: write-ups about hackathons, the internship programme, and the software we build for NGOs and artists in Bulgaria.",
     path: "/blog/",
   }),
   alternates: { canonical: "./", types: { "application/rss+xml": "/blog/feed.xml" } },
@@ -26,7 +26,6 @@ export default function JournalPage() {
       <PageHead
         label={sortedPosts.length > 0 ? `Journal · ${sortedPosts.length} posts` : "Journal · First posts coming soon"}
         title="Journal"
-        copy="Short, honest write-ups by the people who did the work: what was planned, what happened, what we would change. Written in English, with Bulgarian where it matters."
       />
 
       {sortedPosts.length === 0 && (
@@ -101,15 +100,15 @@ export default function JournalPage() {
         <div className={ed.wrap}>
           <div className={ed.news}>
             <div>
-                            <h2 id="follow-title">New posts land here first.</h2>
+              <h2 id="follow-title">New posts land here first.</h2>
               <p>
                 Subscribe with any feed reader, or write to us if you want to be told when we publish something
                 about your school or organisation. No newsletter, no tracking.
               </p>
             </div>
             <div className={ed.newsActions}>
-              <Btn href="/blog/feed.xml" variant="light">RSS feed</Btn>
-              <Btn href={`mailto:${CONTACT_EMAIL}`} variant="amber">Write to us</Btn>
+              <Btn href="/blog/feed.xml" variant="ghost">RSS feed</Btn>
+              <Btn href={`mailto:${CONTACT_EMAIL}`}>Write to us</Btn>
             </div>
           </div>
         </div>

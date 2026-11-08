@@ -41,10 +41,10 @@ export default function SchoolsPage() {
       <PageHead
         label={`School network · ${schoolPartners.length} schools`}
         title="Schools we work with"
-        copy="Technology schools whose students took part in the 2026 internship programme or whose student councils run events with us. The list is short on purpose. We would rather work well with a few schools than lightly with many."
+        copy="Technology schools whose students took part in the 2026 internship programme or whose student councils run events with us."
       />
 
-      <section className={ed.sec} aria-label="Partner schools">
+      <section className={ed.secTight} aria-label="Partner schools">
         <div className={ed.wrap}>
           <ul className={ed.schools}>
             {schoolPartners.map((school) => {

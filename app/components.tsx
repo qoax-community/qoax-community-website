@@ -160,8 +160,8 @@ export function SiteFooter() {
               <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo-light.svg")} alt="Qoax" width={294} height={97} />
             </Link>
             <p>
-              An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school programmes,
-              plus useful technology for artists and civic organisations.
+              An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school
+              programmes.
             </p>
             <p>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>

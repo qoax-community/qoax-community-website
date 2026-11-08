@@ -27,25 +27,10 @@ export default function Home() {
               cultural organisations.
             </p>
             <div className={ed.heroActions}>
-              <Btn href="/events">See upcoming events</Btn>
               <Btn href="/about" variant="ghost">About Qoax</Btn>
+              <Btn href="/events">See upcoming events</Btn>
             </div>
           </div>
-
-          <figure className={ed.heroFigure}>
-            <Image
-              alt="Two team members with microphones present their game at the SUGAMING Jam while a teammate runs the demo"
-              height={630}
-              priority
-              sizes="(max-width: 960px) 100vw, 460px"
-              src={siteAsset("/journal/sugaming-jam-2026-presentation.jpg")}
-              width={1200}
-            />
-            <figcaption>
-              <Link href="/projects/fmi-game-jam">SUGAMING Jam</Link>, Faculty of Mathematics and Informatics,{" "}
-              <time dateTime="2026-10-16">16–18 October 2026</time>. Seven games were published.
-            </figcaption>
-          </figure>
         </div>
       </section>
 
@@ -57,7 +42,6 @@ export default function Home() {
             label="Upcoming"
             id="upcoming-title"
             title="Upcoming events"
-            copy="Every event has a record page with dates, partners, and what we are responsible for. When it is over, we add what happened."
             action={<Btn href="/events" variant="ghost" small>All events</Btn>}
           />
           <div className={ed.rows}>
@@ -74,7 +58,6 @@ export default function Home() {
             label="Journal"
             id="journal-title"
             title="Journal"
-            copy="Short, honest write-ups by the people who did the work: what was planned, what happened, what we would change."
             action={<Btn href="/blog" variant="ghost" small>Read the journal</Btn>}
           />
           {recentPosts.length > 0 ? (

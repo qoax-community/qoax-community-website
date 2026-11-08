@@ -1,6 +1,6 @@
 ---
-title: "SUGAMING Jam 2026: three days, seven games"
-excerpt: A weekend of making games in teams at the Faculty of Mathematics and Informatics, Sofia University. Seven games were published at the end.
+title: "SUGAMING Game Jam 2026: three days, seven games"
+excerpt: A weekend of making games in teams at the Faculty of Mathematics and Informatics, Sofia University. Seven games were submitted.
 lede: From 16 to 18 October 2026, teams at FMI took an idea to a playable game in one weekend, then showed it to everyone in the room.
 category: Events
 tags: [Game jam, SUGAMING, FMI, Sofia University]
@@ -13,27 +13,27 @@ image: /journal/sugaming-jam-2026-presentation.jpg
 
 ## What it was
 
-SUGAMING Jam ran from 16 to 18 October 2026 at the Faculty of Mathematics and Informatics, Sofia University, together with SUGAMING. Over three days teams discussed ideas, built their games, and presented them at the end.
+SUGAMING Game Jam ran from 16 to 18 October 2026 at the Faculty of Mathematics and Informatics, Sofia University. It was organized by the SUGAMING club, a student community for young game developers.
 
-Seven games were published.
+The theme was **Chaotic Business**. Seven games were submitted, all listed on [the jam's itch.io page](https://itch.io/jam/sugaming-jam-2026/entries).
 
-## How the weekend works
+## How the weekend went
 
-A game jam is short on purpose. The time limit forces a team to agree on one idea, cut what does not fit, and finish something people can play.
-
-- A theme is announced at the opening, and teams form on the spot.
-- Teams design, build, and playtest across the weekend.
-- At the end, every team shows what they made.
-- Any engine or framework goes: Unity, Godot, Unreal, web, or your own.
-
-The [event record](/projects/fmi-game-jam/) has a photo of one team’s to-do list on the whiteboard.
+- The theme was announced at the opening on Friday afternoon, and teams started from there.
+- Submissions on itch.io closed on Sunday evening, 18 October.
+- On the last day every team presented its game to the room.
+- The Best Game award went to one team. The [event record](/projects/fmi-game-jam/) has photos from the weekend.
 
 ## Why we do game jams
 
 A game is a complete product in miniature: code, art, sound, rules, and a person on the other side who has to understand it without help. That makes a weekend jam one of the fastest ways for students to learn how to work in a team and ship.
 
-It is also the format for most of our season. Next are [Sofia Game Jam](/projects/sofia-game-jam-2026/) on 20–22 November and the [TUES Game Jam](/projects/tues-game-jam-2026/) at the end of November.
+It is also the format for most of our season. Next are [Sofia Game Jam](/projects/sofia-game-jam-2026/) on 20 to 22 November and the [TUES Game Jam](/projects/tues-game-jam-2026/) at the end of November.
 
 ::: bg
-SUGAMING Jam се проведе от 16 до 18 октомври 2026 г. във Факултета по математика и информатика на Софийския университет. Отборите обсъдиха идеи, направиха игрите си и ги представиха в края. Публикувани бяха седем игри.
+SUGAMING Game Jam се проведе от 16 до 18 октомври 2026 г. във Факултета по математика и информатика на Софийския университет. Организатор беше клуб SUGAMING, общност за млади разработчици на игри.
+
+Темата беше **Хаотичен бизнес**. Бяха предадени седем игри и всички са в [страницата на джама в itch.io](https://itch.io/jam/sugaming-jam-2026/entries).
+
+В последния ден всеки отбор представи играта си пред залата, а един от отборите получи наградата за най-добра игра.
 :::

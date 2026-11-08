@@ -35,6 +35,14 @@ export function Inlines({ source }: { source: string | Inline[] }) {
 }
 
 export function ContentBlock({ block }: { block: Block }) {
+  if (block.type === "bg") {
+    return (
+      <div className={ed.bgVersion} lang="bg">
+        <p className={ed.bgLabel}>На български</p>
+        {block.blocks.map((inner, index) => <ContentBlock block={inner} key={index} />)}
+      </div>
+    );
+  }
   if (block.type === "list") {
     return <ul>{block.items.map((item, index) => <li key={index}><Inlines source={item} /></li>)}</ul>;
   }
@@ -96,7 +104,7 @@ export function Btn({
   );
 }
 
-/* ---------- Section head: "01 — Upcoming" ---------- */
+/* ---------- Section head: "01 / Upcoming" ---------- */
 
 export function SecHead({
   title,
@@ -256,8 +264,8 @@ export function Cta({
           <p>{copy}</p>
         </div>
         <div className={ed.ctaActions}>
-          <Btn href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</Btn>
           {secondary ?? <Btn href="/about" variant="ghost">About Qoax</Btn>}
+          <Btn href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</Btn>
         </div>
       </div>
     </section>

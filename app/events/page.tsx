@@ -8,7 +8,7 @@ import ed from "../editorial.module.css";
 export const metadata: Metadata = {
   ...pageMetadata({
     title: "Events · Hackathons, game jams, and tournaments",
-    description: "Qoax Community events in Sofia: the John Atanasoff Game Jam planned for December 2026, the Telecommunications School Hackathon planned for March–April 2027, and more.",
+    description: "Qoax Community events in Sofia: the John Atanasoff Game Jam planned for December 2026, the Telecommunications School Hackathon planned for March to April 2027, and more.",
     path: "/events/",
   }),
 };
@@ -28,7 +28,6 @@ export default function EventsPage() {
       <PageHead
         label={`Events · ${upcoming.length} upcoming`}
         title="Events"
-        copy="Every event has a record page with dates, partners, and what Qoax is responsible for. After the event we add what actually happened."
       />
 
       <section className={ed.sec} aria-labelledby="dated-title">

@@ -28,11 +28,11 @@
   --ok-soft: #e6f2ec;
   --card: #ffffff;
 
-  /* Accent */
-  --amber: #e29a2c;
-  --amber-100: #fbeed6;
-  --amber-300: #f3c469;
-  --amber-900: #7a4d05;
+  /* No second accent colour: the old amber tokens resolve to ink and neutrals */
+  --amber: var(--ink);
+  --amber-100: var(--bg-soft);
+  --amber-300: var(--line-strong);
+  --amber-900: var(--ink);
 
   /* Type */
   --font-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;

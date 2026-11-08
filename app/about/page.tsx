@@ -12,7 +12,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 export const metadata: Metadata = {
   ...pageMetadata({
     title: "About Qoax Community · Non-profit in Sofia",
-    description: "What Qoax Community is: an independent non-profit technology association in Sofia, Bulgaria (Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893). Who is behind it, how we work, and what happens in 2026–2027.",
+    description: "What Qoax Community is: an independent non-profit technology association in Sofia, Bulgaria (Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893). Who is behind it, how we work, and what happens in 2026-2027.",
     path: "/about/",
     keywords: ["About Qoax", "Qoax Community", "Коакс Комюнити", "Куакс", "Kuaks", "non-profit Sofia", "technology community Bulgaria"],
   }),
@@ -27,7 +27,7 @@ const principles = [
 
 const timeline = [
   {
-    date: "1–14 July 2026",
+    date: "1-14 July 2026",
     title: "Internship Programme 2026",
     copy: "More than 30 students from partner technology schools work in teams with Qoax mentors.",
     href: "/projects/internship-program-2026",
@@ -38,7 +38,7 @@ const timeline = [
     copy: `${legalEntity.nameEn} is registered in Sofia as an independent non-profit.`,
   },
   {
-    date: "2–4 October 2026",
+    date: "2-4 October 2026",
     title: "Atanasoff48",
     copy: "The first SPGE John Atanasoff hackathon comes to the school’s STEM Centre.",
     href: "/projects/atanasoff48",
@@ -69,7 +69,7 @@ const timeline = [
     href: "/projects/fmi-esports-tournament-2027",
   },
   {
-    date: "March–April 2027 · planned",
+    date: "March-April 2027 · planned",
     title: "Telecommunications School Hackathon",
     copy: "A hackathon at the Professional High School of Telecommunications in Sofia. Exact dates are still being arranged.",
     href: "/projects/telecommunications-hackathon-2027",
@@ -79,7 +79,7 @@ const timeline = [
 const jumpLinks = [
   ["what-is-qoax", "What is Qoax?"],
   ["how-we-work", "How we work"],
-  ["timeline", "2026 – 2027"],
+  ["timeline", "2026-2027"],
   ["organisation", "The organisation"],
   ["questions", "Questions"],
 ] as const;
@@ -223,7 +223,7 @@ export default function AboutPage() {
               paid catalogue, and no advertising on this site: everything here is public work.
             </p>
             <p style={{ marginTop: 16 }}>
-              <Btn href={GITHUB_URL} variant="ghost" small>Open source on GitHub</Btn>
+              <Btn href={`${GITHUB_URL}/qoax-community-website`} variant="ghost" small>Source code of this website</Btn>
             </p>
           </div>
           <dl className={ed.kv}>
