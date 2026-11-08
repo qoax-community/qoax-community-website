@@ -27,10 +27,20 @@ That split is how we prefer to work with schools: the students own the event and
 
 ## What comes next
 
-A second edition is planned for October–November 2027. It will be prepared with its own team, budget, and partner programme. Dates will be published on the [event record](/projects/atanasoff48/) once they are confirmed.
+A second edition is planned for October to November 2027. It will be prepared with its own team, budget, and partner programme. Dates will be published on the [event record](/projects/atanasoff48/) once they are confirmed.
 
-Before that, the school hosts [Atanasoff Jam](/projects/john-atanasoff-game-jam-2026/), a game jam planned for January–February 2027.
+Before that, the school hosts [Atanasoff Jam](/projects/john-atanasoff-game-jam-2026/), a game jam planned for January to February 2027.
 
 ::: bg
-Atanasoff48 е хакатонът на СПГЕ „Джон Атанасов“, организиран от Ученическия съвет. Първото издание се проведе от 2 до 4 октомври 2026 г.: 62 участници в 16 отбора имаха 48 часа, за да създадат и представят проект.
+Atanasoff48 е хакатонът на СПГЕ „Джон Атанасов“, организиран от Ученическия съвет на училището. Първото издание се проведе от 2 до 4 октомври 2026 г. в STEM центъра на училището в София.
+
+62 участници в 16 отбора имаха 48 часа, за да създадат и представят проект, след което бяха връчени наградите.
+
+Събитието е на Ученическия съвет. Qoax е част от екипа зад дигиталното му присъствие и помага с практическата организация. Официалният сайт е [atanasoff48.com](https://atanasoff48.com/).
+
+Така предпочитаме да работим с училищата: учениците притежават събитието и решенията, а ние поемаме частите, които е трудно да се изграждат от нулата всяка година.
+
+Второ издание е планирано за октомври до ноември 2027 г., със собствен екип, бюджет и партньорска програма. Датите ще бъдат публикувани на [страницата на събитието](/projects/atanasoff48/), след като бъдат потвърдени.
+
+Преди това училището е домакин на [Atanasoff Jam](/projects/john-atanasoff-game-jam-2026/), гейм джем, планиран за януари до февруари 2027 г.
 :::

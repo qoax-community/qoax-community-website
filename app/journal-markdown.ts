@@ -8,7 +8,7 @@
  *   - YAML-ish frontmatter between `---` fences (key: value, `tags: [a, b]`)
  *   - `## Heading {#optional-id}` starts a section (the H1 is the title)
  *   - paragraphs, `- ` bullet lists, `> ` block quotes
- *   - `::: bg` … `:::` container for Bulgarian paragraphs (rendered lang="bg")
+ *   - `::: bg` … `:::` container for a Bulgarian version (one grouped block, rendered lang="bg")
  *   - inline `[text](url)`, `**strong**`, `*emphasis*`, `` `code` ``
  */
 
@@ -22,7 +22,8 @@ export type Inline =
 export type Block =
   | { type: "paragraph"; inlines: Inline[]; lang?: "bg" }
   | { type: "list"; items: Inline[][] }
-  | { type: "quote"; inlines: Inline[]; lang?: "bg" };
+  | { type: "quote"; inlines: Inline[]; lang?: "bg" }
+  | { type: "bg"; blocks: Block[] };
 
 export type Section = {
   id: string;
@@ -164,7 +165,7 @@ export function parseSections(body: string): Section[] {
         if (current) {
           current.blocks.push(...parseBlocks(current.lines));
           current.lines = [];
-          current.blocks.push(...parseBlocks(bgLines, "bg"));
+          current.blocks.push({ type: "bg", blocks: parseBlocks(bgLines, "bg") });
         }
         bgLines = null;
       } else {
@@ -213,7 +214,8 @@ export function inlineText(inlines: Inline[]) {
   return inlines.map((inline) => inline.text).join("");
 }
 
-export function blockText(block: Block) {
+export function blockText(block: Block): string {
+  if (block.type === "bg") return block.blocks.map(blockText).join(" ");
   if (block.type === "list") return block.items.map(inlineText).join(" ");
   return inlineText(block.inlines);
 }

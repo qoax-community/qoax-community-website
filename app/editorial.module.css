@@ -1125,7 +1125,7 @@
 .phDark { background: var(--bg-soft); border: 1px solid var(--line); }
 
 /* Schools */
-.schools { gap: 12px; }
+.schools { gap: 12px; border: 0; }
 .school { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
 a.school:hover { border-color: var(--line-strong); }
 .schoolName { font-size: 15px; font-weight: 600; }
@@ -1137,6 +1137,7 @@ a.school:hover { border-color: var(--line-strong); }
 .academy p, .academy .mono { color: var(--muted); }
 
 /* Text blocks */
+.cols2, .cols4 { gap: 12px; border-top: 0; }
 .cell { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 18px; }
 .cell h3 { font-size: 16px; }
 .split h2 { font-size: 22px; }
@@ -1260,6 +1261,7 @@ a.school:hover { border-color: var(--line-strong); }
   .qList .q { grid-template-columns: minmax(0, 1fr); }
   .topRight .btnGhost { display: none; }
   .row, .jrow { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 18px 0; }
+  .rows > .row { padding: 16px; }
   .row .rowMeta, .row .rowEnd { display: none; }
   .rowTitle { font-size: 17px; }
   .schools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1291,7 +1293,7 @@ a.school:hover { border-color: var(--line-strong); }
 .countdownLabel { margin-top: 0; font-size: 14px; }
 .live::before { display: none; }
 
-/* Quiet design touch: warm neutrals, one amber hairline, nothing loud */
+/* Quiet design touch: warm neutrals, ink hairlines, nothing loud */
 .foot { background: var(--brand-green); }
 .navLink[aria-current="page"] { background: transparent; color: var(--ink); box-shadow: inset 0 -2px 0 var(--amber); border-radius: 0; }
 .navLink:hover { background: var(--bg-soft); }
@@ -1301,21 +1303,16 @@ a.school:hover { border-color: var(--line-strong); }
 .btnGhost:hover { background: var(--bg-soft); border-color: var(--line-strong); color: var(--ink); }
 .btnLight { background: var(--bg); border-color: var(--bg); color: var(--ink); }
 .btnLight:hover { background: var(--bg-soft); border-color: var(--bg-soft); color: var(--ink); }
-.btnAmber { background: var(--amber); border-color: var(--amber); color: var(--ink); }
-.btnAmber:hover { background: #eaa63f; border-color: #eaa63f; color: var(--ink); }
+.btnAmber { background: var(--ink); border-color: var(--ink); color: #fff; }
+.btnAmber:hover { background: #33332f; border-color: #33332f; color: #fff; }
 .filters [aria-current] { background: transparent; box-shadow: inset 0 -2px 0 var(--amber); border-radius: 0; }
 
 /* Hero photograph: one real image, hairline, plain caption */
-.heroFigure { margin: 0; }
-.heroFigure img { width: 100%; height: auto; aspect-ratio: 1200 / 630; object-fit: cover; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-soft); }
-.heroFigure figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-.heroFigure figcaption a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-strong); }
-.heroFigure figcaption a:hover { text-decoration-color: var(--amber); }
-.heroGrid { align-items: center; }
+.heroGrid { grid-template-columns: minmax(0, 1fr); }
 
-/* Record status: plain words; an upcoming event gets the amber text */
+/* Record status: plain words; an upcoming event is set in bold */
 .rowStatus { display: block; color: var(--muted); font-size: 13px; }
-.rowStatusLive { display: block; color: #8a5a10; font-size: 13px; font-weight: 600; }
+.rowStatusLive { display: block; color: var(--ink); font-size: 13px; font-weight: 600; }
 
 /* No lift, no colour change on hover: underline the title only */
 .row { transition: background-color 140ms ease-out; }
@@ -1323,15 +1320,12 @@ a.school:hover { border-color: var(--line-strong); }
 .post { transition: border-color 140ms ease-out; }
 .feat h2 a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--amber); }
 .ava { background: var(--ink); color: #fff; }
-.avaAmber { background: var(--amber-100); color: var(--amber-900); }
+.avaAmber { background: var(--ink); color: #fff; }
 .tag { border-color: var(--line); }
 .prose p, .prose li { hyphens: auto; }
 .related:hover strong { text-decoration: underline; text-decoration-color: var(--amber); }
 .btn, .btnGhost, .btnLight, .btnAmber, .navLink { transition: background-color 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out; }
 
-@media (max-width: 960px) {
-  .heroFigure { max-width: 640px; }
-}
 
 /* Journal featured post: real cover image, or a single column without one */
 .featSingle { grid-template-columns: minmax(0, 1fr); }
@@ -1341,19 +1335,16 @@ a.school:hover { border-color: var(--line-strong); }
 .feat h2 { font-size: clamp(20px, 2.2vw, 26px); }
 .sideTagList { color: var(--ink-2); font-size: 14px; line-height: 1.6; }
 
-/* Bulgarian summary at the end of a post: marked up with lang="bg" */
-.article p[lang="bg"] {
-  margin-top: 2em;
-  padding-top: 16px;
+/* Bulgarian version at the end of a post: one grouped block, marked up with lang="bg" */
+.bgVersion {
+  margin-top: 2.4em;
+  padding-top: 18px;
   border-top: 1px solid var(--line);
-  font-size: 15.5px;
-  color: var(--muted);
 }
-.article p[lang="bg"]::before {
-  content: "На български";
-  display: block;
-  margin-bottom: 6px;
+.bgVersion p, .bgVersion li { font-size: 15.5px; color: var(--ink-2); }
+.article .bgVersion .bgLabel {
+  margin: 0 0 8px;
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--ink-2);
+  color: var(--muted);
 }

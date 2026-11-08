@@ -60,11 +60,37 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     .sort((a, b) => Number(b.kind === entry.kind) - Number(a.kind === entry.kind))
     .slice(0, 3);
 
-  const narrative = entry.detail
-    ? entry.detail
-    : entry.project
-      ? `${entry.title} is documented here as part of Qoax Community’s non-profit work. The project keeps its own identity while staying connected to the wider network of schools, students, art, and public-interest organizations.`
-      : `${entry.title} is a relationship, programme, or shared effort that helps the community network grow. We document it here so that the people involved, and the schools and organizations around them, can see the work and build on it.`;
+  // Only real, entry-specific copy. No generic filler when an entry has no write-up yet.
+  const narrative = entry.detail;
+  const galleryCredit = entry.imageCredit && entry.gallery && entry.gallery.length > 1
+    ? entry.imageCredit.replace(/^Photo:/, "Photos:")
+    : entry.imageCredit;
+
+  // Button groups read left to right with the main action last (rightmost).
+  const mailAction = {
+    key: "mail",
+    href: `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(entry.title)}`,
+    label: isCompletedEvent ? "Ask about this event" : isEvent ? "Join as a school or partner" : "Ask about this work",
+    external: false,
+  };
+  const liveAction = liveUrl
+    ? {
+        key: "live",
+        href: liveUrl,
+        label: `${isEvent && !isCompletedEvent ? "Register" : "Visit"} · ${new URL(liveUrl).hostname.replace(/^www\./, "")}`,
+        external: true,
+      }
+    : undefined;
+  const streamAction = stream
+    ? {
+        key: "stream",
+        href: stream.url,
+        label: isCompletedEvent ? "Watch the recording" : stream.direct ? "Watch the stream" : "Watch live on YouTube",
+        external: true,
+      }
+    : undefined;
+  const actions = (isCompletedEvent ? [mailAction, liveAction, streamAction] : [mailAction, streamAction, liveAction])
+    .filter((action): action is NonNullable<typeof action> => Boolean(action));
 
   return (
     <div className={styles.page}>
@@ -89,40 +115,43 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <p className={styles.projectSubtitle}>{entry.subtitle}</p>
                 <p className={styles.projectSummary}>{entry.summary}</p>
                 <div className={styles.projectActions}>
-                  {liveUrl && (
-                    <Button href={liveUrl} external>
-                      {isEvent && !isCompletedEvent ? "Register" : "Visit"} · {new URL(liveUrl).hostname.replace(/^www\./, "")}
+                  {actions.map((action, index) => (
+                    <Button
+                      external={action.external}
+                      href={action.href}
+                      key={action.key}
+                      variant={index === actions.length - 1 ? "primary" : "secondary"}
+                    >
+                      {action.label}
                     </Button>
-                  )}
-                  {stream && (
-                    <Button href={stream.url} external variant="secondary">
-                      {isCompletedEvent ? "Watch the stream" : "Watch live on YouTube"}
-                    </Button>
-                  )}
-                  <Button href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(entry.title)}`} variant={liveUrl ? "secondary" : "primary"}>
-                    {isCompletedEvent ? "Ask about this event" : isEvent ? "Join as a school or partner" : "Ask about this work"}
-                  </Button>
+                  ))}
                 </div>
               </div>
               {(entry.image || entry.logo) && (
-                <div className={styles.projectVisual}>
-                  <EntryVisual entry={entry} priority sizes="(max-width: 960px) 100vw, 45vw" />
-                  {entry.imageCredit && <span className={styles.projectVisualCredit}>{entry.imageCredit}</span>}
-                </div>
+                <figure className={styles.projectFigure}>
+                  <div className={styles.projectVisual}>
+                    <EntryVisual entry={entry} priority sizes="(max-width: 960px) 100vw, 45vw" />
+                  </div>
+                  {entry.imageCredit && <figcaption className={styles.photoCredit}>{entry.imageCredit}</figcaption>}
+                </figure>
               )}
             </header>
 
             <dl className={styles.facts} aria-label="Key facts">
               <div className={styles.fact}><dt><span>{isEvent ? "When" : "Date"}</span></dt><dd><strong>{entry.year}</strong></dd></div>
               <div className={styles.fact}><dt><span>Type</span></dt><dd><strong>{entry.project?.category ?? kindLabels[entry.kind]}</strong></dd></div>
-              <div className={styles.fact}><dt><span>With</span></dt><dd><strong>{entry.partner ?? entry.project?.client ?? "Qoax Community"}</strong></dd></div>
+              <div className={styles.fact}><dt><span>{entry.partnerLabel ?? "With"}</span></dt><dd><strong>{entry.partner ?? entry.project?.client ?? "Qoax Community"}</strong></dd></div>
               <div className={styles.fact}><dt><span>{entry.location ? "Where" : "Status"}</span></dt><dd><strong>{entry.location ?? stateLabel[entry.state]}</strong></dd></div>
             </dl>
 
             <div className={styles.projectBody}>
               <section className={styles.prose} aria-labelledby="why-heading">
-                <h2 id="why-heading">{isEvent ? "About the event" : "Why it belongs here"}</h2>
-                <p>{narrative}</p>
+                {narrative && (
+                  <>
+                    <h2 id="why-heading">{isEvent ? "About the event" : "About this work"}</h2>
+                    <p>{narrative}</p>
+                  </>
+                )}
                 {entry.notice && <p className={styles.notice}>{entry.notice}</p>}
 
                 {entry.story && (
@@ -159,6 +188,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         </figure>
                       ))}
                     </div>
+                    {galleryCredit && <p className={styles.photoCredit}>{galleryCredit}</p>}
                   </section>
                 )}
 
@@ -170,10 +200,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <h3>Stream</h3>
                     <p>
                       {isCompletedEvent
-                        ? stream.direct
-                          ? "The event was streamed live. The recording is on YouTube."
-                          : "We stream our events live. Recordings are on the Qoax YouTube channel."
-                        : "We stream this event live on the Qoax YouTube channel. The recording stays there afterwards."}
+                        ? "The event was streamed live. The recording is on YouTube."
+                        : "We plan to stream this event live on the Qoax YouTube channel."}
                     </p>
                     <div className={styles.sideLinks}>
                       <a href={stream.url} rel="noreferrer" target="_blank" data-stream-link="">

@@ -68,7 +68,7 @@ test("exports the journal with its first Markdown posts", async () => {
   const titles = [
     "Atanasoff48: the first 48-hour hackathon at SPGE John Atanasoff",
     "The 2026/27 season: six events, one calendar",
-    "SUGAMING Jam 2026: three days, seven games",
+    "SUGAMING Game Jam 2026: three days, seven games",
   ];
   for (const title of titles) {
     assert.ok(journal.includes(title), `journal lists ${title}`);
@@ -120,7 +120,9 @@ test("parses the journal template so new posts can be written in Markdown", asyn
     ["plan", "what-happened", "what-we-would-change"],
   );
   const blocks = sections.flatMap((section) => section.blocks);
-  assert.ok(blocks.some((block) => block.type === "paragraph" && block.lang === "bg"), "expects a Bulgarian paragraph");
+  const bg = blocks.find((block) => block.type === "bg");
+  assert.ok(bg, "expects a grouped Bulgarian block");
+  assert.ok(bg.blocks.some((block) => block.type === "paragraph" && block.lang === "bg"), "expects a Bulgarian paragraph");
   assert.ok(blocks.some((block) => block.type === "list"), "expects a bullet list");
   assert.ok(blocks.some((block) => block.type === "quote"), "expects a quote");
 });
@@ -264,7 +266,8 @@ test("exports only the requested non-profit project pages", async () => {
 
   const pages = await Promise.all(projectSlugs.map((slug) => render(`/projects/${slug}/`)));
   for (const html of pages) {
-    assert.match(html, /Why it belongs here|About the event/);
+    // Each record carries its own text, never a shared filler paragraph.
+    assert.doesNotMatch(html, /Why it belongs here/);
   }
 
   const [gameJam, tournament] = pages.slice(-2);
@@ -273,7 +276,8 @@ test("exports only the requested non-profit project pages", async () => {
   assert.match(tournament, /League of Legends/);
   assert.match(tournament, /Mar 2027/);
   assert.match(gameJam, /Completed/);
-  assert.match(gameJam, /Seven games were published/);
+  assert.match(gameJam, /Seven games were submitted/);
+  assert.match(gameJam, /About the event/);
   assert.match(gameJam, /In pictures/);
   assert.doesNotMatch(gameJam, /Dates to be announced|Bring your team|Join as a school or partner|role="timer"/);
   assert.match(tournament, /Qoax × SUGAMING Gaming Tournament/);
@@ -281,12 +285,12 @@ test("exports only the requested non-profit project pages", async () => {
   const events = await render("/events/");
   const pastEvents = events.match(/<section[^>]*aria-labelledby="past-title"[\s\S]*?<\/section>/)?.[0];
   assert.ok(pastEvents, "Past events section is rendered");
-  assert.match(pastEvents, /SUGAMING Jam/);
+  assert.match(pastEvents, /SUGAMING Game Jam/);
   assert.doesNotMatch(pastEvents, /Qoax × SUGAMING Gaming Tournament/);
   assert.doesNotMatch(events, /FMI Game Jam/);
   assert.doesNotMatch(await render("/"), /FMI Game Jam/);
 
-  assert.match(pages[0], /2–4 Oct 2026/);
+  assert.match(pages[0], /2-4 Oct 2026/);
   assert.match(pages[0], /atanasoff48\.com/);
   assert.match(pages[1], /30\+ students/);
   assert.match(pages[1], /exact student projects/);
@@ -322,8 +326,8 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:image" content="https:\/\/qo\.ax\/journal\/sugaming-jam-2026-presentation\.jpg"/);
   assert.match(rendered["/projects/atanasoff48/"], /<meta property="og:image" content="https:\/\/qo\.ax\/events\/atanasoff48-2026\/atanasoff48-199\.jpg"/);
   assert.equal((rendered["/projects/atanasoff48/"].match(/\/events\/atanasoff48-2026\/atanasoff48-\d+\.jpg/g) ?? []).length >= 6, true, "Atanasoff48 shows its photo gallery");
-  assert.equal((rendered["/projects/fmi-game-jam/"].match(/\/events\/sugaming-jam-2026\/gamejam-\d+\.jpg/g) ?? []).length >= 5, true, "SUGAMING Jam shows its photo gallery");
-  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Jam · Qoax Community"/);
+  assert.equal((rendered["/projects/fmi-game-jam/"].match(/\/events\/sugaming-jam-2026\/gamejam-\d+\.jpg/g) ?? []).length >= 5, true, "SUGAMING Game Jam shows its photo gallery");
+  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Game Jam · Qoax Community"/);
   assert.match(rendered["/projects/nsicc/"], /<meta name="twitter:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
   // Root pages use the default card at 1200x630.
   assert.match(rendered["/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og-2026-11\.png"/);
@@ -333,17 +337,21 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/"], /"sameAs":\["https:\/\/github\.com\/qoax-community"\]/);
 });
 
-test("links every event page to its livestream and uses the presentation photo for SUGAMING Jam", async () => {
-  const events = ["/projects/fmi-game-jam/", "/projects/atanasoff48/", "/projects/sofia-game-jam-2026/", "/projects/tues-game-jam-2026/"];
-  for (const pathname of events) {
+test("links upcoming events to the stream and never fakes a recording for past ones", async () => {
+  const upcoming = ["/projects/sofia-game-jam-2026/", "/projects/tues-game-jam-2026/"];
+  for (const pathname of upcoming) {
     const html = await render(pathname);
     assert.match(html, /<a[^>]*href="https:\/\/www\.youtube\.com\/@QoaxCommunity"[^>]*data-stream-link=""/, `${pathname} has a stream link`);
     assert.match(html, /<h3>Stream<\/h3>/, `${pathname} has a stream card`);
   }
-  assert.match(await render("/projects/fmi-game-jam/"), />Watch the stream</);
   assert.match(await render("/projects/sofia-game-jam-2026/"), />Watch live on YouTube</);
+  // Completed events without a known recording URL get no stream link at all.
+  for (const pathname of ["/projects/fmi-game-jam/", "/projects/atanasoff48/"]) {
+    assert.doesNotMatch(await render(pathname), /data-stream-link/, `${pathname} has no invented recording link`);
+  }
   // Non-event work has no stream.
   assert.doesNotMatch(await render("/projects/nsicc/"), /data-stream-link/);
+  // The review asked for no decorative photo in the home hero.
   const home = await render("/");
-  assert.match(home, /\/journal\/sugaming-jam-2026-presentation\.jpg/);
+  assert.doesNotMatch(home, /heroPhoto|heroMedia/);
 });

@@ -1253,16 +1253,13 @@ a.logoCard:hover .logoCaption { opacity: 1; }
 
 .projectVisual img { object-fit: cover; }
 
-.projectVisualCredit {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  padding: 4px 9px;
-  border-radius: 6px;
-  color: white;
-  background: rgba(20, 32, 26, 0.6);
-  font-size: 11.5px;
-  font-weight: 500;
+.projectFigure { margin: 0; min-width: 0; }
+
+.photoCredit {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.4;
 }
 
 .facts {
