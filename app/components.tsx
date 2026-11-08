@@ -161,7 +161,7 @@ export function SiteFooter() {
             </Link>
             <p>
               An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school programmes,
-              plus useful technology for artists and civic organisations. Public work first.
+              plus useful technology for artists and civic organisations.
             </p>
             <p>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
