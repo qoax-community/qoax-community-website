@@ -4,7 +4,7 @@ import { siteAsset } from "./site-path";
 export const SITE_NAME = "Qoax Community";
 
 export const defaultOgImage = {
-  url: siteAsset("/og.png"),
+  url: siteAsset("/og-2026-11.png"),
   width: 1200,
   height: 630,
   alt: "Qoax Community · qo.ax",

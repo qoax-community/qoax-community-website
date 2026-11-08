@@ -13,7 +13,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Qoax Community · Technology, taught and built with people",
+    default: "Qoax Community · Hackathons, game jams and mentoring in Sofia",
     template: "%s · Qoax Community",
   },
   description:
@@ -54,8 +54,8 @@ export const metadata: Metadata = {
     apple: siteAsset("/apple-touch-icon.png"),
   },
   openGraph: {
-    title: "Qoax Community · Technology, taught and built with people",
-    description: "Schools, student programmes, art, and NGOs strengthened through practical technology. Public work first.",
+    title: "Qoax Community · Hackathons, game jams and mentoring in Sofia",
+    description: "An independent non-profit in Sofia. Hackathons, game jams and school programmes for students, plus software for artists and civic groups.",
     type: "website",
     locale: "en_US",
     siteName: "Qoax Community",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Qoax Community",
-    description: "Schools, students, art, and public-interest organizations. Public work first.",
+    description: "Hackathons, game jams and mentoring for students in Sofia.",
     images: [defaultOgImage.url],
   },
 };
@@ -84,7 +84,7 @@ const organizationSchema = {
   alternateName: [legalEntity.nameEn, ...brandAlternateNames],
   url: `${siteUrl}/`,
   logo: `${siteUrl}${siteAsset("/icon-512.png")}`,
-  image: `${siteUrl}${siteAsset("/og.png")}`,
+  image: `${siteUrl}${siteAsset("/og-2026-11.png")}`,
   email: legalEntity.contactEmail,
   foundingDate: "2026-07-24",
   nonprofitStatus: "NonprofitType",
