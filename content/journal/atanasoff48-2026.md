@@ -7,6 +7,7 @@ tags: [Hackathon, Student council, SPGE John Atanasoff]
 author: qoax-community
 published: 2026-11-04
 record: atanasoff48
+image: /events/atanasoff48-2026/atanasoff48-199.jpg
 externalUrl: https://atanasoff48.com/
 ---
 

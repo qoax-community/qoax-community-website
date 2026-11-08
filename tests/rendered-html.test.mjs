@@ -301,7 +301,7 @@ test("does not export profit or hidden routes", async () => {
 });
 
 test("gives every page a complete link preview and keeps social channels behind env vars", async () => {
-  const pages = ["/", "/about/", "/faq/", "/schools/", "/work/", "/events/", "/blog/", "/terms/", "/privacy/", "/gdpr/", "/projects/nsicc/", "/projects/fmi-game-jam/"];
+  const pages = ["/", "/about/", "/faq/", "/schools/", "/work/", "/events/", "/blog/", "/terms/", "/privacy/", "/gdpr/", "/projects/nsicc/", "/projects/fmi-game-jam/", "/projects/atanasoff48/"];
   const rendered = Object.fromEntries(await Promise.all(pages.map(async (p) => [p, await render(p)])));
   for (const [pathname, html] of Object.entries(rendered)) {
     assert.match(html, /<meta property="og:title" content="[^"]*Qoax Community[^"]*"/, `${pathname} has og:title`);
@@ -318,6 +318,9 @@ test("gives every page a complete link preview and keeps social channels behind 
   // Records with a raster image preview with their own picture; SVG-only records use the site card.
   assert.match(rendered["/projects/nsicc/"], /<meta property="og:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
   assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:image" content="https:\/\/qo\.ax\/journal\/sugaming-jam-2026\.jpg"/);
+  assert.match(rendered["/projects/atanasoff48/"], /<meta property="og:image" content="https:\/\/qo\.ax\/events\/atanasoff48-2026\/atanasoff48-199\.jpg"/);
+  assert.equal((rendered["/projects/atanasoff48/"].match(/\/events\/atanasoff48-2026\/atanasoff48-\d+\.jpg/g) ?? []).length >= 6, true, "Atanasoff48 shows its photo gallery");
+  assert.equal((rendered["/projects/fmi-game-jam/"].match(/\/events\/sugaming-jam-2026\/gamejam-\d+\.jpg/g) ?? []).length >= 5, true, "SUGAMING Jam shows its photo gallery");
   assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Jam · Qoax Community"/);
   assert.match(rendered["/projects/nsicc/"], /<meta name="twitter:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
   // Root pages use the default card at 1200x630.
