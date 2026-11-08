@@ -41,7 +41,7 @@ export default function WorkPage() {
   return (
     <Shell>
       <PageHead
-        label={`Our work · ${nonprofitEntries.length} records`}
+        label={`${nonprofitEntries.length} records`}
         title="Our work"
         copy="The complete index of our non-profit work: school partnerships, student programmes, art, culture, and projects for public-interest organisations. Newest and most active first."
       />

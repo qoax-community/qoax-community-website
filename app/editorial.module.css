@@ -474,7 +474,7 @@
   color: var(--ink-2);
 }
 
-.byline small { color: var(--muted); }
+.byline small { display: block; color: var(--muted); }
 
 .ava {
   display: inline-grid;

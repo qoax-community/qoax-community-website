@@ -16,7 +16,7 @@ export const schoolPartners = [
     name: "SPGE John Atanasoff",
     logo: "/partners/john-atanasoff.webp",
     href: "/projects/john-atanasoff-school",
-    note: "Internship 2026 · Atanasoff48",
+    note: "Internship 2026 and Atanasoff48",
   },
   {
     name: "Professional High School of Telecommunications",

@@ -7,7 +7,7 @@ export const defaultOgImage = {
   url: siteAsset("/og-2026-11.png"),
   width: 1200,
   height: 630,
-  alt: "Qoax Community · qo.ax",
+  alt: "Qoax Community",
 };
 
 type PageMetadataInput = {
@@ -27,11 +27,12 @@ type PageMetadataInput = {
  * Discord, Viber, Slack, or LinkedIn fall back to a title-less preview.
  */
 export function pageMetadata({ title, description, path, image, keywords }: PageMetadataInput): Metadata {
-  const fullTitle = `${title} · ${SITE_NAME}`;
+  // Natural wording instead of a separator; titles that already name the brand stay as they are.
+  const fullTitle = title.includes(SITE_NAME) ? title : `${title} at ${SITE_NAME}`;
   const usableImage = image && !image.endsWith(".svg") ? image : null;
   const ogImages = usableImage ? [{ url: usableImage, alt: title }, defaultOgImage] : [defaultOgImage];
   return {
-    title,
+    title: { absolute: fullTitle },
     description,
     ...(keywords ? { keywords } : {}),
     openGraph: {

@@ -177,7 +177,7 @@ export function Byline({ post, withDate = true }: { post: Post; withDate?: boole
       <Ava authorSlug={post.authorSlug} />
       <span>
         {author.name}
-        {withDate && <small>{" · "}<time dateTime={post.published}>{shortDate(post.published)}</time>{` · ${readingTime(post)} min`}</small>}
+        {withDate && <small><time dateTime={post.published}>{shortDate(post.published)}</time></small>}
       </span>
     </div>
   );

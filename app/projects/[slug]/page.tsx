@@ -77,7 +77,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ? {
         key: "live",
         href: liveUrl,
-        label: `${isEvent && !isCompletedEvent ? "Register" : "Visit"} · ${new URL(liveUrl).hostname.replace(/^www\./, "")}`,
+        label: isEvent && !isCompletedEvent ? "Register" : "Visit the website",
         external: true,
       }
     : undefined;
@@ -108,9 +108,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div>
                 <p className={styles.projectMeta}>
                   <span className={entry.state === "growing" && isEvent ? styles.projectMetaLive : undefined}>{entry.signal ?? stateLabel[entry.state]}</span>
-                  <span aria-hidden="true"> · </span>
-                  {kindLabels[entry.kind]}
-                </p>
+                                  </p>
                 <h1 className={styles.projectTitle}>{entry.title}</h1>
                 <p className={styles.projectSubtitle}>{entry.subtitle}</p>
                 <p className={styles.projectSummary}>{entry.summary}</p>
