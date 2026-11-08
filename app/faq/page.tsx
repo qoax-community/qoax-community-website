@@ -55,7 +55,7 @@ export default function FaqPage() {
             <span aria-current="page">FAQ</span>
           </nav>
         }
-        label={`FAQ · Често задавани въпроси · ${faqItems.length} questions`}
+        label={`FAQ · ${faqItems.length} questions`}
         title="Frequently asked questions"
         copy="What the association does, which events we run, and how to work with us. If your question is missing, write to us and we will add it."
       />
@@ -86,7 +86,6 @@ export default function FaqPage() {
                           <h3><a href={`#${item.id}`}>{item.question}</a></h3>
                           <div className={ed.qBody}>
                             {item.answer.map((paragraph) => <p key={paragraph.slice(0, 40)}><Inlines source={paragraph} /></p>)}
-                            {item.bulgarian && <p lang="bg">{item.bulgarian}</p>}
                           </div>
                         </div>
                       </article>

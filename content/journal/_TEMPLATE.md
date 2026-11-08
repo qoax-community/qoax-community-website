@@ -30,10 +30,6 @@ and [links](https://qo.ax/events/) work.
 
 > A quote from a participant or a document, when it helps.
 
-::: bg
-Абзаци на български се поставят между `::: bg` и `:::` и се маркират като български за търсачките.
-:::
-
 ## What we would change
 
 Say what you would do differently next time. Keep the constraints, mistakes, and decisions visible.

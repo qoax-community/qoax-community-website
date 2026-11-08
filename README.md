@@ -4,12 +4,10 @@ The static, non-profit-only public site for Qoax Community at [qo.ax](https://qo
 
 It documents:
 
-- Atanasoff48 at SPGE John Atanasoff, 2–4 October 2026
-- the John Atanasoff Game Jam at SPGE John Atanasoff, planned for December 2026 (exact dates to be confirmed)
-- the Telecommunications School Hackathon at the Professional High School of Telecommunications, Sofia, planned for March–April 2027 (exact dates to be confirmed)
-- the completed FMI Game Jam at Sofia University, with photos coming soon
-- the Qoax × SUGAMING Gaming Tournament (Counter-Strike 2 and League of Legends), early March 2027
-- the 1–14 July 2026 internship programme for 30+ students
+- the events Qoax Community runs with schools and universities (hackathons, game jams, tournaments,
+  open days) and the summer internship programme. Names, dates, and details live only in
+  `app/archive-tree-data.ts`, which every page, the sitemap, and the feeds read from; do not
+  repeat event names or dates elsewhere in code or docs
 - partnerships with TUES, SPGE John Atanasoff, Popov School, and telecommunications schools in Bulgaria
 - Venus Labyrinth and InfoCareerCenter
 - the public legal documents (Privacy, Terms, GDPR) for the qo.ax domain
@@ -23,7 +21,7 @@ There is no database, API, server application, Academy catalogue, or commercial 
 - Fonts are downloaded at build time by `next/font` and self-hosted. Google Analytics is the optional runtime third-party integration and loads only after consent.
 - Content lives in `app/archive-tree-data.ts` (records, including events with dates, stories, and galleries), `app/data.ts` (project details), and `app/legal-data.ts` (legal documents).
 - Event pages get a live countdown from `app/countdown.tsx`; `upcomingEvents()` drives the home page hero and the events rail.
-- FMI posters in `public/events/` are original SVGs.
+- Event posters in `public/events/` are original SVGs.
 - Shared UI (header, footer, buttons, tags, cards, icons) lives in `app/components.tsx`.
 
 ## Local development

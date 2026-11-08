@@ -75,8 +75,8 @@ export const faqGroups: FaqGroup[] = [
         id: "which-events",
         question: "What events does Qoax run?",
         answer: [
-          "In the 2026/27 season: Atanasoff48, a 48-hour hackathon at SPGE John Atanasoff on 2 to 4 October 2026; the John Atanasoff Game Jam planned for December 2026; the Telecommunications School Hackathon planned for March to April 2027; SUGAMING Game Jam, held 16 to 18 October 2026 at the Faculty of Mathematics and Informatics, Sofia University; the Qoax × SUGAMING Gaming Tournament in early March 2027; and the summer Internship Programme for students from partner schools. Exact dates and participation details for the two planned school events will be announced once confirmed.",
-          "Dates, partners and results for each one are on [the events page](/events/).",
+          "Hackathons, game jams, gaming tournaments, open days, and a summer internship programme, mostly together with schools and universities in Sofia.",
+          "The current calendar, with dates, partners, and results, is on [the events page](/events/).",
         ],
       },
       {
@@ -136,5 +136,3 @@ export function faqPlainText(item: FaqItem) {
     .replace(/`([^`]+)`/g, "$1");
 }
 
-/** Questions surfaced on the About page. */
-export const aboutFaqIds = ["what-is-qoax", "is-qoax-a-company", "which-events", "software-for-ngos"];

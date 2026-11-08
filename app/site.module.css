@@ -1375,6 +1375,7 @@ a.logoCard:hover .logoCaption { opacity: 1; }
 .sideCard h3 { font-size: 18px; }
 .sideCard p { margin-top: 10px; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
 .sideCard .button { margin-top: 18px; }
+.sideCardAction { display: flex; justify-content: flex-end; }
 .sideCard + .sideCard { margin-top: 16px; }
 
 .sideList {

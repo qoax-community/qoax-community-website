@@ -244,7 +244,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       ? "Schools, student clubs, and universities that want to send teams or help organize can reach us directly."
                       : "Students, teachers, and organizations connected to this work can reach the Qoax team directly."}
                   </p>
-                  <Button href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(entry.title)}`} variant="secondary" small>{CONTACT_EMAIL}</Button>
+                  <div className={styles.sideCardAction}>
+                    <Button href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(entry.title)}`} variant="secondary" small>{CONTACT_EMAIL}</Button>
+                  </div>
                 </div>
               </aside>
             </div>

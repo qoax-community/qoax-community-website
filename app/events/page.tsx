@@ -8,7 +8,7 @@ import ed from "../editorial.module.css";
 export const metadata: Metadata = {
   ...pageMetadata({
     title: "Events · Hackathons, game jams, and tournaments",
-    description: "Qoax Community events in Sofia: the John Atanasoff Game Jam planned for December 2026, the Telecommunications School Hackathon planned for March to April 2027, and more.",
+    description: "Hackathons, game jams, and gaming tournaments that Qoax Community runs with schools and universities in Sofia, with confirmed dates and past results.",
     path: "/events/",
   }),
 };
