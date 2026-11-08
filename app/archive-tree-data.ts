@@ -56,7 +56,20 @@ export type Achievement = {
   story?: StorySection[];
   gallery?: GalleryImage[];
   links?: Array<[string, string]>;
+  /** Direct link to this event's livestream or its recording. Falls back to the Qoax channel. */
+  stream?: string;
 };
+
+/** Qoax's YouTube channel, where events are streamed live and recordings are kept. */
+export const QOAX_STREAM_CHANNEL = "https://www.youtube.com/@QoaxCommunity";
+
+/** Every event links to a stream: its own recording when known, otherwise the Qoax channel. */
+export function streamFor(achievement: Pick<Achievement, "kind" | "stream">) {
+  if (achievement.kind !== "event") return undefined;
+  return achievement.stream
+    ? { url: achievement.stream, direct: true }
+    : { url: QOAX_STREAM_CHANNEL, direct: false };
+}
 
 export type AchievementBranch = {
   slug: "nonprofit";
@@ -329,7 +342,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         signal: "Completed",
         mark: "GJ",
         portfolio: true,
-        image: "/journal/sugaming-jam-2026.jpg",
+        image: "/journal/sugaming-jam-2026-presentation.jpg",
         partner: "SUGAMING",
         location: "FMI, Sofia University, Sofia",
         facts: [["Dates", "16–18 Oct 2026"], ["Games published", "7"], ["Host", "FMI, Sofia University"]],
@@ -349,7 +362,6 @@ const achievementBranchDefinitions: AchievementBranch[] = [
           { src: "/events/sugaming-jam-2026/gamejam-594.jpg", alt: "A participant in headphones works on a game at a laptop with a second laptop beside it", caption: "Building and testing on two screens." },
           { src: "/journal/sugaming-jam-2026-board.jpg", alt: "A participant writes a team to-do list on a whiteboard during the jam", caption: "Planning on the whiteboard." },
           { src: "/events/sugaming-jam-2026/gamejam-684.jpg", alt: "Trays of food laid out for participants", caption: "Fuel for the weekend." },
-          { src: "/events/sugaming-jam-2026/gamejam-394.jpg", alt: "Two team members with microphones present their game while a teammate runs the demo on a laptop", caption: "A team presents its game." },
           { src: "/events/sugaming-jam-2026/gamejam-34.jpg", alt: "A participant in sunglasses throws rock-on hand signs", caption: "The mood by the end." },
           { src: "/events/sugaming-jam-2026/gamejam-864.jpg", alt: "Four team members smile and hold Best Game trophies", caption: "The Best Game team with their trophies." },
         ],

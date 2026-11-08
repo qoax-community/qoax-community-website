@@ -310,14 +310,16 @@ test("gives every page a complete link preview and keeps social channels behind 
     assert.match(html, /<meta name="twitter:card" content="summary_large_image"/, `${pathname} has a large twitter card`);
     assert.match(html, /<meta name="twitter:title" content="[^"]*Qoax Community[^"]*"/, `${pathname} has twitter:title`);
     // Social channels are configured through NEXT_PUBLIC_SOCIAL_* and are empty for now.
-    assert.doesNotMatch(html, /facebook\.com|instagram\.com|linkedin\.com|youtube\.com|tiktok\.com/, `${pathname} shows no social links while env is empty`);
+    // Event pages link to the Qoax YouTube channel for their stream; that is not a footer social link.
+    const withoutStream = html.replaceAll("https://www.youtube.com/@QoaxCommunity", "");
+    assert.doesNotMatch(withoutStream, /facebook\.com|instagram\.com|linkedin\.com|youtube\.com|tiktok\.com/, `${pathname} shows no social links while env is empty`);
     assert.doesNotMatch(html, /google-site-verification/, `${pathname} has no verification tag while env is empty`);
   }
   assert.match(rendered["/about/"], /<meta property="og:title" content="About Qoax Community[^"]*· Qoax Community"/);
   assert.match(rendered["/about/"], /<meta property="og:url" content="https:\/\/qo\.ax\/about\/"/);
   // Records with a raster image preview with their own picture; SVG-only records use the site card.
   assert.match(rendered["/projects/nsicc/"], /<meta property="og:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
-  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:image" content="https:\/\/qo\.ax\/journal\/sugaming-jam-2026\.jpg"/);
+  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:image" content="https:\/\/qo\.ax\/journal\/sugaming-jam-2026-presentation\.jpg"/);
   assert.match(rendered["/projects/atanasoff48/"], /<meta property="og:image" content="https:\/\/qo\.ax\/events\/atanasoff48-2026\/atanasoff48-199\.jpg"/);
   assert.equal((rendered["/projects/atanasoff48/"].match(/\/events\/atanasoff48-2026\/atanasoff48-\d+\.jpg/g) ?? []).length >= 6, true, "Atanasoff48 shows its photo gallery");
   assert.equal((rendered["/projects/fmi-game-jam/"].match(/\/events\/sugaming-jam-2026\/gamejam-\d+\.jpg/g) ?? []).length >= 5, true, "SUGAMING Jam shows its photo gallery");
@@ -329,4 +331,19 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/"], /<meta property="og:url" content="https:\/\/qo\.ax\/"/);
   // schema.org sameAs keeps GitHub even with no social channels configured.
   assert.match(rendered["/"], /"sameAs":\["https:\/\/github\.com\/qoax-community"\]/);
+});
+
+test("links every event page to its livestream and uses the presentation photo for SUGAMING Jam", async () => {
+  const events = ["/projects/fmi-game-jam/", "/projects/atanasoff48/", "/projects/sofia-game-jam-2026/", "/projects/tues-game-jam-2026/"];
+  for (const pathname of events) {
+    const html = await render(pathname);
+    assert.match(html, /<a[^>]*href="https:\/\/www\.youtube\.com\/@QoaxCommunity"[^>]*data-stream-link=""/, `${pathname} has a stream link`);
+    assert.match(html, /<h3>Stream<\/h3>/, `${pathname} has a stream card`);
+  }
+  assert.match(await render("/projects/fmi-game-jam/"), />Watch the stream</);
+  assert.match(await render("/projects/sofia-game-jam-2026/"), />Watch live on YouTube</);
+  // Non-event work has no stream.
+  assert.doesNotMatch(await render("/projects/nsicc/"), /data-stream-link/);
+  const home = await render("/");
+  assert.match(home, /\/journal\/sugaming-jam-2026-presentation\.jpg/);
 });
