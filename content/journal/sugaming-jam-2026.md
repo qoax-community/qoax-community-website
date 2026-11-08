@@ -8,7 +8,7 @@ author: qoax-community
 published: 2026-11-04
 featured: true
 record: fmi-game-jam
-image: /journal/sugaming-jam-2026.jpg
+image: /journal/sugaming-jam-2026-presentation.jpg
 ---
 
 ## What it was

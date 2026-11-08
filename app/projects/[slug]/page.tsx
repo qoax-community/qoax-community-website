@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button, CONTACT_EMAIL, EntryVisual, SiteFooter, SiteHeader } from "../../components";
 import { archiveEntries, getArchiveEntry } from "../../archive-data";
-import { kindLabels } from "../../archive-tree-data";
+import { kindLabels, streamFor } from "../../archive-tree-data";
 import styles from "../../site.module.css";
 
 type ProjectPageProps = { params: Promise<{ slug: string }> };
@@ -36,6 +36,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const liveUrl = entry.href ?? entry.project?.href;
   const isEvent = entry.kind === "event";
   const isCompletedEvent = isEvent && entry.state === "unlocked";
+  const stream = streamFor(entry);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
   const pageUrl = `${siteUrl}/projects/${entry.slug}/`;
   const eventSchema =
@@ -91,6 +92,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   {liveUrl && (
                     <Button href={liveUrl} external>
                       {isEvent && !isCompletedEvent ? "Register" : "Visit"} · {new URL(liveUrl).hostname.replace(/^www\./, "")}
+                    </Button>
+                  )}
+                  {stream && (
+                    <Button href={stream.url} external variant="secondary">
+                      {isCompletedEvent ? "Watch the stream" : "Watch live on YouTube"}
                     </Button>
                   )}
                   <Button href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(entry.title)}`} variant={liveUrl ? "secondary" : "primary"}>
@@ -159,6 +165,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </section>
 
               <aside>
+                {stream && (
+                  <div className={styles.sideCard}>
+                    <h3>Stream</h3>
+                    <p>
+                      {isCompletedEvent
+                        ? stream.direct
+                          ? "The event was streamed live. The recording is on YouTube."
+                          : "We stream our events live. Recordings are on the Qoax YouTube channel."
+                        : "We stream this event live on the Qoax YouTube channel. The recording stays there afterwards."}
+                    </p>
+                    <div className={styles.sideLinks}>
+                      <a href={stream.url} rel="noreferrer" target="_blank" data-stream-link="">
+                        <span>{stream.direct ? (isCompletedEvent ? "Watch the recording" : "Open the stream") : "Qoax on YouTube"}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
                 {(entry.facts || entry.project?.tech) && (
                   <div className={styles.sideCard}>
                     <h3>Details</h3>

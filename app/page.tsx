@@ -34,11 +34,11 @@ export default function Home() {
 
           <figure className={ed.heroFigure}>
             <Image
-              alt="A participant in headphones works on a game on two laptops during the SUGAMING Jam"
+              alt="Two team members with microphones present their game at the SUGAMING Jam while a teammate runs the demo"
               height={630}
               priority
               sizes="(max-width: 960px) 100vw, 460px"
-              src={siteAsset("/journal/sugaming-jam-2026.jpg")}
+              src={siteAsset("/journal/sugaming-jam-2026-presentation.jpg")}
               width={1200}
             />
             <figcaption>
