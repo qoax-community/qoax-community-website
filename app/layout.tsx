@@ -13,8 +13,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Qoax Community · Hackathons, game jams and mentoring in Sofia",
-    template: "%s · Qoax Community",
+    default: "Qoax Community, hackathons, game jams and mentoring in Sofia",
+    template: "%s at Qoax Community",
   },
   description:
     "Qoax Community is an independent non-profit in Sofia, Bulgaria. We build useful software, teach project-led programming, and support schools, students, artists, and civic organizations.",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     apple: siteAsset("/apple-touch-icon.png"),
   },
   openGraph: {
-    title: "Qoax Community · Hackathons, game jams and mentoring in Sofia",
+    title: "Qoax Community, hackathons, game jams and mentoring in Sofia",
     description: "An independent non-profit in Sofia. Hackathons, game jams and school programmes for students, plus software for artists and civic groups.",
     type: "website",
     locale: "en_US",

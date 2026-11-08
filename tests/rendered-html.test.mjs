@@ -65,7 +65,9 @@ test("exports the journal with its first Markdown posts", async () => {
     render("/schools/"),
   ]);
 
-  assert.match(journal, /Notes from/);
+  assert.match(journal, /notes from the work/i);
+  // No decorative middle-dot separators anywhere in the exported pages.
+  assert.doesNotMatch(journal + home + schools, /\u00b7|&middot;/);
   const titles = [
     "Atanasoff48: the first 48-hour hackathon at SPGE John Atanasoff",
     "The 2026/27 season: seven events, one calendar",
@@ -324,7 +326,7 @@ test("gives every page a complete link preview and keeps social channels behind 
     assert.doesNotMatch(withoutStream, /facebook\.com|instagram\.com|linkedin\.com|youtube\.com|tiktok\.com/, `${pathname} shows no social links while env is empty`);
     assert.doesNotMatch(html, /google-site-verification/, `${pathname} has no verification tag while env is empty`);
   }
-  assert.match(rendered["/about/"], /<meta property="og:title" content="About Qoax Community[^"]*· Qoax Community"/);
+  assert.match(rendered["/about/"], /<meta property="og:title" content="About Qoax Community, a non-profit in Sofia"/);
   assert.match(rendered["/about/"], /<meta property="og:url" content="https:\/\/qo\.ax\/about\/"/);
   // Records with a raster image preview with their own picture; SVG-only records use the site card.
   assert.match(rendered["/projects/nsicc/"], /<meta property="og:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
@@ -332,7 +334,7 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/projects/atanasoff48/"], /<meta property="og:image" content="https:\/\/qo\.ax\/events\/atanasoff48-2026\/atanasoff48-199\.jpg"/);
   assert.equal((rendered["/projects/atanasoff48/"].match(/\/events\/atanasoff48-2026\/atanasoff48-\d+\.jpg/g) ?? []).length >= 6, true, "Atanasoff48 shows its photo gallery");
   assert.equal((rendered["/projects/fmi-game-jam/"].match(/\/events\/sugaming-jam-2026\/gamejam-\d+\.jpg/g) ?? []).length >= 5, true, "SUGAMING Game Jam shows its photo gallery");
-  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Game Jam · Qoax Community"/);
+  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Game Jam at Qoax Community"/);
   assert.match(rendered["/projects/nsicc/"], /<meta name="twitter:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
   // Root pages use the default card at 1200x630.
   assert.match(rendered["/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og-2026-11\.png"/);

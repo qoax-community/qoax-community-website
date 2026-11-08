@@ -7,7 +7,7 @@ import ed from "../editorial.module.css";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Events · Hackathons, game jams, and tournaments",
+    title: "Hackathons, game jams, and tournaments",
     description: "Hackathons, game jams, and gaming tournaments that Qoax Community runs with schools and universities in Sofia, with confirmed dates and past results.",
     path: "/events/",
   }),
@@ -26,7 +26,7 @@ export default function EventsPage() {
   return (
     <Shell>
       <PageHead
-        label={`Events · ${upcoming.length} upcoming`}
+        label={`${upcoming.length} upcoming`}
         title="Events"
       />
 

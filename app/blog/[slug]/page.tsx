@@ -98,7 +98,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </nav>
           <div className={ed.postHead}>
             <div>
-              <p className={ed.mono}>{`${post.category} · ${readingTime(post)} min read`}</p>
+              <p className={ed.mono}>{`${readingTime(post)} min read`}</p>
               <h1>{post.title}</h1>
               <p className={ed.lede}>{post.lede}</p>
             </div>
@@ -148,7 +148,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
               </section>
             ))}
             <p className={ed.mono} style={{ marginTop: 40 }}>
-              {`Written by ${[author.name, author.affiliation].filter((value, i, all) => all.indexOf(value) === i).join(" · ")} · ${shortDate(post.published)}`}
+              {`Written by ${author.name}${author.affiliation && author.affiliation !== author.name ? ` of ${author.affiliation}` : ""} on ${shortDate(post.published)}`}
             </p>
           </div>
 

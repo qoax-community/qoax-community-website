@@ -52,7 +52,7 @@ export function AnalyticsConsent() {
           Google receives information about your browsing. No advertising. You can reject analytics and use the whole site.
         </p>
         <p className={styles.details}>
-          Change your choice anytime in Cookie settings. <Link href="/privacy/">Privacy policy</Link>{" · "}<Link href="/gdpr/">Cookie details</Link>
+          Change your choice anytime in Cookie settings. Read the <Link href="/privacy/">privacy policy</Link> and the <Link href="/gdpr/">cookie details</Link>.
         </p>
         {settingsOpen && <p className={styles.details}>Current choice: {choice === "accepted" ? "analytics allowed" : choice === "rejected" ? "analytics rejected" : "not yet chosen"}.</p>}
       </div>

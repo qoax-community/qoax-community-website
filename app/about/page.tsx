@@ -11,7 +11,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "About Qoax Community · Non-profit in Sofia",
+    title: "About Qoax Community, a non-profit in Sofia",
     description: "What Qoax Community is: an independent non-profit technology association in Sofia, Bulgaria (Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893). Who is behind it, how we work, and what happens in 2026-2027.",
     path: "/about/",
     keywords: ["About Qoax", "Qoax Community", "Коакс Комюнити", "Куакс", "Kuaks", "non-profit Sofia", "technology community Bulgaria"],
@@ -112,7 +112,8 @@ export default function AboutPage() {
           <dl className={ed.glance}>
             <div><dt>What</dt><dd>Independent non-profit technology community</dd></div>
             <div><dt>Where</dt><dd>Sofia, Bulgaria</dd></div>
-            <div><dt>Registered</dt><dd>{`${legalEntity.registrationDate} · UIC ${legalEntity.uic}`}</dd></div>
+            <div><dt>Registered</dt><dd>{legalEntity.registrationDate}</dd></div>
+            <div><dt>UIC</dt><dd>{legalEntity.uic}</dd></div>
             <div><dt>Contact</dt><dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd></div>
           </dl>
         </div>

@@ -174,7 +174,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       },
       {
         id: "nasa-space-apps-2026",
-        title: "NASA Space Apps Challenge · Sofia",
+        title: "NASA Space Apps Challenge Sofia",
         subtitle: "The world’s largest hackathon lands in Sofia",
         summary: "Two days, 14 to 15 November 2026, where teams use open NASA and partner-agency data to solve real challenges on Earth and in space. Free, open to everyone, and part of a global event with 450+ locations.",
         year: "14-15 Nov 2026",
@@ -188,7 +188,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         image: "/events/nasa-iss072e340644.jpg",
         imageCredit: "Photo: NASA",
         href: "https://www.spaceappschallenge.org/2026/local-events/sofia/",
-        partner: "NASA Space Apps Challenge · Sofia local event",
+        partner: "NASA Space Apps Challenge",
         location: "Incubator @ Sofia Tech Park, Sofia",
         facts: [["Theme", "The Next Frontier"], ["Teams", "1-6 people"], ["Entry", "Free"]],
         detail: "NASA Space Apps is a 48-hour global hackathon run every year by NASA with 17 space-agency partners. On 14 to 15 November 2026, Qoax Community is bringing a local event to Sofia, so students, developers, designers, scientists, and storytellers can work on the same challenges as teams in hundreds of cities around the world, with mentors in the room and NASA data on the table.",
@@ -291,7 +291,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         image: "/events/fmi-tournament.svg",
         partner: "SUGAMING",
         location: "FMI, Sofia University, Sofia",
-        facts: [["Games", "CS2 · LoL"], ["Qualifiers", "27-28 Feb, online"], ["Finals", "6-7 Mar, live"]],
+        facts: [["Games", "CS2 and LoL"], ["Qualifiers", "27-28 Feb, online"], ["Finals", "6-7 Mar, live"]],
         detail: "Together with SUGAMING and the Faculty of Mathematics and Informatics, Qoax Community is organizing two tournaments, in Counter-Strike 2 and League of Legends. The proposed schedule is online qualifiers for both games on 27 to 28 February 2027 and finals with an audience on 6 to 7 March, one day for each game.",
         notice: "These are working dates. Registration, rules, and the final schedule will be published here.",
         story: [

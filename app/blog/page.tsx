@@ -9,7 +9,7 @@ import ed from "../editorial.module.css";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Journal · Notes from the work",
+    title: "Journal, notes from the work",
     description: "The Qoax Community journal: write-ups about hackathons, the internship programme, and the software we build for NGOs and artists in Bulgaria.",
     path: "/blog/",
   }),
@@ -24,7 +24,7 @@ export default function JournalPage() {
   return (
     <Shell>
       <PageHead
-        label={sortedPosts.length > 0 ? `Journal · ${sortedPosts.length} posts` : "Journal · First posts coming soon"}
+        label={sortedPosts.length > 0 ? `${sortedPosts.length} posts` : "First posts coming soon"}
         title="Journal"
       />
 
@@ -89,7 +89,7 @@ export default function JournalPage() {
         return (
           <section className={ed.secTight} aria-labelledby={`${id}-title`} id={id} key={category}>
             <div className={ed.wrap}>
-              <h2 className={ed.h2} id={`${id}-title`} style={{ marginBottom: 12 }}>{`${category} · ${inCategory.length}`}</h2>
+              <h2 className={ed.h2} id={`${id}-title`} style={{ marginBottom: 12 }}>{category}</h2>
               <div className={ed.rows}>{inCategory.map((post) => <PostRow post={post} key={post.slug} />)}</div>
             </div>
           </section>
