@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Btn, Shell } from "./editorial";
 import ed from "./editorial.module.css";
+import { pageMetadata } from "./seo";
 
 export const metadata: Metadata = {
-  title: "Page not found",
+  ...pageMetadata({
+    title: "Page not found on Qoax Community",
+    description: "This page is not on qo.ax. The link may be old, or the page has moved.",
+  }),
   robots: { index: false, follow: true },
 };
 

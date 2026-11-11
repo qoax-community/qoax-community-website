@@ -1,0 +1,46 @@
+# Runs lint, the static-export checks and the real-browser button checks.
+# The browser test skips locally when Chromium is missing, but fails here
+# (CI is set), so the phone hover fix from PR #23 cannot regress unnoticed.
+name: Test site
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: test-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    # Playwright 1.60 cannot install Chromium on Ubuntu 26.04 (ubuntu-latest), so pin a supported release.
+    runs-on: ubuntu-24.04
+    env:
+      CI: "true"
+      NEXT_PUBLIC_BASE_PATH:
+      NEXT_PUBLIC_SITE_URL: https://qo.ax
+    steps:
+      - name: Check out source
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium for the browser test
+        run: npx playwright-core install --with-deps chromium-headless-shell
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build and test
+        run: npm test

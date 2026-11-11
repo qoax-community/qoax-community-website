@@ -7,7 +7,7 @@ import ed from "../editorial.module.css";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Hackathons, game jams, and tournaments",
+    title: "Qoax Community events: hackathons, game jams and tournaments",
     description: "Hackathons, game jams, and gaming tournaments that Qoax Community runs with schools and universities in Sofia, with confirmed dates and past results.",
     path: "/events/",
   }),
@@ -26,13 +26,12 @@ export default function EventsPage() {
   return (
     <Shell>
       <PageHead
-        label={`${upcoming.length} upcoming`}
         title="Events"
       />
 
       <section className={ed.sec} aria-labelledby="dated-title">
         <div className={ed.wrap}>
-          <SecHead number="01" label="Confirmed dates" id="dated-title" title="Confirmed dates" />
+          <SecHead id="dated-title" title="Confirmed dates" />
           {dated.length > 0 ? (
             <div className={ed.rows}>{dated.map((entry) => <RecordRow entry={entry} key={entry.slug} />)}</div>
           ) : (
@@ -45,8 +44,6 @@ export default function EventsPage() {
         <section className={ed.sec} aria-labelledby="undated-title">
           <div className={ed.wrap}>
             <SecHead
-              number="02"
-              label="Dates to be announced"
               id="undated-title"
               title="In preparation"
               copy="Events in preparation, with exact dates still being arranged. Each record page shows the planned period where available and the details announced so far."
@@ -59,8 +56,6 @@ export default function EventsPage() {
       <section className={ed.sec} aria-labelledby="programmes-title">
         <div className={ed.wrap}>
           <SecHead
-            number="03"
-            label="Programmes"
             id="programmes-title"
             title="Programmes"
             copy="Multi-week programmes run with partner schools, such as the summer internship programme."
@@ -72,7 +67,7 @@ export default function EventsPage() {
       {past.length > 0 && (
         <section className={ed.sec} aria-labelledby="past-title">
           <div className={ed.wrap}>
-            <SecHead number="04" label="Past events" id="past-title" title="Past events" />
+            <SecHead id="past-title" title="Past events" />
             <div className={ed.rows}>{past.map((entry) => <RecordRow entry={entry} key={entry.slug} />)}</div>
           </div>
         </section>

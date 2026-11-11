@@ -210,8 +210,9 @@ export function parseJournalMarkdown(source: string): ParsedDocument {
   return { frontmatter, sections: parseSections(body) };
 }
 
-export function inlineText(inlines: Inline[]) {
-  return inlines.map((inline) => inline.text).join("");
+export function inlineText(inlines: Inline[]): string {
+  // Bold text may wrap a link, so flatten its own inline Markdown too.
+  return inlines.map((inline) => (inline.kind === "strong" ? inlineText(parseInline(inline.text)) : inline.text)).join("");
 }
 
 export function blockText(block: Block): string {

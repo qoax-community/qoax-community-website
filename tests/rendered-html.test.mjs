@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import test from "node:test";
 
 async function render(pathname = "/") {
@@ -35,7 +35,7 @@ test("exports the Qoax Community home and index", async () => {
   assert.match(home, /NASA Space Apps Challenge/);
   assert.doesNotMatch(home, /supposed to do that/);
   assert.match(home, /apple-touch-icon\.png/);
-  assert.match(home, /og-2026-11\.png/);
+  assert.match(home, /og-2026-11-10\.png/);
   assert.doesNotMatch(home, /taught and built with people|Public work first/);
   assert.doesNotMatch(home, /\.woff2/);
   assert.doesNotMatch(home, /fonts\.googleapis\.com/);
@@ -65,9 +65,7 @@ test("exports the journal with its first Markdown posts", async () => {
     render("/schools/"),
   ]);
 
-  assert.match(journal, /notes from the work/i);
-  // No decorative middle-dot separators anywhere in the exported pages.
-  assert.doesNotMatch(journal + home + schools, /\u00b7|&middot;/);
+  assert.match(journal, /<title>Qoax Community journal<\/title>/);
   const titles = [
     "Atanasoff48: the first 48-hour hackathon at SPGE John Atanasoff",
     "The 2026/27 season: seven events, one calendar",
@@ -307,7 +305,7 @@ test("exports only the requested non-profit project pages", async () => {
 test("does not export profit or hidden routes", async () => {
   await assert.rejects(render("/portfolio/"));
   const nasa = await render("/projects/nasa-space-apps-2026/");
-  assert.match(nasa, /Incubator @ Sofia Tech Park/);
+  assert.match(nasa, /Incubator building, Sofia Tech Park/);
   assert.doesNotMatch(await render("/projects/tues-game-jam-2026/"), /supposed to do that/);
 });
 
@@ -315,11 +313,12 @@ test("gives every page a complete link preview and keeps social channels behind 
   const pages = ["/", "/about/", "/faq/", "/schools/", "/work/", "/events/", "/blog/", "/terms/", "/privacy/", "/gdpr/", "/projects/nsicc/", "/projects/fmi-game-jam/", "/projects/atanasoff48/"];
   const rendered = Object.fromEntries(await Promise.all(pages.map(async (p) => [p, await render(p)])));
   for (const [pathname, html] of Object.entries(rendered)) {
-    assert.match(html, /<meta property="og:title" content="[^"]*Qoax Community[^"]*"/, `${pathname} has og:title`);
+    assert.match(html, /<meta property="og:title" content="[^"]+"/, `${pathname} has og:title`);
+    assert.match(html, /<meta property="og:site_name" content="Qoax Community"/, `${pathname} names the site`);
     assert.match(html, /<meta property="og:description" content="[^"]+"/, `${pathname} has og:description`);
     assert.match(html, /<meta property="og:image" content="https:\/\/qo\.ax\/[^"]+"/, `${pathname} has an absolute og:image`);
     assert.match(html, /<meta name="twitter:card" content="summary_large_image"/, `${pathname} has a large twitter card`);
-    assert.match(html, /<meta name="twitter:title" content="[^"]*Qoax Community[^"]*"/, `${pathname} has twitter:title`);
+    assert.match(html, /<meta name="twitter:title" content="[^"]+"/, `${pathname} has twitter:title`);
     // Social channels are configured through NEXT_PUBLIC_SOCIAL_* and are empty for now.
     // Event pages link to the Qoax YouTube channel for their stream; that is not a footer social link.
     const withoutStream = html.replaceAll("https://www.youtube.com/@QoaxCommunity", "");
@@ -334,12 +333,18 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/projects/atanasoff48/"], /<meta property="og:image" content="https:\/\/qo\.ax\/events\/atanasoff48-2026\/atanasoff48-199\.jpg"/);
   assert.equal((rendered["/projects/atanasoff48/"].match(/\/events\/atanasoff48-2026\/atanasoff48-\d+\.jpg/g) ?? []).length >= 6, true, "Atanasoff48 shows its photo gallery");
   assert.equal((rendered["/projects/fmi-game-jam/"].match(/\/events\/sugaming-jam-2026\/gamejam-\d+\.jpg/g) ?? []).length >= 5, true, "SUGAMING Game Jam shows its photo gallery");
-  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Game Jam at Qoax Community"/);
+  assert.match(rendered["/projects/fmi-game-jam/"], /<meta property="og:title" content="SUGAMING Game Jam at FMI, Sofia University"/);
   assert.match(rendered["/projects/nsicc/"], /<meta name="twitter:image" content="https:\/\/qo\.ax\/projects\/nsicc\.png"/);
   // Root pages use the default card at 1200x630.
-  assert.match(rendered["/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og-2026-11\.png"/);
+  assert.match(rendered["/"], /<meta property="og:image" content="https:\/\/qo\.ax\/og-2026-11-10\.png"/);
   assert.match(rendered["/"], /<meta property="og:image:width" content="1200"/);
   assert.match(rendered["/"], /<meta property="og:url" content="https:\/\/qo\.ax\/"/);
+  // Every preview image a page points at is actually exported, so link previews never show a missing picture.
+  for (const [page, html] of Object.entries(rendered)) {
+    for (const [, file] of html.matchAll(/<meta (?:property="og:image"|name="twitter:image") content="https:\/\/qo\.ax\/([^"]+)"/g)) {
+      await assert.doesNotReject(stat(new URL(`../out/${decodeURIComponent(file)}`, import.meta.url)), `${page}: preview image ${file} is exported`);
+    }
+  }
   // schema.org sameAs keeps GitHub even with no social channels configured.
   assert.match(rendered["/"], /"sameAs":\["https:\/\/github\.com\/qoax-community"\]/);
 });
@@ -363,9 +368,158 @@ test("links upcoming events to the stream and never fakes a recording for past o
   assert.doesNotMatch(home, /heroPhoto|heroMedia/);
 });
 
-test("keeps the primary button text white on hover and tap", async () => {
-  // The global a:hover colour outranks .buttonPrimary, which made the NASA
-  // "Register" link dark on dark after a tap on phones.
-  const css = await readFile(new URL("../app/site.module.css", import.meta.url), "utf8");
-  assert.match(css, /\.buttonPrimary:hover\s*\{[^}]*color:\s*#fff/);
+async function walk(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = await Promise.all(entries.map((e) => (e.isDirectory() ? walk(new URL(`${e.name}/`, dir)) : [new URL(e.name, dir)])));
+  return files.flat();
+}
+
+test("keeps the primary button text white on hover and tap in the built CSS", async () => {
+  // The global a:hover colour (specificity 0,1,1) outranked .buttonPrimary (0,1,0), which made the
+  // NASA "Register" link dark on dark after a tap on phones. A class plus :hover (0,2,0) wins.
+  // tests/browser.test.mjs checks the same thing in a real browser when Chromium is installed.
+  const sheets = (await walk(new URL("../out/_next/static/", import.meta.url))).filter((url) => url.pathname.endsWith(".css"));
+  const css = (await Promise.all(sheets.map((url) => readFile(url, "utf8")))).join("\n");
+  assert.match(css, /(^|[}\s,])a:hover\{[^}]*color:/, "the global link hover colour this guards against is still there");
+  const rules = [...css.matchAll(/([^{}]+)\{([^}]*)\}/g)].filter(([, selector]) => /buttonPrimary[\w-]*:hover/.test(selector));
+  assert.ok(rules.length > 0, "a primary button hover rule exists");
+  for (const [, selector, body] of rules) {
+    // Every .buttonPrimary:hover rule is class + pseudo-class, so it outranks a:hover regardless of order.
+    for (const part of selector.split(",").filter((p) => p.includes("buttonPrimary"))) {
+      assert.match(part.trim(), /^\.[\w-]+:hover$/, `${part.trim()} is a single class plus :hover`);
+    }
+    if (/color:/.test(body.replace(/background(-color)?:/g, ""))) assert.match(body, /(^|;)color:(#fff|#ffffff|white)(;|$)/, `${selector} keeps white text`);
+  }
+  assert.ok(rules.some(([, , body]) => /(^|;)color:(#fff|#ffffff|white)(;|$)/.test(body)), "a primary hover rule sets white text");
+});
+
+test("uses no decorative middle-dot separators anywhere in the exported site", async () => {
+  // Emil asked for plain single items instead of "X · Y" everywhere, including titles, feeds and images.
+  // Framework bundles under _next/ are excluded; they are not copy.
+  const exported = (await walk(new URL("../out/", import.meta.url))).filter((url) => /\.(html|xml|json|txt|md|svg|webmanifest)$/.test(url.pathname) && !url.pathname.includes("/_next/"));
+  assert.ok(exported.length > 20, "found the exported pages");
+  for (const url of exported) {
+    const text = await readFile(url, "utf8");
+    assert.doesNotMatch(text, /\u00b7|&middot;|&#183;|&#xb7;/i, `${url.pathname} has no middle dot`);
+  }
+});
+
+test("renders the season post's project list as links, not raw Markdown", async () => {
+  const html = await render("/blog/season-2026-27/");
+  const article = html.slice(html.indexOf("<article"), html.indexOf("</article>"));
+  assert.doesNotMatch(article, /\]\(\/|\*\*/, "no raw Markdown link or bold markers");
+  for (const slug of ["nasa-space-apps-2026", "sofia-game-jam-2026", "telecommunications-hackathon-2027"]) {
+    assert.match(article, new RegExp(`<strong><a[^>]*href="/projects/${slug}/"`), `links ${slug}`);
+  }
+});
+
+// Browsers show "&vert;" or "&#124;" as "|", so entities are decoded before the separator check.
+const namedEntities = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", vert: "|", verbar: "|", VerticalLine: "|", bull: "•", bullet: "•", ndash: "–", mdash: "—", sol: "/", middot: "·", centerdot: "·", CenterDot: "·", commat: "@" };
+const decodeEntities = (value) =>
+  value.replace(/&(#x[\da-f]+|#\d+|[a-z]+);/gi, (entity, name) => {
+    if (name[0] === "#") return String.fromCodePoint(name[1].toLowerCase() === "x" ? parseInt(name.slice(2), 16) : Number(name.slice(1)));
+    return namedEntities[name] ?? entity;
+  });
+// A pipe, bullet, or spaced dash or slash between items is the same "X · Y" pattern in another glyph.
+// Pipes and bullets never belong in the copy, so they count even without spaces ("Sofia|2027", "CS2 •LoL").
+const separator = /(^|\s)[–—\/@](\s|$)|[•|·]/;
+const usesSeparator = (value) => separator.test(decodeEntities(value));
+
+test("the separator check sees through HTML entities", () => {
+  for (const value of ["Left | Right", "Left &vert; Right", "Left &verbar; Right", "Left &#124; Right", "Left &#x7C; Right", "Left&nbsp;&bull;&nbsp;Right", "Left &mdash; Right", "Left &#8211; Right", "Sofia|2027", "CS2 •LoL", "Left&bull;Right", "A&#124;B"]) {
+    assert.ok(usesSeparator(value), `"${value}" is a separator`);
+  }
+  for (const value of ["C++ and JS", "Q&amp;A", "48-hour jam", "UIC (ЕИК)", "spaceappschallenge.org", "end of Nov"]) {
+    assert.ok(!usesSeparator(value), `"${value}" is plain text`);
+  }
+});
+
+test("uses no substitute separators in visible text, attributes, or structured data", async () => {
+  // The breadcrumb "/" spans are aria-hidden visual dividers and stay allowed.
+  const exported = (await walk(new URL("../out/", import.meta.url))).filter((url) => /\.(html|xml|svg|md)$/.test(url.pathname) && !url.pathname.includes("/_next/"));
+  for (const url of exported) {
+    const raw = await readFile(url, "utf8");
+    if (url.pathname.endsWith(".md")) {
+      // Exported Markdown is read as plain text, one line at a time.
+      for (const line of raw.split("\n")) assert.ok(!usesSeparator(line), `${url.pathname}: "${line.trim().slice(0, 80)}" uses a separator glyph`);
+      continue;
+    }
+    const jsonLd = [...raw.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].flatMap(([, json]) => {
+      const strings = [];
+      JSON.parse(json, (key, value) => (typeof value === "string" && !/^https?:|^\//.test(value) && strings.push(value), value));
+      return strings;
+    });
+    const html = raw
+      .replace(/<script[\s\S]*?<\/script>/g, "")
+      .replace(/<style[\s\S]*?<\/style>/g, "")
+      .replace(/<span aria-hidden="true">\/<\/span>/g, "");
+    const text = [...html.matchAll(/>([^<]+)</g)].map(([, node]) => node);
+    const attributes = [...html.matchAll(/\s(?:content|alt|title|aria-label)="([^"]*)"/g)].map(([, value]) => value).filter((value) => !/^https?:|^\//.test(value));
+    for (const value of [...text, ...attributes, ...jsonLd]) {
+      assert.ok(!usesSeparator(value), `${url.pathname}: "${value.trim().slice(0, 80)}" uses a separator glyph`);
+    }
+  }
+});
+
+test("gives every exported page a unique, complete title that matches its link preview", async () => {
+  const pages = (await walk(new URL("../out/", import.meta.url))).filter((url) => url.pathname.endsWith(".html") && !url.pathname.includes("/_next/"));
+  assert.ok(pages.length > 20, "found the exported pages");
+  // 404.html, 404/index.html and _not-found/index.html are the same not-found page.
+  const notFound = /\/(404(\/index)?|_not-found\/index)\.html$/;
+  const seen = new Map();
+  for (const url of pages) {
+    const html = await readFile(url, "utf8");
+    const title = html.match(/<title>([^<]*)<\/title>/)?.[1];
+    const og = html.match(/<meta property="og:title" content="([^"]*)"/)?.[1];
+    const twitter = html.match(/<meta name="twitter:title" content="([^"]*)"/)?.[1];
+    assert.ok(title, `${url.pathname} has a <title>`);
+    assert.ok(title.length <= 65, `${url.pathname} title is ${title.length} characters: ${title}`);
+    assert.equal(og, title, `${url.pathname} og:title matches <title>`);
+    assert.equal(twitter, title, `${url.pathname} twitter:title matches <title>`);
+    if (notFound.test(url.pathname)) {
+      assert.equal(title, "Page not found on Qoax Community", `${url.pathname} is the not-found page`);
+      assert.match(html, /<meta name="robots" content="noindex, follow"/, `${url.pathname} is not indexed`);
+      continue;
+    }
+    assert.ok(!seen.has(title), `${url.pathname} repeats the title of ${seen.get(title)}: ${title}`);
+    seen.set(title, url.pathname);
+  }
+});
+
+test("never gives two links on one page the same text but different destinations", async () => {
+  // The NASA page once had "Register on spaceappschallenge.org" twice: the Sofia event and the global site.
+  const pages = (await walk(new URL("../out/", import.meta.url))).filter((url) => url.pathname.endsWith(".html") && !url.pathname.includes("/_next/"));
+  for (const url of pages) {
+    const html = (await readFile(url, "utf8")).replace(/<script[\s\S]*?<\/script>/g, "");
+    const byName = new Map();
+    for (const [, href, inner] of html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)) {
+      const name = inner.replace(/<span aria-hidden="true">[^<]*<\/span>/g, "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+      if (!name) continue;
+      // A mailto subject line is a prefill, not a different destination.
+      const target = href.replace(/#.*$/, "").replace(/^(mailto:[^?]*)\?.*$/, "$1").replace(/\/$/, "");
+      const previous = byName.get(name);
+      assert.ok(previous === undefined || previous === target, `${url.pathname}: "${name}" links to both ${previous} and ${target}`);
+      byName.set(name, target);
+    }
+  }
+});
+
+test("lists the About timeline in date order", async () => {
+  const html = await render("/about/");
+  const section = html.slice(html.indexOf('id="timeline"'));
+  const dates = [...section.slice(0, section.indexOf("</dl>")).matchAll(/<dt>([^<]+)<\/dt>/g)].map((m) => m[1]);
+  assert.ok(dates.length >= 5, "the timeline has its rows");
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  // Each label sorts by year, its first month, then its first day. "End of Nov" counts as late in the month;
+  // a label with no day ("Jan-Feb 2027") sorts at the start of its month, and a bare year before its months.
+  const key = (label) => {
+    const year = Number(label.match(/\b(\d{4})\b/)?.[1]);
+    const month = months.findIndex((name) => new RegExp(`\\b${name}\\b`).test(label));
+    const day = /^End of\b/.test(label) ? 31 : Number(label.match(/^(\d{1,2})\b/)?.[1] ?? 0);
+    assert.ok(year, `"${label}" has a year`);
+    return year * 10000 + (month + 1) * 100 + day;
+  };
+  for (let i = 1; i < dates.length; i += 1) {
+    assert.ok(key(dates[i - 1]) <= key(dates[i]), `"${dates[i - 1]}" comes before "${dates[i]}"`);
+  }
 });

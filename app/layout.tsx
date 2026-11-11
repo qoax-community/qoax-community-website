@@ -12,10 +12,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: "Qoax Community, hackathons, game jams and mentoring in Sofia",
-    template: "%s at Qoax Community",
-  },
+  title: "Qoax Community: hackathons, game jams and mentoring in Sofia",
   description:
     "Qoax Community is an independent non-profit in Sofia, Bulgaria. We build useful software, teach project-led programming, and support schools, students, artists, and civic organizations.",
   keywords: [
@@ -54,7 +51,7 @@ export const metadata: Metadata = {
     apple: siteAsset("/apple-touch-icon.png"),
   },
   openGraph: {
-    title: "Qoax Community, hackathons, game jams and mentoring in Sofia",
+    title: "Qoax Community: hackathons, game jams and mentoring in Sofia",
     description: "An independent non-profit in Sofia. Hackathons, game jams and school programmes for students, plus software for artists and civic groups.",
     type: "website",
     locale: "en_US",
@@ -64,7 +61,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Qoax Community",
+    title: "Qoax Community: hackathons, game jams and mentoring in Sofia",
     description: "Hackathons, game jams and mentoring for students in Sofia.",
     images: [defaultOgImage.url],
   },
@@ -84,13 +81,13 @@ const organizationSchema = {
   alternateName: [legalEntity.nameEn, ...brandAlternateNames],
   url: `${siteUrl}/`,
   logo: `${siteUrl}${siteAsset("/icon-512.png")}`,
-  image: `${siteUrl}${siteAsset("/og-2026-11.png")}`,
+  image: `${siteUrl}${siteAsset("/og-2026-11-10.png")}`,
   email: legalEntity.contactEmail,
   foundingDate: "2026-07-24",
   nonprofitStatus: "NonprofitType",
   identifier: {
     "@type": "PropertyValue",
-    propertyID: "ЕИК / UIC (Bulgarian Registry Agency)",
+    propertyID: "UIC (ЕИК) issued by the Bulgarian Registry Agency",
     value: legalEntity.uic,
   },
   taxID: legalEntity.uic,

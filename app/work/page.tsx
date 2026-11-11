@@ -7,30 +7,27 @@ import ed from "../editorial.module.css";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Our work",
+    title: "Projects by Qoax Community",
     description: "The complete index of Qoax Community non-profit work: school partnerships, student programmes, hackathons, and technology built for cultural and civic organisations in Bulgaria.",
     path: "/work/",
   }),
 };
 
-const groups: Array<{ number: string; label: string; title: React.ReactNode; copy: string; kinds: AchievementKind[] }> = [
+const groups: Array<{ number: string; title: React.ReactNode; copy: string; kinds: AchievementKind[] }> = [
   {
     number: "01",
-    label: "Programmes and events",
     title: "Run with students and their schools",
     copy: "Hackathons, game jams, tournaments, and the summer internship programme.",
     kinds: ["event", "programme"],
   },
   {
     number: "02",
-    label: "Culture and civic organisations",
     title: "Software for civic and cultural organisations",
     copy: "Technical stewardship for artists and non-profits: installations, websites, and the unglamorous work of keeping them running.",
     kinds: ["culture", "ngo"],
   },
   {
     number: "03",
-    label: "Partner schools",
     title: "Long-term partnerships",
     copy: "Technology schools across Bulgaria whose students take part in our programmes.",
     kinds: ["school"],
@@ -41,7 +38,6 @@ export default function WorkPage() {
   return (
     <Shell>
       <PageHead
-        label={`${nonprofitEntries.length} records`}
         title="Our work"
         copy="The complete index of our non-profit work: school partnerships, student programmes, art, culture, and projects for public-interest organisations. Newest and most active first."
       />
@@ -53,7 +49,7 @@ export default function WorkPage() {
         return (
           <section className={ed.sec} aria-labelledby={id} key={group.number}>
             <div className={ed.wrap}>
-              <SecHead number={group.number} label={group.label} id={id} title={group.title} copy={group.copy} />
+              <SecHead id={id} title={group.title} copy={group.copy} />
               <div className={ed.rows}>{entries.map((entry) => <RecordRow entry={entry} key={entry.slug} />)}</div>
               <p className={`${ed.mono} ${ed.rowsFooter}`}>{`${entries.length} ${entries.length === 1 ? "record" : "records"}`}</p>
             </div>

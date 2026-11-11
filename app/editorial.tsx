@@ -12,7 +12,8 @@ import ed from "./editorial.module.css";
 function renderInline(inline: Inline, key: number) {
   switch (inline.kind) {
     case "strong":
-      return <strong key={key}>{inline.text}</strong>;
+      // Bold text may wrap a link, e.g. **[Title](/path)**.
+      return <strong key={key}>{parseInline(inline.text).map(renderInline)}</strong>;
     case "em":
       return <em key={key}>{inline.text}</em>;
     case "code":
@@ -104,7 +105,7 @@ export function Btn({
   );
 }
 
-/* ---------- Section head: "01 / Upcoming" ---------- */
+/* ---------- Section head ---------- */
 
 export function SecHead({
   title,
@@ -112,8 +113,6 @@ export function SecHead({
   action,
   id,
 }: {
-  number?: string;
-  label: string;
   title: ReactNode;
   copy?: string;
   action?: ReactNode;
@@ -133,16 +132,15 @@ export function SecHead({
 /* ---------- Ruled rows for records ---------- */
 
 export function RecordRow({ entry }: { entry: ArchiveEntry }) {
-  const [day, month] = entry.calendar ?? [entry.year, ""];
+  // The date sits on the first line and the year on its own second line, for every row alike.
+  const split = entry.year.match(/^(.+)\s(\d{4})$/);
+  const date = entry.calendar ? entry.calendar.join(" ") : split?.[1] ?? entry.year;
+  const year = entry.calendar ? entry.year.match(/\d{4}/)?.[0] : split?.[2];
   return (
     <Link className={ed.row} href={`/projects/${entry.slug}`}>
       <div className={ed.rowDate}>
-        {entry.startsAt ? (
-          <time dateTime={entry.startsAt.slice(0, 10)}>{entry.calendar ? `${day} ${month}` : entry.year}</time>
-        ) : (
-          entry.calendar ? `${day} ${month}` : entry.year
-        )}
-        {entry.calendar && <small>{entry.year.match(/\d{4}/)?.[0] ?? entry.year}</small>}
+        {entry.startsAt ? <time dateTime={entry.startsAt.slice(0, 10)}>{date}</time> : date}
+        {year && <small>{year}</small>}
       </div>
       <div>
         <h3 className={ed.rowTitle}>{entry.title}</h3>
@@ -177,7 +175,7 @@ export function Byline({ post, withDate = true }: { post: Post; withDate?: boole
       <Ava authorSlug={post.authorSlug} />
       <span>
         {author.name}
-        {withDate && <small><time dateTime={post.published}>{shortDate(post.published)}</time></small>}
+        {withDate && <small><time dateTime={post.published}>{shortDate(post.published)}</time>, {readingTime(post)} min read</small>}
       </span>
     </div>
   );
@@ -223,7 +221,6 @@ export function PageHead({
   aside,
   crumbs,
 }: {
-  label: string;
   title: ReactNode;
   copy?: string;
   aside?: ReactNode;
@@ -236,10 +233,12 @@ export function PageHead({
         <div>
           <h1>{title}</h1>
         </div>
-        <div className={ed.headAside}>
-          {copy && <p className={ed.headCopy}>{copy}</p>}
-          {aside}
-        </div>
+        {(copy || aside) && (
+          <div className={ed.headAside}>
+            {copy && <p className={ed.headCopy}>{copy}</p>}
+            {aside}
+          </div>
+        )}
       </div>
     </header>
   );

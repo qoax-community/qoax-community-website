@@ -198,7 +198,7 @@ export function formatDate(iso: string) {
 
 export function shortDate(iso: string) {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
-    day: "2-digit",
+    day: "numeric",
     month: "short",
     year: "numeric",
     timeZone: "UTC",

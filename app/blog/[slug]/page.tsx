@@ -83,7 +83,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     wordCount: wordCount(post),
     author: person,
     publisher: { "@id": `${siteUrl}/#organization` },
-    isPartOf: { "@type": "Blog", "@id": `${siteUrl}/blog/#blog`, name: "Qoax Community Journal", url: `${siteUrl}/blog/` },
+    isPartOf: { "@type": "Blog", "@id": `${siteUrl}/blog/#blog`, name: "Qoax Community journal", url: `${siteUrl}/blog/` },
     ...(record ? { about: { "@type": "Event", name: record.title, url: `${siteUrl}/projects/${record.slug}/` } } : {}),
   };
 
@@ -98,7 +98,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </nav>
           <div className={ed.postHead}>
             <div>
-              <p className={ed.mono}>{`${readingTime(post)} min read`}</p>
               <h1>{post.title}</h1>
               <p className={ed.lede}>{post.lede}</p>
             </div>
@@ -116,6 +115,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                   <div className={ed.kvRow}><dt>Updated</dt><dd><time dateTime={post.updated}>{formatDate(post.updated)}</time></dd></div>
                 )}
                 <div className={ed.kvRow}><dt>Category</dt><dd>{groupPostsByCategory ? <Link href={`/blog/#${categoryAnchor(post.category)}`}>{post.category}</Link> : post.category}</dd></div>
+                <div className={ed.kvRow}><dt>Reading time</dt><dd>{`${readingTime(post)} min`}</dd></div>
                 {record && (
                   <div className={ed.kvRow}><dt>Record</dt><dd><Link href={`/projects/${record.slug}`}>{record.title}</Link></dd></div>
                 )}

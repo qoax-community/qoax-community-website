@@ -30,6 +30,8 @@ export type Achievement = {
   /** When true, the record is hidden from the site (no page, no listing, not counted). */
   draft?: boolean;
   title: string;
+  /** Page title when the plain title would be vague on its own, e.g. a school name. */
+  metaTitle?: string;
   subtitle: string;
   summary: string;
   /** Human-readable date label, e.g. "14-15 Nov 2026" */
@@ -48,6 +50,8 @@ export type Achievement = {
   portfolio?: boolean;
   signal?: string;
   href?: string;
+  /** Set to "register" when `href` is a sign-up page; the button then reads "Register on <host>" instead of "Visit <host>". */
+  liveLabel?: "register";
   partner?: string;
   /** Label for the partner fact, e.g. "Organized by". Defaults to "With". */
   partnerLabel?: string;
@@ -100,6 +104,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "atanasoff48",
         title: "Atanasoff48",
+        metaTitle: "Atanasoff48 hackathon at SPGE John Atanasoff",
         subtitle: "The first SPGE John Atanasoff hackathon",
         summary: "The first edition of the school’s 48-hour hackathon: 62 participants in 16 teams at the SPGE John Atanasoff STEM Centre, 2 to 4 October 2026.",
         year: "2-4 Oct 2026",
@@ -140,6 +145,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "sofia-game-jam-2026",
         title: "Sofia Game Jam",
+        metaTitle: "Sofia Game Jam 2026",
         subtitle: "Arcade with a Mission",
         summary: "A game jam in Sofia on 20 to 22 November 2026. This year’s theme is “Arcade with a Mission”: games for arcade machines that take bottles and cans.",
         year: "20-22 Nov 2026",
@@ -158,6 +164,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "tues-game-jam-2026",
         title: "TUES Game Jam",
+        metaTitle: "TUES Game Jam 2026",
         subtitle: "A school game jam at TUES",
         summary: "A game jam at TUES at the end of November 2026. The theme is announced at the opening.",
         year: "End of Nov 2026",
@@ -188,8 +195,10 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         image: "/events/nasa-iss072e340644.jpg",
         imageCredit: "Photo: NASA",
         href: "https://www.spaceappschallenge.org/2026/local-events/sofia/",
-        partner: "NASA Space Apps Challenge",
-        location: "Incubator @ Sofia Tech Park, Sofia",
+        liveLabel: "register",
+        partner: "NASA International Space Apps Challenge",
+        partnerLabel: "Part of",
+        location: "Incubator building, Sofia Tech Park, Sofia",
         facts: [["Theme", "The Next Frontier"], ["Teams", "1-6 people"], ["Entry", "Free"]],
         detail: "NASA Space Apps is a 48-hour global hackathon run every year by NASA with 17 space-agency partners. On 14 to 15 November 2026, Qoax Community is bringing a local event to Sofia, so students, developers, designers, scientists, and storytellers can work on the same challenges as teams in hundreds of cities around the world, with mentors in the room and NASA data on the table.",
         notice: "Registration is free on spaceappschallenge.org: choose the Sofia local event. The venue is the Incubator building at Sofia Tech Park, 111B Tsarigradsko Shose Blvd. Places are limited.",
@@ -208,7 +217,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
             ],
             timeline: [
               ["17 Sep 2026", "Challenges revealed"],
-              ["28 Oct 2026", "Full challenge statements and NASA / partner datasets released"],
+              ["28 Oct 2026", "Full challenge statements released, with datasets from NASA and partner agencies"],
               ["14-15 Nov 2026", "Hackathon weekend, Sofia and 450+ locations worldwide"],
               ["After the event", "Local judging, then global judging of nominated projects"],
             ],
@@ -236,13 +245,14 @@ const achievementBranchDefinitions: AchievementBranch[] = [
           { src: "/events/nasa-black-marble.jpg", alt: "Composite satellite image of Earth at night showing city lights", caption: "Earth at night, NASA’s Black Marble composite." },
         ],
         links: [
-          ["Register on spaceappschallenge.org", "https://www.spaceappschallenge.org/"],
+          ["NASA Space Apps Challenge website", "https://www.spaceappschallenge.org/"],
           ["Space Apps Bulgaria on Facebook", "https://www.facebook.com/SpaceAppsChallengeBulgaria/"],
         ],
       },
       {
         id: "john-atanasoff-game-jam-2026",
         title: "Atanasoff Jam",
+        metaTitle: "Atanasoff Jam at SPGE John Atanasoff",
         subtitle: "The SPGE John Atanasoff game jam",
         summary: "A game jam at SPGE John Atanasoff in January to February 2027: teams make a game together, with mentors, and present the finished projects.",
         year: "Jan-Feb 2027",
@@ -308,6 +318,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "telecommunications-hackathon-2027",
         title: "Telecommunications Hackathon",
+        metaTitle: "Telecommunications Hackathon 2027 in Sofia",
         subtitle: "Technology for healthcare",
         summary: "A hackathon at the Professional High School of Telecommunications in Sofia on 26 to 28 March 2027. The theme is technology for healthcare.",
         year: "26-28 Mar 2027",
@@ -336,6 +347,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "fmi-game-jam",
         title: "SUGAMING Game Jam",
+        metaTitle: "SUGAMING Game Jam at FMI, Sofia University",
         subtitle: "A game jam at FMI, Sofia University",
         summary: "A game jam organized by the SUGAMING club at the Faculty of Mathematics and Informatics, 16 to 18 October 2026. Seven games were submitted.",
         year: "16-18 Oct 2026",
@@ -378,6 +390,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "internship-program-2026",
         title: "Internship Programme 2026",
+        metaTitle: "Internship Programme 2026 with partner schools",
         subtitle: "Thirty-plus students building in teams",
         summary: "A shared programme for more than 30 students from Bulgarian technology schools, held from 1 to 14 July 2026.",
         year: "1-14 Jul 2026",
@@ -394,6 +407,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "venus-labyrinth",
         title: "Venus Labyrinth",
+        metaTitle: "Venus Labyrinth sensory theatre",
         subtitle: "Art, space, light, and human choice",
         summary: "Technical stewardship for a 28-room sensory theatre work where technology stays invisible and the experience comes first.",
         year: "2025",
@@ -409,6 +423,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "infocareercenter",
         title: "InfoCareerCenter",
+        metaTitle: "Qoax Community and InfoCareerCenter",
         subtitle: "Technology for an NGO",
         summary: "A bilingual digital presence for a national student information and career-guidance organization.",
         year: "2025",
@@ -424,6 +439,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "tues",
         title: "TUES",
+        metaTitle: "Qoax Community and TUES",
         subtitle: "Technology-school partnership",
         summary: "A continuing relationship with one of Bulgaria’s strongest student technology communities.",
         year: "Active",
@@ -438,6 +454,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "john-atanasoff-school",
         title: "SPGE John Atanasoff",
+        metaTitle: "Qoax Community and SPGE John Atanasoff",
         subtitle: "School partnership",
         summary: "A practical partnership spanning student initiatives, the 2026 internship programme, and Atanasoff48.",
         year: "Active",
@@ -452,6 +469,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "popov-school",
         title: "Popov School",
+        metaTitle: "Qoax Community and Popov School",
         subtitle: "School partnership",
         summary: "A partner school contributing students and shared momentum to the 2026 internship programme.",
         year: "2026",
@@ -466,6 +484,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
       {
         id: "telecommunications-schools-bulgaria",
         title: "Telecommunications Schools",
+        metaTitle: "Qoax Community and the telecommunications schools",
         subtitle: "Internship network across Bulgaria",
         summary: "Relationships with telecommunications-focused schools connecting students to real technical project work.",
         year: "2026",
