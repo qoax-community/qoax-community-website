@@ -35,7 +35,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
             <section className={styles.legalEntity} aria-labelledby="legal-entity-title">
               <h2 id="legal-entity-title">Controller: {legalEntity.nameBg}</h2>
               <dl className={styles.entityGrid}>
-                <div><dt>UIC / ЕИК</dt><dd>{legalEntity.uic}</dd></div>
+                <div><dt>UIC (ЕИК)</dt><dd>{legalEntity.uic}</dd></div>
                 <div><dt>Contact</dt><dd><a href={`mailto:${legalEntity.contactEmail}`}>{legalEntity.contactEmail}</a></dd></div>
                 <div><dt>Registered address</dt><dd>{legalEntity.addressEn}</dd></div>
                 <div><dt>Адрес на управление</dt><dd>{legalEntity.addressBg}</dd></div>

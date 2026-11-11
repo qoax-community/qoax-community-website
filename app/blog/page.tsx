@@ -9,7 +9,7 @@ import ed from "../editorial.module.css";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Journal, notes from the work",
+    title: "Qoax Community journal",
     description: "The Qoax Community journal: write-ups about hackathons, the internship programme, and the software we build for NGOs and artists in Bulgaria.",
     path: "/blog/",
   }),
@@ -24,7 +24,6 @@ export default function JournalPage() {
   return (
     <Shell>
       <PageHead
-        label={sortedPosts.length > 0 ? `${sortedPosts.length} posts` : "First posts coming soon"}
         title="Journal"
       />
 

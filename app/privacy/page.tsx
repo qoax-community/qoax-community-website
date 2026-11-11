@@ -7,7 +7,7 @@ const document = legalDocument("privacy");
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: document.title,
+    title: "Qoax Community privacy policy",
     description: document.description,
     path: "/privacy/",
   }),

@@ -4,7 +4,7 @@ import { siteAsset } from "./site-path";
 export const SITE_NAME = "Qoax Community";
 
 export const defaultOgImage = {
-  url: siteAsset("/og-2026-11.png"),
+  url: siteAsset("/og-2026-11-10.png"),
   width: 1200,
   height: 630,
   alt: "Qoax Community",
@@ -27,8 +27,8 @@ type PageMetadataInput = {
  * Discord, Viber, Slack, or LinkedIn fall back to a title-less preview.
  */
 export function pageMetadata({ title, description, path, image, keywords }: PageMetadataInput): Metadata {
-  // Natural wording instead of a separator; titles that already name the brand stay as they are.
-  const fullTitle = title.includes(SITE_NAME) ? title : `${title} at ${SITE_NAME}`;
+  // Each page passes its complete title. The brand is carried by og:site_name, so no suffix is added.
+  const fullTitle = title;
   const usableImage = image && !image.endsWith(".svg") ? image : null;
   const ogImages = usableImage ? [{ url: usableImage, alt: title }, defaultOgImage] : [defaultOgImage];
   return {

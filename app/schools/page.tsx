@@ -11,7 +11,7 @@ import ed from "../editorial.module.css";
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "Schools we work with",
+    title: "Schools working with Qoax Community",
     description: "Qoax Community partners with technology schools in Bulgaria: TUES, SPGE John Atanasoff, PGVT A. S. Popov, the Professional High School of Telecommunications, and Private School St. Sofia. Internships, hackathons, and student-council events.",
     path: "/schools/",
   }),
@@ -39,7 +39,6 @@ export default function SchoolsPage() {
   return (
     <Shell>
       <PageHead
-        label={`${schoolPartners.length} schools`}
         title="Schools we work with"
         copy="Technology schools whose students took part in the 2026 internship programme or whose student councils run events with us."
       />
@@ -84,8 +83,6 @@ export default function SchoolsPage() {
       <section className={ed.sec} aria-labelledby="ways-title">
         <div className={ed.wrap}>
           <SecHead
-            number="01"
-            label="How a partnership works"
             id="ways-title"
             title="How a partnership works"
           />
@@ -107,8 +104,6 @@ export default function SchoolsPage() {
       <section className={ed.sec} aria-labelledby="records-title">
         <div className={ed.wrap}>
           <SecHead
-            number="02"
-            label="School records"
             id="records-title"
             title="School records"
             copy="What we did together, when, and what came of it."

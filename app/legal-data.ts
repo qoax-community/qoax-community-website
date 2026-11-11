@@ -26,9 +26,9 @@ export const legalEntity = {
 } as const;
 
 const questionnairePrivacy = {
-  title: "Въпросници и вътрешна аналитика на QOAX Community",
+  title: "Въпросници и вътрешна аналитика на Qoax Community",
   paragraphs: [
-    "При попълване на въпросник в crm.qo.ax Google потвърждава имейла Ви. Записваме името, имейла, Google идентификатора, изпратените отговори, въпросите към момента на подаване, датата и версията на информацията за личните данни. Достъп има оторизираният екип на QOAX Community. При проучвания за обучения целта включва сравнение на интереса по училища през учебните години, планиране на бъдещи курсове и подобряване на програмите.",
+    "При попълване на въпросник в crm.qo.ax Google потвърждава имейла Ви. Записваме името, имейла, Google идентификатора, изпратените отговори, въпросите към момента на подаване, датата и версията на информацията за личните данни. Достъп има оторизираният екип на Qoax Community. При проучвания за обучения целта включва сравнение на интереса по училища през учебните години, планиране на бъдещи курсове и подобряване на програмите.",
     "Отговорите се пазят до 3 години (1095 дни) от подаването, освен ако във въпросника е посочен по-кратък срок. Това е максимална продуктова настройка, а не универсален законов срок; преглеждаме необходимостта ежегодно и заличаваме данните по-рано, когато целта отпадне или е приложимо искане за изтриване. След изтичане автоматичното почистване ги премахва от активната база. Участието е доброволно, а съгласието за обработване на отговорите не разрешава рекламни съобщения.",
     "Незадължителната вътрешна аналитика се включва само след съгласие. Записва посещение, успешен Google вход, започване и успешно изпращане: вид събитие, време, въпросник и хеш на случаен браузърен идентификатор. В тези записи няма имейл, отговори, IP адрес или данни за устройство. Новите събития се пазят до 3 години (1095 дни) от записването за сравнение на използването през учебните години и подобряване на формите. Във въпросниците няма Google Analytics или рекламни тракери; аналитиката на публичния qo.ax сайт е отделна.",
     "Можете да продължите с Google без незадължителна аналитика и да промените избора от Настройки на аналитиката във формата. Google входът сам по себе си не дава съгласие. Необходимите бисквитки поддържат входа до 2 часа, връщането от Google до 10 минути и избора за браузърна аналитика до 180 дни. Разрешението за имейл аналитика е отделно за въпросника и потвърдения имейл, до 90 дни. Тези срокове за запомняне на избора не са срокове за изтриване на вече събраната статистика.",
@@ -47,7 +47,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
       "We collect only the information needed to operate public pages, answer messages, run community programmes and protect the service.",
       "We do not sell personal data, run behavioural advertising or build advertising profiles.",
       "Google Analytics runs on the public website only after you accept analytics. Rejecting analytics does not restrict access to the site. You can withdraw consent through Cookie settings in the footer.",
-      "Google sign-in is used when a user chooses it, including questionnaire respondents. Gmail sending permissions are requested separately from authorized QOAX staff, never from questionnaire respondents.",
+      "Google sign-in is used when a user chooses it, including questionnaire respondents. Gmail sending permissions are requested separately from authorized Qoax staff, never from questionnaire respondents.",
       "Requests about personal data can be sent to contact@qo.ax or to the registered address below.",
     ],
     sections: [
@@ -65,7 +65,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
           "Operational data for community programmes, including schools, student programmes, partners, events, participation notes and public-interest project records.",
           "Technical and security data, such as request timestamps, user agent, IP-based security records, error logs and audit events.",
           "With analytics consent: pages visited, referring websites, visit times, engagement and interactions, browser and device information, approximate location, and pseudonymous cookie identifiers. Google processes network information, including the IP address, to deliver Analytics and derive approximate location; Google states that GA4 does not log or store individual IP addresses from EU users.",
-          "Google account data, when a QOAX user signs in or grants Gmail sending permission: Google account identifier, verified email, display name and OAuth authorization status.",
+          "Google account data, when a Qoax user signs in or grants Gmail sending permission: Google account identifier, verified email, display name and OAuth authorization status.",
           "Email delivery data in connected services, such as sender, recipient, message template, delivery status, opens, link clicks and replies when tracking is enabled for an outreach workflow.",
         ],
       },
@@ -75,7 +75,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
           "To publish and maintain the qo.ax public website and related community records.",
           "With your permission, to understand use of our public pages and improve their content and usability using Google Analytics 4.",
           "To answer messages, coordinate school and partner work, plan meetings and follow up on community programmes.",
-          "To operate authorized internal QOAX tools, including authentication, CRM, mail and accounting workspaces.",
+          "To operate authorized internal Qoax tools, including authentication, CRM, mail and accounting workspaces.",
           "To keep services secure, diagnose faults, prevent misuse and maintain audit records.",
           "To comply with legal, accounting, regulatory or dispute-related obligations where applicable.",
         ],
@@ -93,7 +93,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
       {
         title: "5. Recipients and processors",
         bullets: [
-          "Authorized QOAX team members and service administrators, limited to what their work requires.",
+          "Authorized Qoax team members and service administrators, limited to what their work requires.",
           "Infrastructure providers for static hosting, databases, backups, email delivery, logs and service monitoring.",
           "Google for Google Analytics after you accept analytics, and separately when Google sign-in or Gmail authorization is used in a connected service.",
           "Public authorities, courts, advisers or counterparties when required by law, protection of rights or a legitimate programme need.",
@@ -141,19 +141,19 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
   terms: {
     id: "terms",
     title: "Terms of Use",
-    description: "Rules for using qo.ax public pages and connected QOAX community services.",
+    description: "Rules for using qo.ax public pages and connected Qoax Community services.",
     updated: "Last updated: 1 September 2026",
     summary: [
       "qo.ax is the public website of Qoax Community and documents community, school, student, art and civic technology work.",
       "Public pages are informational. Specific programmes, events or paid services may have separate confirmations or terms.",
-      "QOAX materials, marks, website design and platform code remain protected unless a separate license says otherwise.",
+      "Qoax materials, marks, website design and platform code remain protected unless a separate license says otherwise.",
       "Use the site and connected services lawfully and do not attempt to bypass security or access another person's data.",
     ],
     sections: [
       {
         title: "1. Provider and scope",
         paragraphs: [
-          `${legalEntity.nameEn}, UIC ${legalEntity.uic}, operates qo.ax. These terms apply to visitors using the public pages and to authorized users accessing connected QOAX services from this domain or through QOAX authentication.`,
+          `${legalEntity.nameEn}, UIC ${legalEntity.uic}, operates qo.ax. These terms apply to visitors using the public pages and to authorized users accessing connected Qoax services from this domain or through Qoax authentication.`,
           "If a programme, event, academy enrollment, partnership or internal service has its own written terms, confirmation or agreement, that document applies in addition to these terms.",
         ],
       },
@@ -166,16 +166,16 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
       {
         title: "3. Accounts and authorized access",
         bullets: [
-          "Some QOAX services use Google sign-in or central QOAX Auth and are available only to authorized users.",
+          "Some Qoax services use Google sign-in or central Qoax Auth and are available only to authorized users.",
           "Keep login links, sessions and authorization grants private. Report suspected unauthorized access promptly.",
           "Do not use another person's account, scrape private data, bypass access controls or overload the service.",
-          "OAuth permissions, including Gmail sending permission, must be granted only by authorized QOAX users and may be revoked by the user or service administrator.",
+          "OAuth permissions, including Gmail sending permission, must be granted only by authorized Qoax users and may be revoked by the user or service administrator.",
         ],
       },
       {
         title: "4. Content and intellectual property",
         paragraphs: [
-          "QOAX keeps the rights in its name, marks, website design, software, curriculum, internal tools and published materials, except where an open-source license or written permission says otherwise.",
+          "Qoax keeps the rights in its name, marks, website design, software, curriculum, internal tools and published materials, except where an open-source license or written permission says otherwise.",
           "Project partners, schools, artists and contributors keep their own rights in materials they provide. Public project records may refer to partners and link to their public resources for documentation and attribution.",
         ],
       },
@@ -184,7 +184,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
         bullets: [
           "Do not upload or send unlawful, harmful, privacy-invasive, discriminatory, malicious or rights-infringing material.",
           "Do not attempt to access administrative pages, CRM records, email tracking records, accounting records or user data unless you are authorized.",
-          "Do not interfere with the availability, security or integrity of QOAX systems.",
+          "Do not interfere with the availability, security or integrity of Qoax systems.",
         ],
       },
       {
@@ -218,7 +218,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
         bullets: [
           "The public static website may be cached by the browser so pages and assets load faster.",
           "The local-storage entry qoax.analytics-consent.v1 remembers whether you accepted or rejected analytics, the notice version and the expiry time, for up to 180 days. It is necessary to honour your choice and is not an analytics identifier. If browser storage is blocked, the choice may only last for the current page.",
-          "Connected QOAX applications may use local storage, session storage or secure cookies for login state, UI preferences, drafts, filters and application continuity.",
+          "Connected Qoax applications may use local storage, session storage or secure cookies for login state, UI preferences, drafts, filters and application continuity.",
         ],
       },
       {
@@ -234,7 +234,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
       {
         title: "3. Email and link tracking",
         paragraphs: [
-          "Authorized internal outreach systems may record delivery status, opens, link clicks and replies for emails sent by QOAX. Tracking links should use opaque identifiers rather than exposing database IDs or sensitive labels in the URL.",
+          "Authorized internal outreach systems may record delivery status, opens, link clicks and replies for emails sent by Qoax. Tracking links should use opaque identifiers rather than exposing database IDs or sensitive labels in the URL.",
           "These records are used to prioritize follow-up, understand whether a message was received and keep a practical audit trail for the outreach workflow.",
         ],
       },

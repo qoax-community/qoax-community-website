@@ -28,7 +28,7 @@ export function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
-    <title>Qoax Community Journal</title>
+    <title>Qoax Community journal</title>
     <link>${siteUrl}/blog/</link>
     <atom:link href="${siteUrl}/blog/feed.xml" rel="self" type="application/rss+xml" />
     <description>Notes from the work of Qoax Community (Коакс Комюнити): events, programmes, and the software we build for public-interest organisations in Bulgaria.</description>

@@ -38,8 +38,6 @@ export default function Home() {
       <section className={ed.sec} aria-labelledby="upcoming-title" id="upcoming">
         <div className={ed.wrap}>
           <SecHead
-            number="01"
-            label="Upcoming"
             id="upcoming-title"
             title="Upcoming events"
             action={<Btn href="/events" variant="ghost" small>All events</Btn>}
@@ -54,8 +52,6 @@ export default function Home() {
       <section className={ed.sec} aria-labelledby="journal-title">
         <div className={ed.wrap}>
           <SecHead
-            number="02"
-            label="Journal"
             id="journal-title"
             title="Journal"
             action={<Btn href="/blog" variant="ghost" small>Read the journal</Btn>}
@@ -79,8 +75,6 @@ export default function Home() {
       <section className={ed.sec} aria-labelledby="schools-title" id="schools">
         <div className={ed.wrap}>
           <SecHead
-            number="03"
-            label="School network"
             id="schools-title"
             title="Schools we work with"
             copy="Technology schools whose students took part in the 2026 internship programme or whose councils run events with us."

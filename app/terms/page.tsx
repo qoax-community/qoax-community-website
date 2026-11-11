@@ -7,7 +7,7 @@ const document = legalDocument("terms");
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: document.title,
+    title: "Qoax Community terms of use",
     description: document.description,
     path: "/terms/",
   }),

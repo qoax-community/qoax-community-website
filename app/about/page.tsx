@@ -52,8 +52,8 @@ const timelineSource: (string | TimelineItem)[] = [
   "sofia-game-jam-2026",
   "tues-game-jam-2026",
   "john-atanasoff-game-jam-2026",
-  "fmi-esports-tournament-2027",
   "john-atanasoff-open-day-2027",
+  "fmi-esports-tournament-2027",
   "telecommunications-hackathon-2027",
 ];
 
@@ -102,7 +102,6 @@ export default function AboutPage() {
             <span aria-current="page">About</span>
           </nav>
         }
-        label="About"
         title="About Qoax"
         copy="Qoax Community connects technology, education, culture, and civic initiative in Sofia, Bulgaria. We learn by building, and we grow by sharing what we know."
       />
@@ -113,7 +112,7 @@ export default function AboutPage() {
             <div><dt>What</dt><dd>Independent non-profit technology community</dd></div>
             <div><dt>Where</dt><dd>Sofia, Bulgaria</dd></div>
             <div><dt>Registered</dt><dd>{legalEntity.registrationDate}</dd></div>
-            <div><dt>UIC</dt><dd>{legalEntity.uic}</dd></div>
+            <div><dt>UIC (ЕИК)</dt><dd>{legalEntity.uic}</dd></div>
             <div><dt>Contact</dt><dd><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></dd></div>
           </dl>
         </div>
@@ -156,7 +155,7 @@ export default function AboutPage() {
 
       <section className={ed.sec} aria-labelledby="how-we-work-title" id="how-we-work">
         <div className={ed.wrap}>
-          <SecHead number="02" label="How we work" id="how-we-work-title" title="How we work" />
+          <SecHead id="how-we-work-title" title="How we work" />
           <ul className={ed.cols4}>
             {principles.map(([title, copy]) => (
               <li className={ed.cell} key={title}>
@@ -210,7 +209,7 @@ export default function AboutPage() {
           <dl className={ed.kv}>
             <div className={ed.kvRow}><dt>Registered name</dt><dd lang="bg">{legalEntity.nameBg}</dd></div>
             <div className={ed.kvRow}><dt>English name</dt><dd>{legalEntity.nameEn}</dd></div>
-            <div className={ed.kvRow}><dt>UIC / ЕИК</dt><dd>{legalEntity.uic}</dd></div>
+            <div className={ed.kvRow}><dt>UIC (ЕИК)</dt><dd>{legalEntity.uic}</dd></div>
             <div className={ed.kvRow}><dt>Registered</dt><dd>{legalEntity.registrationDate}</dd></div>
             <div className={ed.kvRow}><dt>Address</dt><dd>{legalEntity.addressEn}</dd></div>
             <div className={ed.kvRow}><dt>Contact</dt><dd><a href={`mailto:${legalEntity.contactEmail}`}>{legalEntity.contactEmail}</a></dd></div>

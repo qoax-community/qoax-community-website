@@ -1287,8 +1287,6 @@ a.logoCard:hover .logoCaption { opacity: 1; }
 .prose > p { max-width: 66ch; margin-top: 18px; color: var(--ink-2); font-size: 17.5px; line-height: 1.7; }
 
 .notice {
-  display: flex;
-  gap: 12px;
   max-width: 66ch;
   margin-top: 24px;
   padding: 16px 20px;
@@ -1755,4 +1753,6 @@ a.logoCard:hover .logoCaption { opacity: 1; }
 .tagAccent { color: var(--amber-900); }
 .entityGrid a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-strong); }
 .listRow:hover .listArrow { background: var(--ink); }
-.prose p, .prose li { hyphens: auto; }
+/* Keep at least 4 letters on each side of an automatic hyphen, so a word never breaks as "re-leased". */
+.prose p, .prose li { hyphens: auto; hyphenate-limit-chars: 8 4 4; }
+.address { hyphens: manual; white-space: nowrap; }

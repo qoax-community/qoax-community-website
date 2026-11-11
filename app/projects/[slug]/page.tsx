@@ -10,6 +10,14 @@ import styles from "../../site.module.css";
 
 type ProjectPageProps = { params: Promise<{ slug: string }> };
 
+// Prose is hyphenated automatically, which can split a web address such as spaceappschallenge.org
+// into a version a reader might copy with the hyphen. Keep addresses whole.
+function keepAddresses(text: string) {
+  return text.split(/(\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:org|com|ax|bg|net|io)\b)/i).map((part, index) =>
+    index % 2 ? <span className={styles.address} key={index}>{part}</span> : part,
+  );
+}
+
 export function generateStaticParams() {
   return archiveEntries.map((entry) => ({ slug: entry.slug }));
 }
@@ -19,7 +27,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const entry = getArchiveEntry(slug);
   if (!entry) return {};
   return pageMetadata({
-    title: entry.title,
+    title: entry.metaTitle ?? entry.title,
     description: entry.summary,
     path: `/projects/${entry.slug}/`,
     image: entry.image,
@@ -66,7 +74,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ? entry.imageCredit.replace(/^Photo:/, "Photos:")
     : entry.imageCredit;
 
-  // Button groups read left to right with the main action last (rightmost).
+  // The main action comes first. The hero column is too narrow for three buttons on one row,
+  // so a main action placed last would wrap onto a row of its own.
   const mailAction = {
     key: "mail",
     href: `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(entry.title)}`,
@@ -77,7 +86,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     ? {
         key: "live",
         href: liveUrl,
-        label: isEvent && !isCompletedEvent ? "Register" : "Visit the website",
+        // Name the destination so visitors know they are leaving qo.ax.
+        label: `${entry.liveLabel === "register" && !isCompletedEvent ? "Register on" : "Visit"} ${new URL(liveUrl).hostname.replace(/^www\./, "")}`,
         external: true,
       }
     : undefined;
@@ -89,7 +99,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         external: true,
       }
     : undefined;
-  const actions = (isCompletedEvent ? [mailAction, liveAction, streamAction] : [mailAction, streamAction, liveAction])
+  const actions = (isCompletedEvent ? [streamAction, liveAction, mailAction] : [liveAction, streamAction, mailAction])
     .filter((action): action is NonNullable<typeof action> => Boolean(action));
 
   return (
@@ -108,7 +118,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <div>
                 <p className={styles.projectMeta}>
                   <span className={entry.state === "growing" && isEvent ? styles.projectMetaLive : undefined}>{entry.signal ?? stateLabel[entry.state]}</span>
-                                  </p>
+                </p>
                 <h1 className={styles.projectTitle}>{entry.title}</h1>
                 <p className={styles.projectSubtitle}>{entry.subtitle}</p>
                 <p className={styles.projectSummary}>{entry.summary}</p>
@@ -118,7 +128,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                       external={action.external}
                       href={action.href}
                       key={action.key}
-                      variant={index === actions.length - 1 ? "primary" : "secondary"}
+                      variant={index === 0 ? "primary" : "secondary"}
                     >
                       {action.label}
                     </Button>
@@ -150,17 +160,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <p>{narrative}</p>
                   </>
                 )}
-                {entry.notice && <p className={styles.notice}>{entry.notice}</p>}
+                {entry.notice && <p className={styles.notice}>{keepAddresses(entry.notice)}</p>}
 
                 {entry.story && (
                   <div className={styles.story}>
                     {entry.story.map((section) => (
                       <section className={styles.storySection} key={section.title}>
                         <h3>{section.title}</h3>
-                        {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                        {section.paragraphs?.map((paragraph) => <p key={paragraph}>{keepAddresses(paragraph)}</p>)}
                         {section.bullets && (
                           <ul>
-                            {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                            {section.bullets.map((bullet) => <li key={bullet}>{keepAddresses(bullet)}</li>)}
                           </ul>
                         )}
                         {section.timeline && (

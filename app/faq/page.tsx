@@ -55,7 +55,6 @@ export default function FaqPage() {
             <span aria-current="page">FAQ</span>
           </nav>
         }
-        label={`${faqItems.length} questions`}
         title="Frequently asked questions"
         copy="What the association does, which events we run, and how to work with us. If your question is missing, write to us and we will add it."
       />

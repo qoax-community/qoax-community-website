@@ -25,5 +25,5 @@
   <g fill="#a9c0b2" transform="translate(150 640) scale(14)" shape-rendering="crispEdges">
     <rect x="1" y="0" width="1" height="1"/><rect x="3" y="0" width="1" height="1"/><rect x="0" y="1" width="5" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="0" y="3" width="5" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/>
   </g>
-  <text x="600" y="760" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="34" fill="rgba(255,255,255,0.7)" letter-spacing="6">PRESS START · 48H · FMI</text>
+  <text x="600" y="760" text-anchor="middle" font-family="Menlo, Consolas, monospace" font-size="34" fill="rgba(255,255,255,0.7)" letter-spacing="6">A 48-HOUR GAME JAM AT FMI</text>
 </svg>

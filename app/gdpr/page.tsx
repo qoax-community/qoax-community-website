@@ -7,7 +7,7 @@ const document = legalDocument("gdpr");
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: document.title,
+    title: "Qoax Community GDPR and browser storage notice",
     description: document.description,
     path: "/gdpr/",
   }),
