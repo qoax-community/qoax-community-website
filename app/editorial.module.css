@@ -1167,21 +1167,40 @@ a.school:hover { border-color: var(--line-strong); }
 .cta h2 { font-size: 18px; }
 .cta p { margin-top: 4px; color: var(--muted); font-size: 14.5px; }
 
-/* Footer: dark ink band */
-.foot { background: var(--brand-yellow); color: var(--ink); border-top: 0; padding: 44px 0 28px; margin-top: 24px; }
-.footBrand p { color: var(--ink-2); font-size: 14px; }
-.footBrand a { color: var(--ink); }
-.footCol h3 { color: var(--ink); font-size: 14px; font-weight: 600; margin-bottom: 10px; }
-.footCol ul { gap: 6px; }
+/* Footer: yellow band, duck on top, big wordmark at the bottom. On large
+   screens it sits fixed behind the page and is revealed as the page scrolls
+   away, inside a wrapper whose clip-path keeps it from showing elsewhere. */
+.footReveal { --foot-h: 440px; position: relative; margin-top: 24px; }
+.foot { position: relative; overflow: hidden; background: var(--brand-yellow); color: var(--ink); border-top: 0; padding: 48px 0 28px; margin-top: 0; }
+.footLife { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.footInner { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+.footGrid { grid-template-columns: minmax(0, 4fr) repeat(3, minmax(0, 2fr)); }
+.footBrand p { margin-top: 18px; max-width: 34ch; color: var(--ink-2); font-size: 14px; }
+.footDuckLink { display: inline-block; }
+.footDuck { display: block; width: 46px; height: auto; transition: transform 0.2s ease; }
+.footDuckLink:hover .footDuck { transform: rotate(-8deg); }
+.footCol h3 { color: var(--ink); font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.footCol ul { gap: 8px; }
+.footCol li { color: var(--ink-2); font-size: 14px; }
 .footCol a, .footCol button { color: var(--ink-2); font-size: 14px; }
 .footCol a:hover, .footCol button:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-.footLegal { border-top-color: rgba(28, 28, 26, 0.2); color: var(--ink-2); font-size: 12.5px; }
-.footLegal a { color: var(--ink); }
-/* The Qoax duck sits at the end of the legal line, on every page. */
-.footLegal { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
-.footDuck { flex: none; width: 30px; height: auto; }
-.foot .brand, .foot .brand:hover { color: var(--ink); }
-.foot .brandName { color: var(--ink-2); border-left-color: rgba(28, 28, 26, 0.3); }
+.footIconLink { display: inline-flex; align-items: center; gap: 8px; }
+.footIconLink svg { flex: none; }
+.footBottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.footMark { display: block; flex: none; }
+.footMark img { display: block; width: clamp(150px, 18vw, 230px); height: auto; }
+.footLegal { display: block; margin: 0; padding: 0; border: 0; max-width: 64ch; text-align: right; color: var(--ink-2); font-size: 12.5px; }
+
+@media (min-width: 1101px) and (min-height: 640px) {
+  .footReveal { height: var(--foot-h); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  .footReveal .foot { position: fixed; left: 0; right: 0; bottom: 0; height: var(--foot-h); }
+}
+
+@media (max-width: 720px) {
+  .footInner { gap: 40px; }
+  .footBottom { flex-direction: column; align-items: flex-start; }
+  .footLegal { text-align: left; }
+}
 
 /* Interior page header */
 .head { padding: clamp(32px, 4vw, 48px) 0 clamp(20px, 2.5vw, 28px); gap: 24px; }
