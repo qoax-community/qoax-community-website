@@ -10,6 +10,7 @@ import { socialLinks } from "./social-links";
 import { NavLinks } from "./nav-links";
 import { CookieSettingsButton } from "./analytics-consent";
 import { LifeCanvas } from "./life-canvas";
+import { FooterReveal } from "./footer-reveal";
 
 export const CONTACT_EMAIL = "contact@qo.ax";
 export const ACADEMY_URL = "https://qoax.academy/";
@@ -170,7 +171,7 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <div className={ed.footReveal}>
+    <FooterReveal className={ed.footReveal}>
       <footer className={ed.foot}>
         <LifeCanvas className={ed.footLife} />
         <div className={`${ed.wrap} ${ed.footInner}`}>
@@ -224,6 +225,6 @@ export function SiteFooter() {
           </div>
         </div>
       </footer>
-    </div>
+    </FooterReveal>
   );
 }

@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { getArchiveEntry } from "../../archive-data";
 import { authors, categoryAnchor, formatDate, groupPostsByCategory, getPost, postPreviewImage, posts, readingTime, relatedPosts, shortDate, wordCount } from "../../blog-data";
 import { pageMetadata } from "../../seo";
-import { Ava, Btn, ContentBlock, PostCard, Shell } from "../../editorial";
+import { Ava, Btn, ContentBlock, Cta, PostCard, Shell } from "../../editorial";
 import ed from "../../editorial.module.css";
+import { ShareLinks } from "../share-links";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 
@@ -155,7 +156,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <aside className={ed.side}>
             <div>
               <h2>Tags</h2>
-              <p className={ed.sideTagList}>{post.tags.join(", ")}</p>
+              <ul className={ed.tagChips}>
+                {post.tags.map((tag) => (
+                  <li key={tag}><Link href={`/blog/?q=${encodeURIComponent(tag)}`}>{tag}</Link></li>
+                ))}
+              </ul>
             </div>
             {record && (
               <div>
@@ -175,10 +180,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             )}
             <div>
               <h2>Share</h2>
-              <ul>
-                <li><a href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(url)}`}>Send by email</a></li>
-                <li><Link href="/blog/feed.xml">RSS feed</Link></li>
-              </ul>
+              <ShareLinks title={post.title} url={url} />
             </div>
           </aside>
         </div>
@@ -197,6 +199,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         </section>
       )}
+
+      <Cta
+        title="Have a question about this post, or want to take part next time?"
+        copy="Write to us. We answer every message, and we publish what we do."
+        secondary={<Btn href="/blog" variant="ghost">Read more posts</Btn>}
+      />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </Shell>
