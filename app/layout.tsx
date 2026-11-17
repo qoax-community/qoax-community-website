@@ -44,10 +44,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: siteAsset("/brand/qoax-favicon-community.svg"), type: "image/svg+xml" },
+      { url: siteAsset("/brand/qoax-favicon-duck.svg"), type: "image/svg+xml" },
+      { url: siteAsset("/favicon.ico"), sizes: "16x16 32x32 48x48" },
       { url: siteAsset("/icon-512.png"), sizes: "512x512", type: "image/png" },
     ],
-    shortcut: siteAsset("/brand/qoax-favicon-community.svg"),
+    shortcut: siteAsset("/favicon.ico"),
     apple: siteAsset("/apple-touch-icon.png"),
   },
   openGraph: {

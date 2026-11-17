@@ -1177,6 +1177,9 @@ a.school:hover { border-color: var(--line-strong); }
 .footCol a:hover, .footCol button:hover { color: #fff; }
 .footLegal { border-top-color: #2a3c31; color: #8fa096; font-size: 12.5px; }
 .footLegal a { color: #c3cdc6; }
+/* The Qoax duck sits at the end of the legal line, on every page. */
+.footLegal { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+.footDuck { flex: none; width: 30px; height: auto; }
 .foot .brand, .foot .brand:hover { color: #fff; }
 .foot .brandName { color: #a9b6ad; border-left-color: #3a4c41; }
 

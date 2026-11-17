@@ -31,8 +31,9 @@ test("exports the Qoax Community home and index", async () => {
   assert.doesNotMatch(home, /Community paper/);
   assert.doesNotMatch(home, /Fieldwork ledger/);
   assert.match(home, /Get in touch/);
-  // NASA Space Apps Sofia is official and listed; unannounced jam themes stay private.
-  assert.match(home, /NASA Space Apps Challenge/);
+  // NASA Space Apps Sofia is official and listed (on Events once it is no longer upcoming);
+  // unannounced jam themes stay private.
+  assert.match(events, /NASA Space Apps Challenge/);
   assert.doesNotMatch(home, /supposed to do that/);
   assert.match(home, /apple-touch-icon\.png/);
   assert.match(home, /og-2026-11-10\.png/);
@@ -160,8 +161,11 @@ test("publishes the FAQ and the About page with searchable structure", async () 
   assert.match(about, /contact@qo\.ax/);
   assert.equal((about.match(/<h1[\s>]/g) ?? []).length, 1);
 
-  // The Q badge sits next to the wordmark in the header and the FAQ is reachable from the footer.
-  assert.match(home, /qoax-favicon-community\.svg/);
+  // The Qoax duck is the favicon and sits in the footer; the FAQ is reachable from the footer.
+  assert.match(home, /qoax-favicon-duck\.svg/);
+  assert.match(home, /favicon\.ico/);
+  assert.match(home, /qoax-duck-light\.svg/);
+  assert.doesNotMatch(home, /qoax-favicon-community\.svg/);
   assert.match(home, /href="\/faq\/"/);
 });
 
