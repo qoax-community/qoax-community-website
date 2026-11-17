@@ -9,6 +9,7 @@ import ed from "./editorial.module.css";
 import { socialLinks } from "./social-links";
 import { NavLinks } from "./nav-links";
 import { CookieSettingsButton } from "./analytics-consent";
+import { LifeCanvas } from "./life-canvas";
 
 export const CONTACT_EMAIL = "contact@qo.ax";
 export const ACADEMY_URL = "https://qoax.academy/";
@@ -43,6 +44,23 @@ function iconAttributes({ size = 18, className }: IconProps) {
 
 function MenuIcon(props: IconProps) {
   return <svg {...iconAttributes(props)}><path d="M4 7h16M4 12h16M4 17h16" /></svg>;
+}
+
+function PinIcon(props: IconProps) {
+  return (
+    <svg {...iconAttributes(props)}>
+      <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" />
+      <circle cx="12" cy="9.5" r="2.5" />
+    </svg>
+  );
+}
+
+function GithubIcon(props: IconProps) {
+  return (
+    <svg {...iconAttributes(props)}>
+      <path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" />
+    </svg>
+  );
 }
 
 function MailIcon(props: IconProps) {
@@ -152,52 +170,60 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   return (
-    <footer className={ed.foot}>
-      <div className={ed.wrap}>
-        <div className={ed.footGrid}>
-          <div className={ed.footBrand}>
-            <Link className={ed.brand} href="/" aria-label="Qoax home">
-              <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} />
+    <div className={ed.footReveal}>
+      <footer className={ed.foot}>
+        <LifeCanvas className={ed.footLife} />
+        <div className={`${ed.wrap} ${ed.footInner}`}>
+          <div className={ed.footGrid}>
+            <div className={ed.footBrand}>
+              <Link href="/" aria-label="Qoax home" className={ed.footDuckLink}>
+                <Image className={ed.footDuck} src={siteAsset("/brand/qoax-duck-mono.svg")} alt="The Qoax duck" title="Quack." width={690} height={765} />
+              </Link>
+              <p>
+                An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school
+                programmes.
+              </p>
+            </div>
+
+            <div className={ed.footCol}>
+              <h3>Community</h3>
+              <ul>
+                {footerCommunity.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}
+              </ul>
+            </div>
+            <div className={ed.footCol}>
+              <h3>Organisation</h3>
+              <ul>
+                <li><Link href="/about">About</Link></li>
+                <li><Link href="/faq">FAQ</Link></li>
+                {legalNavigation.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}
+                <li><CookieSettingsButton /></li>
+              </ul>
+            </div>
+            <div className={ed.footCol}>
+              <h3>Contact</h3>
+              <ul>
+                <li><a className={ed.footIconLink} href={`mailto:${CONTACT_EMAIL}`}><MailIcon size={15} /> {CONTACT_EMAIL}</a></li>
+                <li className={ed.footIconLink}><PinIcon size={15} /> Sofia, Bulgaria</li>
+                <li><a className={ed.footIconLink} href={GITHUB_URL} rel="noreferrer" target="_blank"><GithubIcon size={15} /> GitHub</a></li>
+                {socialLinks.map((link) => (
+                  <li key={link.id}><a href={link.url} rel="noreferrer" target="_blank">{link.label} ↗</a></li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className={ed.footBottom}>
+            <Link href="/" aria-label="Qoax home" className={ed.footMark}>
+              <Image src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} />
             </Link>
-            <p>
-              An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school
-              programmes.
-            </p>
-            <p>
-              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            <p className={ed.footLegal}>
+              {`© ${new Date().getFullYear()} Qoax Community. ${legalEntity.nameEn}, UIC ${legalEntity.uic}. `}
+              <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}.`}</span>
             </p>
           </div>
-
-          <div className={ed.footCol}>
-            <h3>Community</h3>
-            <ul>
-              {footerCommunity.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}
-            </ul>
-          </div>
-          <div className={ed.footCol}>
-            <h3>Organisation</h3>
-            <ul>
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/faq">FAQ</Link></li>
-              <li><a href={GITHUB_URL} rel="noreferrer" target="_blank">GitHub ↗</a></li>
-              {socialLinks.map((link) => (
-                <li key={link.id}><a href={link.url} rel="noreferrer" target="_blank">{link.label} ↗</a></li>
-              ))}
-              {legalNavigation.map(([label, href]) => <li key={href}><Link href={href}>{label}</Link></li>)}
-              <li><CookieSettingsButton /></li>
-            </ul>
-          </div>
         </div>
-
-        <div className={ed.footLegal}>
-          <span>
-            {`© ${new Date().getFullYear()} Qoax Community. ${legalEntity.nameEn}, UIC ${legalEntity.uic}. `}
-            <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}.`}</span>
-            {" Sofia, Bulgaria."}
-          </span>
-          <Image className={ed.footDuck} src={siteAsset("/brand/qoax-duck-mono.svg")} alt="The Qoax duck" title="Quack." width={690} height={765} />
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 }
