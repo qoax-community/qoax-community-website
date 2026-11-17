@@ -164,7 +164,7 @@ test("publishes the FAQ and the About page with searchable structure", async () 
   // The Qoax duck is the favicon and sits in the footer; the FAQ is reachable from the footer.
   assert.match(home, /qoax-favicon-duck\.svg/);
   assert.match(home, /favicon\.ico/);
-  assert.match(home, /qoax-duck-light\.svg/);
+  assert.match(home, /qoax-duck-mono\.svg/);
   assert.doesNotMatch(home, /qoax-favicon-community\.svg/);
   assert.match(home, /href="\/faq\/"/);
 });

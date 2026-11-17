@@ -788,8 +788,8 @@ a.logoCard:hover .logoCaption { opacity: 1; }
   overflow: clip;
 }
 
-.academy .eyebrow { color: #a9c0b2; }
-.academy .eyebrow::before { background: #a9c0b2; }
+.academy .eyebrow { color: #bdbbb3; }
+.academy .eyebrow::before { background: #bdbbb3; }
 .academy .lead { color: rgba(255, 255, 255, 0.76); }
 
 .academyHead {
@@ -840,7 +840,7 @@ a.logoCard:hover .logoCaption { opacity: 1; }
 .pathCard:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
 
 .pathCard > span {
-  color: #a9c0b2;
+  color: #bdbbb3;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0;
