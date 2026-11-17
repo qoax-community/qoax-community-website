@@ -31,19 +31,23 @@ npm install
 npm run dev
 ```
 
-`npm install` checks out the [qoax-githooks](https://github.com/qoax-community/qoax-githooks)
-submodule under `.githooks/shared` and points git at `.githooks`, so every
-commit message is checked against [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
-before the commit is created. The same hook runs in CI over the pull request
-title and every non-merge commit it carries.
+`.githooks/commit-msg` is a tracked copy of the commit-msg hook of
+[qoax-githooks](https://github.com/qoax-community/qoax-githooks). `npm install`
+points git at `.githooks`, so the hook checks every commit message against
+[Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)
+before git creates the commit. CI runs the release of the hook that
+`.github/workflows/commit-conventions.yml` pins, over the pull request title and
+every non-merge commit. CI also compares the copy with that release. The
+[qoax-githooks README](https://github.com/qoax-community/qoax-githooks#readme)
+gives the details.
 
 - rejected messages are reported in full, one entry per broken rule, each with a fix
 - if you already set `core.hooksPath` yourself, the installer leaves it alone and warns instead — your own hooks keep working, and this check does not run locally
 - `git commit --no-verify` skips the local check — CI still runs it
 - `git commit --cleanup=<mode>` on the command line is invisible to a hook, which sees only `commit.cleanup`. Under a mode the hook cannot know about, a `#` line may be judged as a comment and then stored as text; set `commit.cleanup` in your config if you use a non-default mode
 - the hook needs bash 4+ (`brew install bash` on macOS); without it the hook warns instead of blocking
-- Dependabot moves the submodule pin forward as the hook changes; `git config --global submodule.recurse true` makes `git pull` follow it, otherwise you keep running the hook version you first cloned
-- `.githooks/shared/scripts/check-messages.sh main..HEAD` checks a branch before you push it. The hook's own test suite lives in qoax-githooks and runs there
+- Dependabot opens a pull request that moves the qoax-githooks pin in the workflow. When a release changes the hook, the check of that pull request fails until the pull request also updates `.githooks/commit-msg`. After the merge, `git pull` gives you the new hook
+- `COMMIT_MSG_HOOK=.githooks/commit-msg <qoax-githooks clone>/scripts/check-messages.sh main..HEAD` checks a branch before you push it. The hook's own test suite lives in qoax-githooks and runs there
 
 ## Static publishing
 
