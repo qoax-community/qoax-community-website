@@ -195,6 +195,7 @@ export function SiteFooter() {
             <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}.`}</span>
             {" Sofia, Bulgaria."}
           </span>
+          <Image className={ed.footDuck} src={siteAsset("/brand/qoax-duck-light.svg")} alt="The Qoax duck" title="Quack." width={690} height={765} />
         </div>
       </div>
     </footer>
