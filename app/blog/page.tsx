@@ -6,6 +6,7 @@ import { CONTACT_EMAIL } from "../components";
 import { categoryAnchor, featuredPost, groupPostsByCategory, postCategories, postPreviewImage, sortedPosts } from "../blog-data";
 import { Btn, Byline, PageHead, PostRow, Shell } from "../editorial";
 import ed from "../editorial.module.css";
+import { JournalSearch, type SearchItem } from "./journal-search";
 
 export const metadata: Metadata = {
   ...pageMetadata({
@@ -20,6 +21,11 @@ export default function JournalPage() {
   const rest = sortedPosts.filter((post) => post.slug !== featuredPost?.slug);
   const featuredImage = featuredPost ? postPreviewImage(featuredPost) : undefined;
   const categories = postCategories.filter((category) => sortedPosts.some((post) => post.category === category));
+  const searchItems: SearchItem[] = sortedPosts.map((post) => ({
+    slug: post.slug,
+    text: [post.title, post.excerpt, post.category, ...post.tags].join(" ").toLowerCase(),
+    row: <PostRow post={post} />,
+  }));
 
   return (
     <Shell>
@@ -42,58 +48,62 @@ export default function JournalPage() {
         </section>
       )}
 
-      {featuredPost && (
-      <section className={ed.secTight} aria-labelledby="featured-title">
-        <div className={ed.wrap}>
-          <article className={featuredImage ? ed.feat : `${ed.feat} ${ed.featSingle}`}>
-            <div>
-              <p className={ed.mono}>{featuredPost.category}</p>
-              <h2 id="featured-title"><Link href={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link></h2>
-              <p className={ed.featExcerpt}>{featuredPost.excerpt}</p>
-              <div style={{ marginTop: 18 }}><Byline post={featuredPost} /></div>
-              <div style={{ marginTop: 22 }}><Btn href={`/blog/${featuredPost.slug}`} small>Read the post</Btn></div>
-            </div>
-            {featuredImage && (
-              <Link aria-hidden="true" className={ed.featMedia} href={`/blog/${featuredPost.slug}`} tabIndex={-1}>
-                <Image alt="" height={630} src={featuredImage} width={1200} />
-              </Link>
+      {sortedPosts.length > 0 && (
+      <JournalSearch items={searchItems}>
+        {featuredPost && (
+        <section className={ed.secTight} aria-labelledby="featured-title">
+          <div className={ed.wrap}>
+            <article className={featuredImage ? ed.feat : `${ed.feat} ${ed.featSingle}`}>
+              <div>
+                <p className={ed.mono}>{featuredPost.category}</p>
+                <h2 id="featured-title"><Link href={`/blog/${featuredPost.slug}`}>{featuredPost.title}</Link></h2>
+                <p className={ed.featExcerpt}>{featuredPost.excerpt}</p>
+                <div style={{ marginTop: 18 }}><Byline post={featuredPost} /></div>
+                <div style={{ marginTop: 22 }}><Btn href={`/blog/${featuredPost.slug}`} small>Read the post</Btn></div>
+              </div>
+              {featuredImage && (
+                <Link aria-hidden="true" className={ed.featMedia} href={`/blog/${featuredPost.slug}`} tabIndex={-1}>
+                  <Image alt="" height={630} src={featuredImage} width={1200} />
+                </Link>
+              )}
+            </article>
+          </div>
+        </section>
+        )}
+
+        {rest.length > 0 && (
+        <section className={ed.secTight} aria-labelledby="all-posts-title">
+          <div className={ed.wrap}>
+            {groupPostsByCategory && (
+              <nav className={ed.filters} aria-label="Journal categories">
+                <span aria-current="true">All</span>
+                {categories.map((category) => (
+                  <a href={`#${categoryAnchor(category)}`} key={category}>{category}</a>
+                ))}
+              </nav>
             )}
-          </article>
-        </div>
-      </section>
-      )}
+            <h2 className={ed.h2} id="all-posts-title" style={{ marginTop: groupPostsByCategory ? 28 : 0, marginBottom: 12 }}>
+              {groupPostsByCategory ? "Latest" : "Earlier posts"}
+            </h2>
+            <div className={ed.rows}>{rest.map((post) => <PostRow post={post} key={post.slug} />)}</div>
+          </div>
+        </section>
+        )}
 
-      {rest.length > 0 && (
-      <section className={ed.secTight} aria-labelledby="all-posts-title">
-        <div className={ed.wrap}>
-          {groupPostsByCategory && (
-            <nav className={ed.filters} aria-label="Journal categories">
-              <span aria-current="true">All</span>
-              {categories.map((category) => (
-                <a href={`#${categoryAnchor(category)}`} key={category}>{category}</a>
-              ))}
-            </nav>
-          )}
-          <h2 className={ed.h2} id="all-posts-title" style={{ marginTop: groupPostsByCategory ? 28 : 0, marginBottom: 12 }}>
-            {groupPostsByCategory ? "Latest" : "Earlier posts"}
-          </h2>
-          <div className={ed.rows}>{rest.map((post) => <PostRow post={post} key={post.slug} />)}</div>
-        </div>
-      </section>
+        {groupPostsByCategory && categories.map((category) => {
+          const inCategory = sortedPosts.filter((post) => post.category === category);
+          const id = categoryAnchor(category);
+          return (
+            <section className={ed.secTight} aria-labelledby={`${id}-title`} id={id} key={category}>
+              <div className={ed.wrap}>
+                <h2 className={ed.h2} id={`${id}-title`} style={{ marginBottom: 12 }}>{category}</h2>
+                <div className={ed.rows}>{inCategory.map((post) => <PostRow post={post} key={post.slug} />)}</div>
+              </div>
+            </section>
+          );
+        })}
+      </JournalSearch>
       )}
-
-      {groupPostsByCategory && categories.map((category) => {
-        const inCategory = sortedPosts.filter((post) => post.category === category);
-        const id = categoryAnchor(category);
-        return (
-          <section className={ed.secTight} aria-labelledby={`${id}-title`} id={id} key={category}>
-            <div className={ed.wrap}>
-              <h2 className={ed.h2} id={`${id}-title`} style={{ marginBottom: 12 }}>{category}</h2>
-              <div className={ed.rows}>{inCategory.map((post) => <PostRow post={post} key={post.slug} />)}</div>
-            </div>
-          </section>
-        );
-      })}
 
       <section className={ed.secTight} aria-labelledby="follow-title">
         <div className={ed.wrap}>
