@@ -502,7 +502,7 @@
 
 .phDark {
   background: var(--bg-soft);
-  border: 1px solid #35523f;
+  border: 1px solid #3a3a36;
   border-radius: var(--radius-md);
 }
 
@@ -578,7 +578,7 @@
 
 .academy h2 { font-size: clamp(32px, 3.6vw, 46px); margin-top: 12px; color: var(--bg); }
 .academy h2 em { color: var(--amber-300); }
-.academy p { color: #c9d6cc; }
+.academy p { color: #d6d4cc; }
 .academyLede { margin-top: 18px; font-size: 18px; max-width: 46ch; }
 .academyActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 
@@ -586,7 +586,7 @@
 
 .path {
   padding: 22px 24px 24px;
-  border: 1px solid #35523f;
+  border: 1px solid #3a3a36;
   border-radius: var(--radius-lg);
 }
 
@@ -596,12 +596,12 @@
 .path p { margin-top: 10px; font-size: 16px; }
 
 .pathTags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-.pathTags .tag { border-color: #3e5d49; color: #c9d6cc; }
+.pathTags .tag { border-color: #4a4a45; color: #d6d4cc; }
 
 .academyNote {
   margin-top: 22px;
   padding-top: 18px;
-  border-top: 1px solid #35523f;
+  border-top: 1px solid #3a3a36;
   font-size: 15px;
 }
 
@@ -838,7 +838,7 @@
 }
 
 .news h2 { color: var(--bg); font-size: 30px; margin-top: 10px; }
-.news p { color: #c9d6cc; margin-top: 10px; }
+.news p { color: #d6d4cc; margin-top: 10px; }
 .news .mono { color: var(--green-300); }
 .newsActions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
 
@@ -1041,7 +1041,7 @@
 .navLink[aria-current="page"] { background: var(--green-50); color: var(--ink); }
 .navLink[aria-current="page"]::after { display: none; }
 .menuButton { height: 36px; padding: 0 12px; }
-.menuPanel { background: #fff; box-shadow: 0 8px 24px rgba(20, 32, 26, 0.12); padding: 6px; }
+.menuPanel { background: #fff; box-shadow: 0 8px 24px rgba(28, 28, 26, 0.12); padding: 6px; }
 .menuPanel a { padding: 8px 12px; border-radius: 6px; font-size: 15px; }
 
 /* Buttons: 36px controls, 6px radius */
@@ -1077,7 +1077,7 @@
 .next { background: #fff; border-color: var(--line); border-radius: 8px; padding: 20px; }
 .nextTop { padding-bottom: 0; border-bottom: 0; }
 .live { padding: 2px 8px; border-radius: 6px; background: var(--ok-soft); color: var(--ok); font-size: 12px; font-weight: 600; }
-.live::before { width: 6px; height: 6px; background: var(--ok); }
+.live::before { width: 6px; height: 6px; background: var(--ok-dot); }
 .nextTitle { margin-top: 12px; font-size: 18px; line-height: 1.3; }
 .nextSub { margin-top: 4px; font-size: 14px; }
 .nextFacts { grid-template-columns: minmax(0, 1fr); gap: 0; margin-top: 16px; padding-top: 0; border-top: 0; }
@@ -1168,20 +1168,20 @@ a.school:hover { border-color: var(--line-strong); }
 .cta p { margin-top: 4px; color: var(--muted); font-size: 14.5px; }
 
 /* Footer: dark ink band */
-.foot { background: var(--green-950); color: #c3cdc6; border-top: 0; padding: 44px 0 28px; margin-top: 24px; }
-.footBrand p { color: #a9b6ad; font-size: 14px; }
-.footBrand a { color: #fff; }
-.footCol h3 { color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.foot { background: var(--brand-yellow); color: var(--ink); border-top: 0; padding: 44px 0 28px; margin-top: 24px; }
+.footBrand p { color: var(--ink-2); font-size: 14px; }
+.footBrand a { color: var(--ink); }
+.footCol h3 { color: var(--ink); font-size: 14px; font-weight: 600; margin-bottom: 10px; }
 .footCol ul { gap: 6px; }
-.footCol a, .footCol button { color: #c3cdc6; font-size: 14px; }
-.footCol a:hover, .footCol button:hover { color: #fff; }
-.footLegal { border-top-color: #2a3c31; color: #8fa096; font-size: 12.5px; }
-.footLegal a { color: #c3cdc6; }
+.footCol a, .footCol button { color: var(--ink-2); font-size: 14px; }
+.footCol a:hover, .footCol button:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.footLegal { border-top-color: rgba(28, 28, 26, 0.2); color: var(--ink-2); font-size: 12.5px; }
+.footLegal a { color: var(--ink); }
 /* The Qoax duck sits at the end of the legal line, on every page. */
 .footLegal { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
 .footDuck { flex: none; width: 30px; height: auto; }
-.foot .brand, .foot .brand:hover { color: #fff; }
-.foot .brandName { color: #a9b6ad; border-left-color: #3a4c41; }
+.foot .brand, .foot .brand:hover { color: var(--ink); }
+.foot .brandName { color: var(--ink-2); border-left-color: rgba(28, 28, 26, 0.3); }
 
 /* Interior page header */
 .head { padding: clamp(32px, 4vw, 48px) 0 clamp(20px, 2.5vw, 28px); gap: 24px; }
@@ -1301,7 +1301,7 @@ a.school:hover { border-color: var(--line-strong); }
 .live::before { display: none; }
 
 /* Quiet design touch: warm neutrals, ink hairlines, nothing loud */
-.foot { background: var(--brand-green); }
+.foot { background: var(--brand-yellow); }
 /* Hover and active share the same 6px rounded highlight; the active link adds
    a short amber bar a few pixels below it, so the highlight keeps its shape. */
 .navLink:hover { background: var(--bg-soft); }

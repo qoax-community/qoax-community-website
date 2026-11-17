@@ -157,7 +157,7 @@ export function SiteFooter() {
         <div className={ed.footGrid}>
           <div className={ed.footBrand}>
             <Link className={ed.brand} href="/" aria-label="Qoax home">
-              <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo-light.svg")} alt="Qoax" width={294} height={97} />
+              <Image className={ed.brandLogo} src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} />
             </Link>
             <p>
               An independent non-profit in Sofia, Bulgaria. Hackathons, game jams, tournaments, and school
@@ -195,7 +195,7 @@ export function SiteFooter() {
             <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}.`}</span>
             {" Sofia, Bulgaria."}
           </span>
-          <Image className={ed.footDuck} src={siteAsset("/brand/qoax-duck-light.svg")} alt="The Qoax duck" title="Quack." width={690} height={765} />
+          <Image className={ed.footDuck} src={siteAsset("/brand/qoax-duck-mono.svg")} alt="The Qoax duck" title="Quack." width={690} height={765} />
         </div>
       </div>
     </footer>

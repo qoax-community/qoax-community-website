@@ -11,7 +11,7 @@
   --ink-2: #3f3f3b;
   --muted: #6b6a65;
 
-  /* Former green scale, now warm neutrals (footer keeps the brand green) */
+  /* Former green scale, now warm neutrals */
   --green-950: #1c1c1a;
   --green-900: #262624;
   --green-800: #1c1c1a;
@@ -21,11 +21,13 @@
   --green-300: #c4c3bc;
   --green-100: #efeee9;
   --green-50: #f3f2ee;
-  --brand-green: #16251d;
+  /* Footer: the QuackStack yellow */
+  --brand-yellow: #f3c836;
 
   /* Status */
-  --ok: #1f7a4d;
-  --ok-soft: #e6f2ec;
+  --ok: #1c1c1a;
+  --ok-soft: #fff3c4;
+  --ok-dot: #e59c2d;
   --card: #ffffff;
 
   /* No second accent colour: the old amber tokens resolve to ink and neutrals */
