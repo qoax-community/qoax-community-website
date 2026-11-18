@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "modern-web-guidance": {
+      "source": "qoax-community/qoax-agent-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/modern-web-guidance/skills/modern-web-guidance/SKILL.md",
+      "computedHash": "2b30f840e2f423f5fa86cbcf701fb48604b2bba224917a490d6d6b960e5d760e"
+    }
+  }
+}
