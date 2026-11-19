@@ -69,7 +69,7 @@ test("exports the journal with its first Markdown posts", async () => {
   assert.match(journal, /<title>Qoax Community journal<\/title>/);
   const titles = [
     "Atanasoff48: the first 48-hour hackathon at SPGE John Atanasoff",
-    "The 2026/27 season: seven events, one calendar",
+    "The 2026/27 season: six events, one calendar",
     "SUGAMING Game Jam 2026: three days, seven games",
   ];
   for (const title of titles) {
@@ -311,7 +311,7 @@ test("does not export profit or hidden routes", async () => {
   await assert.rejects(render("/portfolio/"));
   const nasa = await render("/projects/nasa-space-apps-2026/");
   assert.match(nasa, /Incubator building, Sofia Tech Park/);
-  assert.doesNotMatch(await render("/projects/tues-game-jam-2026/"), /supposed to do that/);
+  await assert.rejects(render("/projects/tues-game-jam-2026/"));
 });
 
 test("gives every page a complete link preview and keeps social channels behind env vars", async () => {
@@ -355,7 +355,7 @@ test("gives every page a complete link preview and keeps social channels behind 
 });
 
 test("links upcoming events to the stream and never fakes a recording for past ones", async () => {
-  const upcoming = ["/projects/sofia-game-jam-2026/", "/projects/tues-game-jam-2026/"];
+  const upcoming = ["/projects/sofia-game-jam-2026/"];
   for (const pathname of upcoming) {
     const html = await render(pathname);
     assert.match(html, /<a[^>]*href="https:\/\/www\.youtube\.com\/@QoaxCommunity"[^>]*data-stream-link=""/, `${pathname} has a stream link`);

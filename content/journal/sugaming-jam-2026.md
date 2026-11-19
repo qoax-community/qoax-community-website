@@ -28,5 +28,4 @@ The theme was **Chaotic Business**. Seven games were submitted, all listed on [t
 
 A game is a complete product in miniature: code, art, sound, rules, and a person on the other side who has to understand it without help. That makes a weekend jam one of the fastest ways for students to learn how to work in a team and ship.
 
-It is also the format for most of our season. Next are [Sofia Game Jam](/projects/sofia-game-jam-2026/) on 20 to 22 November and the [TUES Game Jam](/projects/tues-game-jam-2026/) at the end of November.
-
+It is also the format for most of our season. Next is [Sofia Game Jam](/projects/sofia-game-jam-2026/) on 20 to 22 November.
