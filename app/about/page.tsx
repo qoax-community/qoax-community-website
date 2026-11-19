@@ -50,7 +50,6 @@ const timelineSource: (string | TimelineItem)[] = [
   },
   "nasa-space-apps-2026",
   "sofia-game-jam-2026",
-  "tues-game-jam-2026",
   "john-atanasoff-game-jam-2026",
   "john-atanasoff-open-day-2027",
   "fmi-esports-tournament-2027",
