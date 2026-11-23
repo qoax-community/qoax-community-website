@@ -70,9 +70,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   // Only real, entry-specific copy. No generic filler when an entry has no write-up yet.
   const narrative = entry.detail;
-  const galleryCredit = entry.imageCredit && entry.gallery && entry.gallery.length > 1
+  const galleryCredit = entry.galleryCredit ?? (entry.imageCredit && entry.gallery && entry.gallery.length > 1
     ? entry.imageCredit.replace(/^Photo:/, "Photos:")
-    : entry.imageCredit;
+    : entry.imageCredit);
 
   // The main action comes first. The hero column is too narrow for three buttons on one row,
   // so a main action placed last would wrap onto a row of its own.
