@@ -1439,3 +1439,121 @@ a.school:hover { border-color: var(--line-strong); }
   cursor: pointer;
 }
 .shareList button:hover { color: var(--ink); }
+
+/* Event photo band: a dark section whose heading words rise out of a mask
+   and whose photos slide in one after another, in stepped columns. -------- */
+.stagger {
+  /* The photos start shifted right; keep them from widening the page. */
+  overflow-x: clip;
+  padding: clamp(72px, 10vw, 136px) 0 clamp(56px, 8vw, 104px);
+  background: var(--ink);
+  color: #f4f3ee;
+}
+.staggerTitle {
+  margin: 0 auto clamp(40px, 6vw, 80px);
+  max-width: 16ch;
+  color: #fff;
+  font-size: clamp(40px, 7.4vw, 104px);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-align: center;
+}
+.staggerMask {
+  display: inline-block;
+  overflow: hidden;
+  /* Room for descenders inside the clipped line. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  vertical-align: top;
+}
+.staggerMask + .staggerMask { margin-left: 0.24em; }
+.staggerWord {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.1, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.staggerTitle[data-shown] .staggerWord { transform: none; }
+
+.staggerGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  --step: clamp(32px, 6vw, 90px);
+  /* Room for the lowest column, which is shifted down by two steps. */
+  padding-bottom: calc(2 * var(--step));
+}
+/* Each column sits lower than the one before it and flows on its own. */
+.staggerCell:nth-child(3n + 2) { transform: translateY(var(--step)); }
+.staggerCell:nth-child(3n) { transform: translateY(calc(2 * var(--step))); }
+
+.staggerFrame {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #2a2a27;
+  color: #fff;
+  opacity: 0;
+  transform: translateX(25%);
+  transition: opacity 0.7s ease, transform 1s cubic-bezier(0.2, 0.7, 0.1, 1);
+  transition-delay: calc(var(--i, 0) * 120ms);
+}
+.staggerFrame[data-shown] { opacity: 1; transform: none; }
+.staggerFrame:hover { color: #fff; }
+.staggerFrame:focus-visible { outline: 2px solid var(--brand-yellow); outline-offset: 3px; }
+
+.staggerMedia {
+  position: absolute;
+  inset: -16% 0;
+  transform: translate3d(0, calc(var(--drift, 0) * 10%), 0);
+  will-change: transform;
+}
+.staggerMedia img {
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.staggerFrame:hover .staggerMedia img { transform: scale(1.04); }
+
+.staggerLabel {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(28, 28, 26, 0.82);
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.staggerFrame:hover .staggerLabel,
+.staggerFrame:focus-visible .staggerLabel { opacity: 1; transform: none; }
+
+.staggerFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-top: clamp(32px, 5vw, 56px);
+  color: #b9b8b1;
+  font-size: 14.5px;
+}
+.staggerFoot p { max-width: 62ch; }
+.staggerFoot p a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 720px) {
+  .staggerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px; }
+  .staggerGrid { --step: 48px; padding-bottom: var(--step); }
+  .staggerCell:nth-child(n) { transform: none; }
+  .staggerCell:nth-child(2n) { transform: translateY(var(--step)); }
+  .staggerLabel { opacity: 1; transform: none; font-size: 12px; left: 8px; bottom: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .staggerWord, .staggerFrame { transform: none; opacity: 1; transition: none; }
+  .staggerMedia { transform: none; inset: 0; }
+}
