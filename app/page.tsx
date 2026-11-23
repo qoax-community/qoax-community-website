@@ -75,7 +75,7 @@ export default function Home() {
             <Link href={`/projects/${gameJam?.slug ?? "fmi-game-jam"}`}>SUGAMING Game Jam</Link> in October, and{" "}
             <Link href={`/projects/${spaceApps?.slug ?? "nasa-space-apps-2026"}`}>NASA Space Apps Challenge Sofia</Link> and{" "}
             <Link href={`/projects/${sofiaJam?.slug ?? "sofia-game-jam-2026"}`}>Sofia Game Jam</Link> in November 2026.
-            Photos of Atanasoff48 by SPGE John Atanasoff, of Space Apps by Emilia Tomova and of Sofia Game Jam by Radislav Gachevski.
+            Photos of Atanasoff48 by SPGE John Atanasoff and of Sofia Game Jam by Radislav Gachevski. Space Apps day 2 photos by Emilia Tomova.
           </>
         }
         action={<Btn href="/events" variant="light">All events</Btn>}

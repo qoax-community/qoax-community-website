@@ -45,6 +45,8 @@ export type Achievement = {
   priority: 1 | 2 | 3 | 4 | 5;
   image?: string;
   imageCredit?: string;
+  /** Gallery caption when the hero credit does not cover every gallery photo */
+  galleryCredit?: string;
   logo?: string;
   mark?: string;
   portfolio?: boolean;
@@ -187,6 +189,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         mark: "SA",
         image: "/events/nasa-space-apps-2026/nasa-team.jpg",
         imageCredit: "Photo: Emilia Tomova",
+        galleryCredit: "Day 2 photos by Emilia Tomova",
         href: "https://www.spaceappschallenge.org/2026/local-events/sofia/",
         liveLabel: "register",
         partner: "NASA International Space Apps Challenge",
