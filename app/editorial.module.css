@@ -1186,7 +1186,7 @@ a.school:hover { border-color: var(--line-strong); }
   margin-top: 0;
 }
 .footLife { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.footInner { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+.footInner { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; }
 .footGrid { grid-template-columns: minmax(0, 4fr) repeat(3, minmax(0, 2fr)); }
 .footBrand p { margin-top: 18px; max-width: 34ch; color: var(--ink-2); font-size: 14px; }
 .footDuckLink { display: inline-block; }
@@ -1202,7 +1202,8 @@ a.school:hover { border-color: var(--line-strong); }
 .footBottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
 .footMark { display: block; flex: none; }
 .footMark img { display: block; width: clamp(150px, 18vw, 230px); height: auto; }
-.footLegal { display: block; margin: 0; padding: 0; border: 0; max-width: 64ch; text-align: right; color: var(--ink-2); font-size: 12.5px; }
+.footLegal { display: grid; justify-items: end; gap: 1px; margin: 0; padding: 0 0 4px; border: 0; text-align: right; color: var(--ink-2); font-size: 12px; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.footLegal span { white-space: nowrap; }
 
 .footMark img { filter: drop-shadow(0 6px 10px rgba(28, 28, 26, 0.16)); }
 
@@ -1213,9 +1214,10 @@ a.school:hover { border-color: var(--line-strong); }
 .footReveal[data-reveal] .foot { position: fixed; left: 0; right: 0; bottom: 0; height: var(--foot-h); }
 
 @media (max-width: 720px) {
-  .footInner { gap: 40px; }
-  .footBottom { flex-direction: column; align-items: flex-start; }
-  .footLegal { text-align: left; }
+  .footInner { gap: 32px; }
+  .footBottom { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .footLegal { justify-items: start; text-align: left; }
+  .footLegal span { white-space: normal; }
 }
 
 /* Interior page header */
@@ -1550,6 +1552,7 @@ a.school:hover { border-color: var(--line-strong); }
   .staggerGrid { --step: 48px; padding-bottom: var(--step); }
   .staggerCell:nth-child(n) { transform: none; }
   .staggerCell:nth-child(2n) { transform: translateY(var(--step)); }
+  .staggerCell:last-child:nth-child(odd) { display: none; }
   .staggerLabel { opacity: 1; transform: none; font-size: 12px; left: 8px; bottom: 8px; }
 }
 

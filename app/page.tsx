@@ -16,13 +16,18 @@ export default function Home() {
   const recentPosts = sortedPosts.slice(0, 3);
   const hackathon = getArchiveEntry("atanasoff48");
   const gameJam = getArchiveEntry("fmi-game-jam");
+  const sofiaJam = getArchiveEntry("sofia-game-jam-2026");
+  const spaceApps = getArchiveEntry("nasa-space-apps-2026");
   const photos = bandPhotos([
+    [sofiaJam, "sgj-teams"],
+    [spaceApps, "nasa-winners"],
     [hackathon, "atanasoff48-199"],
     [gameJam, "gamejam-594"],
+    [sofiaJam, "sgj-playtest"],
+    [spaceApps, "nasa-team"],
     [hackathon, "atanasoff48-203"],
+    [sofiaJam, "sgj-arcade"],
     [gameJam, "gamejam-34"],
-    [hackathon, "atanasoff48-205"],
-    [gameJam, "gamejam-864"],
   ]);
 
   return (
@@ -59,16 +64,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Photo band from the October events */}
+      {/* Photo band from the autumn 2026 events */}
       <PhotoStagger
         id="photos-title"
         words={["Build,", "play", "&", "present"]}
         photos={photos}
         credit={
           <>
-            From <Link href={`/projects/${hackathon?.slug ?? "atanasoff48"}`}>Atanasoff48</Link>, 2 to 4 October 2026, and{" "}
-            the <Link href={`/projects/${gameJam?.slug ?? "fmi-game-jam"}`}>SUGAMING Game Jam</Link>, 16 to 18 October 2026.
-            Atanasoff48 photos by SPGE John Atanasoff.
+            From <Link href={`/projects/${hackathon?.slug ?? "atanasoff48"}`}>Atanasoff48</Link> and the{" "}
+            <Link href={`/projects/${gameJam?.slug ?? "fmi-game-jam"}`}>SUGAMING Game Jam</Link> in October, and{" "}
+            <Link href={`/projects/${spaceApps?.slug ?? "nasa-space-apps-2026"}`}>NASA Space Apps Challenge Sofia</Link> and{" "}
+            <Link href={`/projects/${sofiaJam?.slug ?? "sofia-game-jam-2026"}`}>Sofia Game Jam</Link> in November 2026.
+            Photos of Atanasoff48 by SPGE John Atanasoff, of Space Apps by Emilia Tomova and of Sofia Game Jam by Radislav Gachevski.
           </>
         }
         action={<Btn href="/events" variant="light">All events</Btn>}

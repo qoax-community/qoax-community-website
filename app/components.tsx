@@ -219,8 +219,8 @@ export function SiteFooter() {
               <Image src={siteAsset("/brand/qoax-logo.svg")} alt="Qoax" width={294} height={97} />
             </Link>
             <p className={ed.footLegal}>
-              {`© ${new Date().getFullYear()} Qoax Community. ${legalEntity.nameEn}, UIC ${legalEntity.uic}. `}
-              <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}.`}</span>
+              <span>{`© ${new Date().getFullYear()} ${legalEntity.nameEn}, UIC ${legalEntity.uic}`}</span>
+              <span lang="bg">{`${legalEntity.nameBg}, ЕИК ${legalEntity.uic}`}</span>
             </p>
           </div>
         </div>
