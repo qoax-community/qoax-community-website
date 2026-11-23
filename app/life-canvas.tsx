@@ -22,11 +22,16 @@ const PATTERNS: Array<Array<[number, number]>> = [
 ];
 
 const FADE_STEPS = 6;
+// How long the board holds still after the visitor edits a cell.
+const EDIT_HOLD_MS = 1400;
 
 /**
  * Conway's Game of Life on a wrapping grid, drawn behind decorative surfaces.
  * It pauses while off screen or in a hidden tab, and draws one still frame
- * when the visitor prefers reduced motion. The pointer seeds new cells.
+ * when the visitor prefers reduced motion. Clicking a square toggles that one
+ * cell, and dragging with a mouse paints a line of cells. The board holds still
+ * briefly after each edit, so the visitor sees exactly what they drew before the
+ * next generation runs.
  */
 export function LifeCanvas({ className, cell = 16, tick = 560, rgb = "28, 28, 26", alpha = 0.13 }: LifeCanvasProps) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -47,6 +52,9 @@ export function LifeCanvas({ className, cell = 16, tick = 560, rgb = "28, 28, 26
     let timer = 0;
     let stale = 0;
     let lastPopulation = -1;
+    let holdUntil = 0;
+    let painting = false;
+    let lastPainted = -1;
 
     const index = (x: number, y: number) => ((y + rows) % rows) * cols + ((x + cols) % cols);
 
@@ -129,6 +137,7 @@ export function LifeCanvas({ className, cell = 16, tick = 560, rgb = "28, 28, 26
     };
 
     const loop = () => {
+      if (performance.now() < holdUntil) return;
       step();
       draw();
     };
@@ -139,14 +148,47 @@ export function LifeCanvas({ className, cell = 16, tick = 560, rgb = "28, 28, 26
       if (!reduceMotion && visible && !document.hidden) timer = window.setInterval(loop, tick);
     };
 
-    const onPointer = (event: PointerEvent) => {
-      if (reduceMotion) return;
+    const cellAt = (event: PointerEvent) => {
       const box = canvas.getBoundingClientRect();
       const x = Math.floor((event.clientX - box.left) / cell);
       const y = Math.floor((event.clientY - box.top) / cell);
-      if (x < 0 || y < 0 || x >= cols || y >= rows) return;
-      stamp(x, y, PATTERNS[Math.floor(Math.random() * PATTERNS.length)]);
+      if (x < 0 || y < 0 || x >= cols || y >= rows) return -1;
+      return y * cols + x;
+    };
+
+    const edit = (i: number, alive: 0 | 1) => {
+      grid[i] = alive;
+      // A cleared cell disappears at once instead of fading like a natural death.
+      ghost[i] = alive ? 0 : FADE_STEPS;
+      lastPainted = i;
+      holdUntil = performance.now() + EDIT_HOLD_MS;
+      stale = 0;
       draw();
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (reduceMotion || event.button !== 0) return;
+      // Links and buttons in the footer keep working without touching the board.
+      if ((event.target as Element | null)?.closest("a, button, input, select, textarea, summary, label")) return;
+      const i = cellAt(event);
+      if (i < 0) return;
+      painting = event.pointerType === "mouse";
+      edit(i, grid[i] ? 0 : 1);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (!painting) return;
+      if ((event.buttons & 1) === 0) {
+        painting = false;
+        return;
+      }
+      const i = cellAt(event);
+      if (i >= 0 && i !== lastPainted && !grid[i]) edit(i, 1);
+    };
+
+    const stopPainting = () => {
+      painting = false;
+      lastPainted = -1;
     };
 
     const host = canvas.parentElement ?? canvas;
@@ -160,14 +202,20 @@ export function LifeCanvas({ className, cell = 16, tick = 560, rgb = "28, 28, 26
     resizeObserver.observe(canvas);
     intersectionObserver.observe(canvas);
     document.addEventListener("visibilitychange", sync);
-    host.addEventListener("pointerdown", onPointer);
+    host.addEventListener("pointerdown", onPointerDown);
+    host.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", stopPainting);
+    window.addEventListener("pointercancel", stopPainting);
 
     return () => {
       window.clearInterval(timer);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       document.removeEventListener("visibilitychange", sync);
-      host.removeEventListener("pointerdown", onPointer);
+      host.removeEventListener("pointerdown", onPointerDown);
+      host.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", stopPainting);
+      window.removeEventListener("pointercancel", stopPainting);
     };
   }, [cell, tick, rgb, alpha]);
 

@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { archiveEntries } from "./archive-data";
+import { archiveEntries, getArchiveEntry } from "./archive-data";
 import { upcomingEvents } from "./archive-tree-data";
 import { sortedPosts } from "./blog-data";
 import { Btn, Cta, PostCard, RecordRow, SecHead, Shell } from "./editorial";
+import { PhotoStagger, type StaggerPhoto } from "./photo-stagger";
 import { schoolPartners } from "./schools-data";
 import { siteAsset } from "./site-path";
 import ed from "./editorial.module.css";
@@ -13,6 +14,16 @@ export default function Home() {
     .map((event) => archiveEntries.find((entry) => entry.id === event.id))
     .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
   const recentPosts = sortedPosts.slice(0, 3);
+  const hackathon = getArchiveEntry("atanasoff48");
+  const gameJam = getArchiveEntry("fmi-game-jam");
+  const photos = bandPhotos([
+    [hackathon, "atanasoff48-199"],
+    [gameJam, "gamejam-594"],
+    [hackathon, "atanasoff48-203"],
+    [gameJam, "gamejam-34"],
+    [hackathon, "atanasoff48-205"],
+    [gameJam, "gamejam-864"],
+  ]);
 
   return (
     <Shell>
@@ -47,6 +58,21 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Photo band from the October events */}
+      <PhotoStagger
+        id="photos-title"
+        words={["Build,", "play", "&", "present"]}
+        photos={photos}
+        credit={
+          <>
+            From <Link href={`/projects/${hackathon?.slug ?? "atanasoff48"}`}>Atanasoff48</Link>, 2 to 4 October 2026, and{" "}
+            the <Link href={`/projects/${gameJam?.slug ?? "fmi-game-jam"}`}>SUGAMING Game Jam</Link>, 16 to 18 October 2026.
+            Atanasoff48 photos by SPGE John Atanasoff.
+          </>
+        }
+        action={<Btn href="/events" variant="light">All events</Btn>}
+      />
 
       {/* 02 Journal */}
       <section className={ed.sec} aria-labelledby="journal-title">
@@ -114,4 +140,15 @@ export default function Home() {
       <Cta />
     </Shell>
   );
+}
+
+type GalleryEntry = ReturnType<typeof getArchiveEntry>;
+
+/** Picks named photos from event galleries, skipping any that are missing. */
+function bandPhotos(picks: [GalleryEntry, string][]): StaggerPhoto[] {
+  return picks.flatMap(([entry, name]) => {
+    const image = entry?.gallery?.find((item) => item.src.endsWith(`/${name}.jpg`));
+    if (!entry || !image) return [];
+    return [{ src: image.src, alt: image.alt, event: entry.title, href: `/projects/${entry.slug}` }];
+  });
 }
