@@ -355,15 +355,15 @@ test("gives every page a complete link preview and keeps social channels behind 
 });
 
 test("links upcoming events to the stream and never fakes a recording for past ones", async () => {
-  const upcoming = ["/projects/sofia-game-jam-2026/"];
+  const upcoming = ["/projects/john-atanasoff-game-jam-2026/"];
   for (const pathname of upcoming) {
     const html = await render(pathname);
     assert.match(html, /<a[^>]*href="https:\/\/www\.youtube\.com\/@QoaxCommunity"[^>]*data-stream-link=""/, `${pathname} has a stream link`);
     assert.match(html, /<h3>Stream<\/h3>/, `${pathname} has a stream card`);
   }
-  assert.match(await render("/projects/sofia-game-jam-2026/"), />Watch live on YouTube</);
+  assert.match(await render("/projects/john-atanasoff-game-jam-2026/"), />Watch live on YouTube</);
   // Completed events without a known recording URL get no stream link at all.
-  for (const pathname of ["/projects/fmi-game-jam/", "/projects/atanasoff48/"]) {
+  for (const pathname of ["/projects/fmi-game-jam/", "/projects/atanasoff48/", "/projects/sofia-game-jam-2026/", "/projects/nasa-space-apps-2026/"]) {
     assert.doesNotMatch(await render(pathname), /data-stream-link/, `${pathname} has no invented recording link`);
   }
   // Non-event work has no stream.

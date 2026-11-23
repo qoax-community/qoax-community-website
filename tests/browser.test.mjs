@@ -107,7 +107,7 @@ const look = (locator) =>
     return { color: s.color, background: s.backgroundColor, outlineStyle: s.outlineStyle, outlineWidth: s.outlineWidth, outlineColor: s.outlineColor };
   });
 
-test("the NASA register button stays readable on hover, after a tap, and on keyboard focus", async (t) => {
+test("the NASA primary button stays readable on hover, after a tap, and on keyboard focus", async (t) => {
   const browser = await launch(t);
   if (!browser) return;
   const { server, origin } = await serve();
@@ -120,7 +120,7 @@ test("the NASA register button stays readable on hover, after a tap, and on keyb
     const context = await browser.newContext({ viewport, hasTouch: viewport.touch, isMobile: viewport.touch });
     const page = await context.newPage();
     await open(page, `${origin}/projects/nasa-space-apps-2026/`);
-    const primary = page.getByRole("link", { name: "Register on spaceappschallenge.org", exact: true });
+    const primary = page.getByRole("link", { name: "Visit spaceappschallenge.org", exact: true });
     // A tap must not leave the page; the test only cares about the state the tap leaves behind.
     await primary.evaluate((el) => el.addEventListener("click", (event) => event.preventDefault()));
 
@@ -159,7 +159,7 @@ test("the NASA register button stays readable on hover, after a tap, and on keyb
     assert.equal(ring.color, "rgb(255, 255, 255)", `${viewport.width}px: white text on focus`);
 
     // The secondary buttons next to it stay readable on hover too. They can be see-through, so measure what is painted behind them.
-    for (const name of [/^Watch live on YouTube/, /^Join as a school or partner/]) {
+    for (const name of [/^Ask about this event/]) {
       const secondary = page.getByRole("link", { name });
       await secondary.hover();
       const { color, background } = await painted(secondary);
