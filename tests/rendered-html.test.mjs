@@ -17,7 +17,7 @@ test("exports the Qoax Community home and index", async () => {
 
   assert.match(home, /Qoax Community/);
   assert.doesNotMatch(home, /QO\.AX Community/);
-  assert.match(home, /Schools we work with/);
+  assert.match(home, /Schools we’ve worked with/);
   assert.match(home, /Private School St\. Sofia logo/);
   assert.match(home, /Technology School Electronic Systems logo/);
   assert.match(home, /SPGE John Atanasoff logo/);
