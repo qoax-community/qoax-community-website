@@ -1174,6 +1174,8 @@ a.school:hover { border-color: var(--line-strong); }
 .foot {
   position: relative;
   overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
   /* Brand yellow, lit a little brighter towards the top, with an inner shadow
      along the top edge so the page above reads as a sheet lifting off it. */
   background:

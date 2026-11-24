@@ -39,7 +39,7 @@ export default function SchoolsPage() {
   return (
     <Shell>
       <PageHead
-        title="Schools we work with"
+        title="Schools we’ve worked with"
         copy="Technology schools whose students took part in the 2026 internship programme or whose student councils run events with us."
       />
 

@@ -109,7 +109,7 @@ export default function Home() {
         <div className={ed.wrap}>
           <SecHead
             id="schools-title"
-            title="Schools we work with"
+            title="Schools we’ve worked with"
             copy="Technology schools whose students took part in the 2026 internship programme or whose councils run events with us."
             action={<Btn href="/schools" variant="ghost" small>About the network</Btn>}
           />
