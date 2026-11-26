@@ -95,14 +95,10 @@ test("exports the journal with its first Markdown posts", async () => {
   const notFound = await readFile(new URL("../out/404.html", import.meta.url), "utf8");
   assert.match(notFound, /name="robots" content="noindex, follow"/);
 
-  // Anything about the Academy lives on qoax.academy; qo.ax only carries the opening date.
-  for (const html of [home, journal]) assert.doesNotMatch(html, /Academy|Академия/);
-  assert.match(schools, /href="https:\/\/qoax\.academy\/schools\/"[^>]*>qoax\.academy\/schools(<!-- -->)? ↗<\/a>/);
-  assert.doesNotMatch(
-    schools.replaceAll("Some of these schools also host Qoax Academy", ""),
-    /Academy|Академия/,
-    "schools page mentions the Academy only in the pointer",
-  );
+  // A separate company sells the qoax.academy courses. Google for Nonprofits treats links from qo.ax to a paid
+  // course site as undisclosed commercial activity, so qo.ax must not link to the Academy or mention it until the
+  // association officially runs the Academy.
+  for (const html of [home, journal, schools]) assert.doesNotMatch(html, /Academy|Академия|qoax\.academy/);
   assert.doesNotMatch(home, /"subOrganization"/);
   assert.match(schools, /Schools we/);
   assert.match(schools, /SPGE John Atanasoff logo/);
@@ -155,11 +151,28 @@ test("publishes the FAQ and the About page with searchable structure", async () 
   assert.match(about, /href="\/projects\/fmi-game-jam\/">SUGAMING Game Jam</);
   assert.doesNotMatch(about, />FMI Game Jam<|SU Jam/);
   assert.doesNotMatch(about, /Learning programme/);
-  assert.match(about, /26 Oct 2026/);
-  assert.match(about, /href="https:\/\/qoax\.academy\/"[^>]*>Qoax Academy opens(<!-- -->)? ↗<\/a>/);
-  assert.doesNotMatch(about, /Related initiative|Learning programme|Коакс Академия/);
+  assert.doesNotMatch(about, /Related initiative|Learning programme|Academy|Академия|qoax\.academy/);
   assert.match(about, /contact@qo\.ax/);
   assert.equal((about.match(/<h1[\s>]/g) ?? []).length, 1);
+
+  // Google for Nonprofits checks for a clear mission statement and the registration details (name, UIC, address)
+  // before it activates Workspace on qo.ax. The public-benefit row and the reports section match the register entry.
+  const jumpTargets = [...about.matchAll(/<li><a href="#([^"]+)"/g)].map(([, id]) => id);
+  assert.equal(jumpTargets[0], "mission", "the mission is the first jump link");
+  assert.match(about, /<h2 id="mission-title">Our mission<\/h2>/);
+  const mission = about.slice(about.indexOf('id="mission"'), about.indexOf('id="what-is-qoax"'));
+  assert.match(mission, /Qoax Community is a non-profit association in Sofia, Bulgaria\./);
+  assert.match(mission, /Our mission is to develop the technology and programming community/);
+  assert.equal((mission.slice(mission.indexOf("<ol>"), mission.indexOf("</ol>")).match(/<li>/g) ?? []).length, 12, "all twelve registered objectives");
+  assert.match(about, /href="https:\/\/portal\.registryagency\.bg\/CR\/en\/Reports\/ActiveConditionTabResult\?uic=208896893"/);
+  assert.match(about, /Designated to carry out public-benefit activity \(<span lang="bg">общественополезна дейност<\/span>\)/);
+  assert.match(about, /id="reports"/);
+  assert.match(about, /No annual statement or report exists yet\./);
+  assert.match(about, /by\s+30 September 2027/);
+  assert.match(about, /"@type":\["NGO","Organization"\][^<]*"description":"Qoax Community is a non-profit association in Sofia, Bulgaria\. Our mission is/);
+  // Google refuses activation for placeholder content, so finished work must not promise content "soon".
+  assert.doesNotMatch(faq, /in the coming days/);
+  assert.doesNotMatch(await render("/projects/internship-program-2026/"), /will be published here soon/);
 
   // The Qoax duck is the favicon and sits in the footer; the FAQ is reachable from the footer.
   assert.match(home, /qoax-favicon-duck\.svg/);
@@ -235,6 +248,8 @@ test("exports public legal pages for Google OAuth app domain", async () => {
   assert.match(privacy, /Gmail sending permissions are requested separately/);
   assert.match(terms, /Terms of Use/);
   assert.match(terms, /OAuth permissions/);
+  // Same rule as the Academy check above: the Terms must not suggest that the association sells courses.
+  assert.doesNotMatch(terms, /academy|paid services/i);
   assert.match(gdpr, /GDPR and Browser Storage Notice/);
   assert.match(gdpr, /Email and link tracking/);
   for (const html of [privacy, gdpr]) {
@@ -302,7 +317,7 @@ test("exports only the requested non-profit project pages", async () => {
   assert.match(pages[0], /2-4 Oct 2026/);
   assert.match(pages[0], /atanasoff48\.com/);
   assert.match(pages[1], /30\+ students/);
-  assert.match(pages[1], /exact student projects/);
+  assert.match(pages[1], /more than 30 students worked in teams/);
   assert.match(pages[2], /Sensory Theatre Sofia/);
   assert.match(pages[3], /Non-profit/);
 });

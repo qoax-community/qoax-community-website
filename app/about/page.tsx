@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "../seo";
 import Link from "next/link";
-import { ACADEMY_URL, CONTACT_EMAIL, GITHUB_URL } from "../components";
+import { CONTACT_EMAIL, GITHUB_URL } from "../components";
 import { getArchiveEntry } from "../archive-data";
 import { Btn, Cta, PageHead, SecHead, Shell } from "../editorial";
-import { legalEntity } from "../legal-data";
+import { legalEntity, missionStatement, registeredObjectives } from "../legal-data";
 import ed from "../editorial.module.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
@@ -12,7 +12,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://qo.ax";
 export const metadata: Metadata = {
   ...pageMetadata({
     title: "About Qoax Community, a non-profit in Sofia",
-    description: "What Qoax Community is: an independent non-profit technology association in Sofia, Bulgaria (Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893). Who is behind it, how we work, and what happens in 2026-2027.",
+    description: "What Qoax Community is: an independent non-profit technology association in Sofia, Bulgaria (Сдружение КОАКС КОМЮНИТИ, ЕИК 208896893). Our mission and registered objectives, how we work, what happens in 2026-2027, and our public-benefit status and reports.",
     path: "/about/",
     keywords: ["About Qoax", "Qoax Community", "Коакс Комюнити", "Куакс", "Kuaks", "non-profit Sofia", "technology community Bulgaria"],
   }),
@@ -41,13 +41,6 @@ const timelineSource: (string | TimelineItem)[] = [
   },
   "atanasoff48",
   "fmi-game-jam",
-  {
-    date: "26 Oct 2026",
-    title: "Qoax Academy opens",
-    copy: "Everything about the Academy is on qoax.academy.",
-    href: ACADEMY_URL,
-    external: true,
-  },
   "nasa-space-apps-2026",
   "sofia-game-jam-2026",
   "john-atanasoff-game-jam-2026",
@@ -63,10 +56,12 @@ const timeline: TimelineItem[] = timelineSource.flatMap((item) => {
 });
 
 const jumpLinks = [
+  ["mission", "Our mission"],
   ["what-is-qoax", "What is Qoax?"],
   ["how-we-work", "How we work"],
   ["timeline", "2026-2027"],
   ["organisation", "The organisation"],
+  ["reports", "Financial reports"],
 ] as const;
 
 export default function AboutPage() {
@@ -125,6 +120,33 @@ export default function AboutPage() {
           </ol>
         </div>
       </nav>
+
+      <section className={ed.sec} aria-labelledby="mission-title" id="mission">
+        <div className={`${ed.wrap} ${ed.split}`}>
+          <div className={ed.splitAside}>
+            <h2 id="mission-title">Our mission</h2>
+          </div>
+          <div className={ed.prose}>
+            <p>
+              <strong>Qoax Community is a non-profit association in Sofia, Bulgaria.</strong> {missionStatement}
+            </p>
+            <p>
+              To do this, we run hackathons, game jams, and tournaments with schools and universities, mentor students
+              through the summer internship programme, and build software for civic and cultural organisations.
+            </p>
+            <h3>Registered objectives</h3>
+            <p>
+              The association’s entry in the Bulgarian Register of Non-Profit Legal Entities lists twelve
+              objectives. This is our English translation, in the registered order. The Bulgarian text in
+              the <a href={legalEntity.registryUrl} rel="noreferrer" target="_blank">register entry ↗</a> is the
+              official version.
+            </p>
+            <ol>
+              {registeredObjectives.map((objective) => <li key={objective}>{objective}</li>)}
+            </ol>
+          </div>
+        </div>
+      </section>
 
       <section className={ed.sec} aria-labelledby="what-is-qoax-title" id="what-is-qoax">
         <div className={`${ed.wrap} ${ed.split}`}>
@@ -199,7 +221,9 @@ export default function AboutPage() {
             <h2 id="organisation-title">The organisation</h2>
             <p style={{ marginTop: 16, color: "var(--ink-2)" }}>
               Qoax Community operates as a Bulgarian non-profit association. There is no commercial portfolio, no
-              paid catalogue, and no advertising on this site: everything here is public work.
+              paid catalogue, and no advertising on this site: everything here is public work. Under its statute, the
+              association does not distribute profit and uses all of its income and property only to achieve its
+              objectives.
             </p>
             <p style={{ marginTop: 16 }}>
               <Btn href={`${GITHUB_URL}/qoax-community-website`} variant="ghost" small>Source code of this website</Btn>
@@ -210,9 +234,33 @@ export default function AboutPage() {
             <div className={ed.kvRow}><dt>English name</dt><dd>{legalEntity.nameEn}</dd></div>
             <div className={ed.kvRow}><dt>UIC (ЕИК)</dt><dd>{legalEntity.uic}</dd></div>
             <div className={ed.kvRow}><dt>Registered</dt><dd>{legalEntity.registrationDate}</dd></div>
+            <div className={ed.kvRow}><dt>Legal form</dt><dd>Association (<span lang="bg">сдружение</span>)</dd></div>
+            <div className={ed.kvRow}><dt>Public-benefit status</dt><dd>Designated to carry out public-benefit activity (<span lang="bg">общественополезна дейност</span>)</dd></div>
             <div className={ed.kvRow}><dt>Address</dt><dd>{legalEntity.addressEn}</dd></div>
             <div className={ed.kvRow}><dt>Contact</dt><dd><a href={`mailto:${legalEntity.contactEmail}`}>{legalEntity.contactEmail}</a></dd></div>
+            <div className={ed.kvRow}><dt>Public register</dt><dd><a href={legalEntity.registryUrl} rel="noreferrer" target="_blank">View the register entry ↗</a></dd></div>
           </dl>
+        </div>
+      </section>
+
+      <section className={ed.sec} aria-labelledby="reports-title" id="reports">
+        <div className={`${ed.wrap} ${ed.split}`}>
+          <div className={ed.splitAside}>
+            <h2 id="reports-title">Public benefit and financial reports</h2>
+          </div>
+          <div className={ed.prose}>
+            <p>
+              The association’s register entry designates it to carry out public-benefit activity
+              (<span lang="bg">общественополезна дейност</span>). Bulgarian law and the association’s statute require
+              it to file an annual financial statement and an annual activity report in the Register of Non-Profit
+              Legal Entities. The legal deadline is 30 September of the following year. The Bulgarian Registry Agency
+              keeps the register, and anyone can read it free of charge.
+            </p>
+            <p>
+              No annual statement or report exists yet. The first statement and report will cover 2026 and must be
+              filed by 30 September 2027.
+            </p>
+          </div>
         </div>
       </section>
 

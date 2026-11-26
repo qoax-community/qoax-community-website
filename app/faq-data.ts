@@ -62,7 +62,7 @@ export const faqGroups: FaqGroup[] = [
         id: "who-is-behind-qoax",
         question: "Who is behind Qoax?",
         answer: [
-          "Engineers, teachers, and students in Sofia. We will introduce the people behind the community in the [journal](/blog/) in the coming days; every post carries the name of the person who wrote it.",
+          "Engineers, teachers, and students in Sofia. The members of the association form its general assembly, which elects a manager (управител) to run it. The registration details are on the [About page](/about/#organisation).",
         ],
       },
     ],

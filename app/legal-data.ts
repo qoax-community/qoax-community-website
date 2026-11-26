@@ -23,7 +23,31 @@ export const legalEntity = {
   registrationDate: "24 July 2026",
   contactEmail: "contact@qo.ax",
   sourceUrl: "https://papagal.bg/eik/208896893/efb0",
+  registryUrl: "https://portal.registryagency.bg/CR/en/Reports/ActiveConditionTabResult?uic=208896893",
 } as const;
+
+export const missionStatement =
+  "Our mission is to develop the technology and programming community and to support school pupils, university students, teachers, and young professionals in their educational and professional development.";
+
+/**
+ * English translation of field 6б ("Цели") of the association's entry in the Register of Non-Profit
+ * Legal Entities. Google for Nonprofits compares this site with the registration details, so keep all
+ * twelve items in the registered order and change them only after the register entry changes.
+ */
+export const registeredObjectives = [
+  "Developing and supporting the technology and programming community.",
+  "Promoting education, training, and professional qualification in information technology, programming, engineering sciences, and related fields.",
+  "Supporting school pupils, university students, teachers, and young professionals in their educational and professional development.",
+  "Organising and supporting educational, scientific, technological, innovation, and entrepreneurial initiatives.",
+  "Organising hackathons, competitions, practical training, and other formats for developing knowledge, skills, and competences.",
+  "Facilitating internship, practical-training, educational, and career programmes, and supporting young people in establishing themselves professionally.",
+  "Promoting innovation, entrepreneurship, and research and development.",
+  "Supporting the creation and development of technology projects, products, and initiatives of public significance.",
+  "Promoting the exchange of knowledge, good practice, and professional experience.",
+  "Building and developing partnerships between educational institutions, business, the public sector, non-governmental organisations, and the technology community.",
+  "Taking part in national, European, and international programmes, projects, and initiatives related to the association's objectives.",
+  "Contributing to the development of digital skills, technological culture, and civic engagement in society.",
+] as const;
 
 const questionnairePrivacy = {
   title: "Въпросници и вътрешна аналитика на Qoax Community",
@@ -142,10 +166,10 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
     id: "terms",
     title: "Terms of Use",
     description: "Rules for using qo.ax public pages and connected Qoax Community services.",
-    updated: "Last updated: 1 September 2026",
+    updated: "Last updated: 26 November 2026",
     summary: [
       "qo.ax is the public website of Qoax Community and documents community, school, student, art and civic technology work.",
-      "Public pages are informational. Specific programmes, events or paid services may have separate confirmations or terms.",
+      "Public pages are informational. Specific programmes, events or partnerships may have separate confirmations or terms.",
       "Qoax materials, marks, website design and platform code remain protected unless a separate license says otherwise.",
       "Use the site and connected services lawfully and do not attempt to bypass security or access another person's data.",
     ],
@@ -154,7 +178,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
         title: "1. Provider and scope",
         paragraphs: [
           `${legalEntity.nameEn}, UIC ${legalEntity.uic}, operates qo.ax. These terms apply to visitors using the public pages and to authorized users accessing connected Qoax services from this domain or through Qoax authentication.`,
-          "If a programme, event, academy enrollment, partnership or internal service has its own written terms, confirmation or agreement, that document applies in addition to these terms.",
+          "If a programme, event, partnership or internal service has its own written terms, confirmation or agreement, that document applies in addition to these terms.",
         ],
       },
       {
