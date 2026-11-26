@@ -3,7 +3,6 @@ import { pageMetadata } from "../seo";
 import Image from "next/image";
 import Link from "next/link";
 import { nonprofitEntries } from "../archive-data";
-import { ACADEMY_URL } from "../components";
 import { Btn, Cta, PageHead, RecordRow, SecHead, Shell } from "../editorial";
 import { schoolPartners } from "../schools-data";
 import { siteAsset } from "../site-path";
@@ -73,10 +72,6 @@ export default function SchoolsPage() {
               );
             })}
           </ul>
-          <p className={ed.schoolsNote}>
-            Some of these schools also host Qoax Academy. Which ones, and what that means for their students, is on{" "}
-            <a href={`${ACADEMY_URL}schools/`} rel="noreferrer" target="_blank">qoax.academy/schools ↗</a>.
-          </p>
         </div>
       </section>
 

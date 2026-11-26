@@ -95,14 +95,10 @@ test("exports the journal with its first Markdown posts", async () => {
   const notFound = await readFile(new URL("../out/404.html", import.meta.url), "utf8");
   assert.match(notFound, /name="robots" content="noindex, follow"/);
 
-  // Anything about the Academy lives on qoax.academy; qo.ax only carries the opening date.
-  for (const html of [home, journal]) assert.doesNotMatch(html, /Academy|Академия/);
-  assert.match(schools, /href="https:\/\/qoax\.academy\/schools\/"[^>]*>qoax\.academy\/schools(<!-- -->)? ↗<\/a>/);
-  assert.doesNotMatch(
-    schools.replaceAll("Some of these schools also host Qoax Academy", ""),
-    /Academy|Академия/,
-    "schools page mentions the Academy only in the pointer",
-  );
+  // A separate company sells the qoax.academy courses. Google for Nonprofits treats links from qo.ax to a paid
+  // course site as undisclosed commercial activity, so qo.ax must not link to the Academy or mention it until the
+  // association officially runs the Academy.
+  for (const html of [home, journal, schools]) assert.doesNotMatch(html, /Academy|Академия|qoax\.academy/);
   assert.doesNotMatch(home, /"subOrganization"/);
   assert.match(schools, /Schools we/);
   assert.match(schools, /SPGE John Atanasoff logo/);
@@ -155,9 +151,7 @@ test("publishes the FAQ and the About page with searchable structure", async () 
   assert.match(about, /href="\/projects\/fmi-game-jam\/">SUGAMING Game Jam</);
   assert.doesNotMatch(about, />FMI Game Jam<|SU Jam/);
   assert.doesNotMatch(about, /Learning programme/);
-  assert.match(about, /26 Oct 2026/);
-  assert.match(about, /href="https:\/\/qoax\.academy\/"[^>]*>Qoax Academy opens(<!-- -->)? ↗<\/a>/);
-  assert.doesNotMatch(about, /Related initiative|Learning programme|Коакс Академия/);
+  assert.doesNotMatch(about, /Related initiative|Learning programme|Academy|Академия|qoax\.academy/);
   assert.match(about, /contact@qo\.ax/);
   assert.equal((about.match(/<h1[\s>]/g) ?? []).length, 1);
 
@@ -254,6 +248,8 @@ test("exports public legal pages for Google OAuth app domain", async () => {
   assert.match(privacy, /Gmail sending permissions are requested separately/);
   assert.match(terms, /Terms of Use/);
   assert.match(terms, /OAuth permissions/);
+  // Same rule as the Academy check above: the Terms must not suggest that the association sells courses.
+  assert.doesNotMatch(terms, /academy|paid services/i);
   assert.match(gdpr, /GDPR and Browser Storage Notice/);
   assert.match(gdpr, /Email and link tracking/);
   for (const html of [privacy, gdpr]) {

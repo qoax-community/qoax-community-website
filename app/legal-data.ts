@@ -166,10 +166,10 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
     id: "terms",
     title: "Terms of Use",
     description: "Rules for using qo.ax public pages and connected Qoax Community services.",
-    updated: "Last updated: 1 September 2026",
+    updated: "Last updated: 26 November 2026",
     summary: [
       "qo.ax is the public website of Qoax Community and documents community, school, student, art and civic technology work.",
-      "Public pages are informational. Specific programmes, events or paid services may have separate confirmations or terms.",
+      "Public pages are informational. Specific programmes, events or partnerships may have separate confirmations or terms.",
       "Qoax materials, marks, website design and platform code remain protected unless a separate license says otherwise.",
       "Use the site and connected services lawfully and do not attempt to bypass security or access another person's data.",
     ],
@@ -178,7 +178,7 @@ export const legalDocuments: Record<LegalDocumentId, LegalDocument> = {
         title: "1. Provider and scope",
         paragraphs: [
           `${legalEntity.nameEn}, UIC ${legalEntity.uic}, operates qo.ax. These terms apply to visitors using the public pages and to authorized users accessing connected Qoax services from this domain or through Qoax authentication.`,
-          "If a programme, event, academy enrollment, partnership or internal service has its own written terms, confirmation or agreement, that document applies in addition to these terms.",
+          "If a programme, event, partnership or internal service has its own written terms, confirmation or agreement, that document applies in addition to these terms.",
         ],
       },
       {

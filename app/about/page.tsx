@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "../seo";
 import Link from "next/link";
-import { ACADEMY_URL, CONTACT_EMAIL, GITHUB_URL } from "../components";
+import { CONTACT_EMAIL, GITHUB_URL } from "../components";
 import { getArchiveEntry } from "../archive-data";
 import { Btn, Cta, PageHead, SecHead, Shell } from "../editorial";
 import { legalEntity, missionStatement, registeredObjectives } from "../legal-data";
@@ -41,13 +41,6 @@ const timelineSource: (string | TimelineItem)[] = [
   },
   "atanasoff48",
   "fmi-game-jam",
-  {
-    date: "26 Oct 2026",
-    title: "Qoax Academy opens",
-    copy: "Everything about the Academy is on qoax.academy.",
-    href: ACADEMY_URL,
-    external: true,
-  },
   "nasa-space-apps-2026",
   "sofia-game-jam-2026",
   "john-atanasoff-game-jam-2026",
