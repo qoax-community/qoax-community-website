@@ -393,7 +393,6 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         partner: "Partner technology schools in Bulgaria",
         location: "Sofia, Bulgaria",
         detail: "From 1 to 14 July 2026, more than 30 students worked in teams across a practical internship programme supported by Qoax and partner schools. The programme connected technical mentorship, project ownership, peer work, and a real delivery rhythm.",
-        notice: "The exact student projects, teams, and outcomes will be published here soon.",
       },
       {
         id: "venus-labyrinth",

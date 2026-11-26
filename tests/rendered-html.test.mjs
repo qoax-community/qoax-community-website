@@ -161,6 +161,25 @@ test("publishes the FAQ and the About page with searchable structure", async () 
   assert.match(about, /contact@qo\.ax/);
   assert.equal((about.match(/<h1[\s>]/g) ?? []).length, 1);
 
+  // Google for Nonprofits checks for a clear mission statement and the registration details (name, UIC, address)
+  // before it activates Workspace on qo.ax. The public-benefit row and the reports section match the register entry.
+  const jumpTargets = [...about.matchAll(/<li><a href="#([^"]+)"/g)].map(([, id]) => id);
+  assert.equal(jumpTargets[0], "mission", "the mission is the first jump link");
+  assert.match(about, /<h2 id="mission-title">Our mission<\/h2>/);
+  const mission = about.slice(about.indexOf('id="mission"'), about.indexOf('id="what-is-qoax"'));
+  assert.match(mission, /Qoax Community is a non-profit association in Sofia, Bulgaria\./);
+  assert.match(mission, /Our mission is to develop the technology and programming community/);
+  assert.equal((mission.slice(mission.indexOf("<ol>"), mission.indexOf("</ol>")).match(/<li>/g) ?? []).length, 12, "all twelve registered objectives");
+  assert.match(about, /href="https:\/\/portal\.registryagency\.bg\/CR\/en\/Reports\/ActiveConditionTabResult\?uic=208896893"/);
+  assert.match(about, /Designated to carry out public-benefit activity \(<span lang="bg">общественополезна дейност<\/span>\)/);
+  assert.match(about, /id="reports"/);
+  assert.match(about, /No annual statement or report exists yet\./);
+  assert.match(about, /by\s+30 September 2027/);
+  assert.match(about, /"@type":\["NGO","Organization"\][^<]*"description":"Qoax Community is a non-profit association in Sofia, Bulgaria\. Our mission is/);
+  // Google refuses activation for placeholder content, so finished work must not promise content "soon".
+  assert.doesNotMatch(faq, /in the coming days/);
+  assert.doesNotMatch(await render("/projects/internship-program-2026/"), /will be published here soon/);
+
   // The Qoax duck is the favicon and sits in the footer; the FAQ is reachable from the footer.
   assert.match(home, /qoax-favicon-duck\.svg/);
   assert.match(home, /favicon\.ico/);
@@ -302,7 +321,7 @@ test("exports only the requested non-profit project pages", async () => {
   assert.match(pages[0], /2-4 Oct 2026/);
   assert.match(pages[0], /atanasoff48\.com/);
   assert.match(pages[1], /30\+ students/);
-  assert.match(pages[1], /exact student projects/);
+  assert.match(pages[1], /more than 30 students worked in teams/);
   assert.match(pages[2], /Sensory Theatre Sofia/);
   assert.match(pages[3], /Non-profit/);
 });

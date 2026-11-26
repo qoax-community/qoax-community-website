@@ -4,7 +4,7 @@ import { GITHUB_URL } from "./components";
 import { defaultOgImage } from "./seo";
 import { googleSiteVerification, socialLinks } from "./social-links";
 import { brandAlternateNames } from "./brand-names";
-import { legalEntity } from "./legal-data";
+import { legalEntity, missionStatement } from "./legal-data";
 import { siteAsset } from "./site-path";
 import { AnalyticsConsent } from "./analytics-consent";
 
@@ -80,6 +80,7 @@ const organizationSchema = {
   name: "Qoax Community",
   legalName: legalEntity.nameBg,
   alternateName: [legalEntity.nameEn, ...brandAlternateNames],
+  description: `Qoax Community is a non-profit association in Sofia, Bulgaria. ${missionStatement}`,
   url: `${siteUrl}/`,
   logo: `${siteUrl}${siteAsset("/icon-512.png")}`,
   image: `${siteUrl}${siteAsset("/og-2026-11-10.png")}`,
