@@ -58,7 +58,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           url: pageUrl,
           startDate: entry.startsAt.slice(0, 10),
           eventStatus: "https://schema.org/EventScheduled",
-          organizer: { "@id": `${siteUrl}/#organization` },
           ...(entry.location ? { location: { "@type": "Place", name: entry.location, address: entry.location } } : {}),
           ...(entry.image ? { image: `${siteUrl}${entry.image}` } : {}),
         }

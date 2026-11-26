@@ -195,8 +195,8 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         partner: "NASA International Space Apps Challenge",
         partnerLabel: "Part of",
         location: "Incubator building, Sofia Tech Park, Sofia",
-        facts: [["Theme", "The Next Frontier"], ["Grand prize", "€750"], ["Qoax", "Organizer, livestream"]],
-        detail: "NASA Space Apps is a 48-hour global hackathon run every year by NASA with 17 space-agency partners. On 14 to 15 November 2026, Qoax Community brought a local event to Sofia Tech Park, where students, developers, designers, and scientists worked on the same challenges as teams in hundreds of cities around the world, with mentors in the room. Qoax also ran the livestream. The winning team took home the €750 grand prize.",
+        facts: [["Theme", "The Next Frontier"], ["Grand prize", "€750"], ["Qoax", "Livestream"]],
+        detail: "NASA Space Apps is a 48-hour global hackathon run every year by NASA with 17 space-agency partners. The Sofia event took place on 14 to 15 November 2026 at Sofia Tech Park, where students, developers, designers, and scientists worked on the same challenges as teams in hundreds of cities around the world, with mentors in the room. Qoax provided the livestream. The winning team took home the €750 grand prize.",
         story: [
           {
             title: "What Space Apps is",
@@ -221,7 +221,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
             title: "Why Sofia",
             paragraphs: [
               "Sofia has taken part in Space Apps since 2013, when a Sofia team, ChickBook, became a global winner in the People’s Choice category. Local editions have gathered dozens of participants and up to 17 teams in a single weekend, hosted over the years by schools, universities, and the software community.",
-              "Qoax Community picked up that thread. Our partner schools already run hackathons and internship programmes with us, and Space Apps was the natural next step: the same practical rhythm, real data, and a global stage.",
+              "Qoax supported the 2026 Sofia event by providing its livestream.",
             ],
           },
         ],

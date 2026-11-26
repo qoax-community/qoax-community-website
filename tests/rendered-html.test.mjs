@@ -326,6 +326,13 @@ test("does not export profit or hidden routes", async () => {
   await assert.rejects(render("/portfolio/"));
   const nasa = await render("/projects/nasa-space-apps-2026/");
   assert.match(nasa, /Incubator building, Sofia Tech Park/);
+  assert.match(nasa, /Qoax provided the livestream/);
+  assert.doesNotMatch(nasa, /Organizer, livestream|Qoax Community brought a local event|Qoax Community picked up that thread/);
+  const event = [...nasa.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+    .map((match) => JSON.parse(match[1]))
+    .find((value) => value["@type"] === "Event");
+  assert.ok(event, "NASA event retains its structured data");
+  assert.equal(event.organizer, undefined, "listing an event does not make Qoax its organizer");
   await assert.rejects(render("/projects/tues-game-jam-2026/"));
 });
 
