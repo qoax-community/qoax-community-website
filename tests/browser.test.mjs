@@ -62,6 +62,62 @@ test("skips only when the browser is missing, not when it fails to start", () =>
   assert.equal(isMissingBrowser(new Error("spawn EACCES")), false);
 });
 
+test("a refreshed playlist reveals three videos at a time and keeps keyboard focus in the new content", async (t) => {
+  const browser = await launch(t);
+  if (!browser) return;
+  t.after(() => browser.close());
+  const { server, origin } = await serve();
+  t.after(() => new Promise((resolve) => server.close(resolve)));
+  const snapshot = JSON.parse(await readFile(new URL("../public/data/youtube-playlist.json", import.meta.url), "utf8"));
+  const videos = [...snapshot.videos];
+  for (let index = 0; index < 5; index++) {
+    const id = `fixture000${index}`;
+    videos.push({ ...snapshot.videos[0], id, title: `Older broadcast ${index + 1}`, published: "2026-10-01T00:00:00Z", thumbnail: `/streams/thumbs/${id}.jpg` });
+  }
+  const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await page.route("**/data/youtube-playlist.json", (route) => route.fulfill({ json: { ...snapshot, videos } }));
+  const image = await readFile(new URL(`../public${snapshot.videos[0].thumbnail}`, import.meta.url));
+  await page.route("**/streams/thumbs/fixture*.jpg", (route) => route.fulfill({ body: image, contentType: "image/jpeg" }));
+  const external = [];
+  page.on("request", (request) => { if (/youtube|ytimg|google/.test(new URL(request.url()).hostname)) external.push(request.url()); });
+  await page.goto(origin);
+  const section = page.locator("#streams");
+  await section.getByRole("status").filter({ hasText: "Showing 3 of 8 videos" }).waitFor();
+  assert.equal(await section.locator("li").count(), 3);
+  await section.getByRole("button", { name: "Show more", exact: true }).click();
+  await section.getByRole("status").filter({ hasText: "Showing 6 of 8 videos" }).waitFor();
+  assert.equal(await section.locator("li").count(), 6);
+  await page.waitForFunction(() => document.querySelectorAll("#streams li a")[3] === document.activeElement);
+  assert.equal(await section.locator("li a").nth(3).evaluate((el) => el === document.activeElement), true);
+  await section.getByRole("button", { name: "Show more", exact: true }).click();
+  await section.getByRole("status").filter({ hasText: "Showing 8 of 8 videos" }).waitFor();
+  assert.equal(await section.locator("li").count(), 8);
+  assert.equal(await section.getByRole("button", { name: "Show more", exact: true }).count(), 0);
+  await page.waitForFunction(() => document.querySelectorAll("#streams li a")[6] === document.activeElement);
+  assert.equal(await section.locator("li a").nth(6).evaluate((el) => el === document.activeElement), true);
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  assert.deepEqual(external, [], "playlist UI never contacts YouTube or Google before a click");
+});
+
+test("playlist refresh errors and responses from another playlist retain the rendered videos", async (t) => {
+  const browser = await launch(t);
+  if (!browser) return;
+  t.after(() => browser.close());
+  const { server, origin } = await serve();
+  t.after(() => new Promise((resolve) => server.close(resolve)));
+  const snapshot = JSON.parse(await readFile(new URL("../public/data/youtube-playlist.json", import.meta.url), "utf8"));
+  for (const response of [{ status: 503, body: "Unavailable" }, { json: { ...snapshot, playlistId: "another-playlist", videos: [] } }]) {
+    const page = await browser.newPage();
+    await page.route("**/data/youtube-playlist.json", (route) => route.fulfill(response));
+    const finished = page.waitForResponse("**/data/youtube-playlist.json");
+    await page.goto(origin);
+    await finished;
+    assert.equal(await page.locator("#streams li").count(), 3);
+    assert.equal(await page.locator("#streams li h3").first().textContent(), snapshot.videos[0].title);
+    await page.close();
+  }
+});
+
 // Buttons animate colour changes over 140ms; without this the test would read the colour before the change ends.
 async function open(page, url) {
   await page.goto(url);
@@ -120,7 +176,7 @@ test("the NASA primary button stays readable on hover, after a tap, and on keybo
     const context = await browser.newContext({ viewport, hasTouch: viewport.touch, isMobile: viewport.touch });
     const page = await context.newPage();
     await open(page, `${origin}/projects/nasa-space-apps-2026/`);
-    const primary = page.getByRole("link", { name: "Visit spaceappschallenge.org", exact: true });
+    const primary = page.locator("article > header").getByRole("link", { name: "Watch the recording", exact: true });
     // A tap must not leave the page; the test only cares about the state the tap leaves behind.
     await primary.evaluate((el) => el.addEventListener("click", (event) => event.preventDefault()));
 
@@ -137,7 +193,7 @@ test("the NASA primary button stays readable on hover, after a tap, and on keybo
 
     // The main action comes first, so it never wraps onto a row of its own.
     const first = await primary.evaluate((el) => el === el.parentElement.firstElementChild);
-    assert.ok(first, `${viewport.width}px: the register button leads the action row`);
+    assert.ok(first, `${viewport.width}px: the recording button leads the action row`);
 
     // Keyboard users get a visible focus ring.
     await page.mouse.move(0, 0);
@@ -147,7 +203,7 @@ test("the NASA primary button stays readable on hover, after a tap, and on keybo
       await page.keyboard.press("Tab");
       focused = await primary.evaluate((el) => el === document.activeElement);
     }
-    assert.ok(focused, `${viewport.width}px: the register button is reachable with Tab`);
+    assert.ok(focused, `${viewport.width}px: the recording button is reachable with Tab`);
     const ring = await look(primary);
     assert.notEqual(ring.outlineStyle, "none", `${viewport.width}px: focus outline is drawn`);
     assert.ok(parseFloat(ring.outlineWidth) >= 2, `${viewport.width}px: focus outline is at least 2px`);
@@ -159,7 +215,7 @@ test("the NASA primary button stays readable on hover, after a tap, and on keybo
     assert.equal(ring.color, "rgb(255, 255, 255)", `${viewport.width}px: white text on focus`);
 
     // The secondary buttons next to it stay readable on hover too. They can be see-through, so measure what is painted behind them.
-    for (const name of [/^Ask about this event/]) {
+    for (const name of [/^Visit spaceappschallenge.org$/, /^Ask about this event/]) {
       const secondary = page.getByRole("link", { name });
       await secondary.hover();
       const { color, background } = await painted(secondary);

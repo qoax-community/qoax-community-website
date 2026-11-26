@@ -1,4 +1,5 @@
 import { siteAsset } from "./site-path";
+import { STREAM_PLAYLIST_URL } from "./streams-data";
 
 export type AchievementState = "unlocked" | "growing" | "locked";
 
@@ -68,18 +69,15 @@ export type Achievement = {
   stream?: string;
 };
 
-/** Qoax's YouTube channel, where events are streamed live and recordings are kept. */
-export const QOAX_STREAM_CHANNEL = "https://www.youtube.com/@QoaxCommunity";
-
 /**
  * Where to watch an event. A completed event only links to its own recording, never to the
- * channel home page. An upcoming event without a direct link points to the channel.
+ * generic playlist. An upcoming event without a direct link points to the stream playlist.
  */
 export function streamFor(achievement: Pick<Achievement, "kind" | "stream" | "state">) {
   if (achievement.kind !== "event") return undefined;
   if (achievement.stream) return { url: achievement.stream, direct: true };
   if (achievement.state === "unlocked") return undefined;
-  return { url: QOAX_STREAM_CHANNEL, direct: false };
+  return { url: STREAM_PLAYLIST_URL, direct: false };
 }
 
 export type AchievementBranch = {
@@ -159,6 +157,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         signal: "Completed",
         mark: "SG",
         image: "/events/sofia-game-jam-2026/sgj-teams.jpg",
+        stream: "https://www.youtube.com/watch?v=jpjpQi7ADZI",
         imageCredit: "Photo: Radislav Gachevski",
         location: "Sofia Summit Center, Sofia",
         facts: [["Theme", "Arcade with a Mission"], ["Format", "Game jam"], ["Qoax", "Livestream, sponsors"]],
@@ -188,6 +187,7 @@ const achievementBranchDefinitions: AchievementBranch[] = [
         signal: "Completed",
         mark: "SA",
         image: "/events/nasa-space-apps-2026/nasa-team.jpg",
+        stream: "https://www.youtube.com/watch?v=tKL2WClouPE",
         imageCredit: "Photo: Emilia Tomova",
         galleryCredit: "Day 2 photos by Emilia Tomova",
         href: "https://www.spaceappschallenge.org/2026/local-events/sofia/",

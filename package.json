@@ -10,8 +10,9 @@
     "dev": "next dev",
     "build": "next build",
     "build:pages": "next build",
+    "sync:streams": "python3 scripts/refresh-youtube-playlist.py",
     "start": "npx serve out",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "test": "npm run build && python3 -m unittest discover -s tests -p 'test_*.py' && node --test tests/*.test.mjs",
     "lint": "eslint ."
   },
   "dependencies": {
