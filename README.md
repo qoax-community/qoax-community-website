@@ -80,6 +80,32 @@ panel: no `googletagmanager.com` or `google-analytics.com` requests before conse
 or after rejecting; accepting loads one tag; Cookie settings → Reject analytics
 removes `_ga` / `_ga_P7F0DM83L3`, and the reloaded page makes no Analytics requests.
 
+## YouTube streams
+
+The homepage links to the public [Hackathon & Game Jam Broadcasts playlist](https://www.youtube.com/playlist?list=PLNQyuRkW5vUw).
+It renders the newest three published videos from `public/data/youtube-playlist.json`,
+then reveals three more per “Show more” click. The playlist link always opens the full list.
+Video titles and dates come from YouTube; thumbnails are hosted locally. No YouTube
+player, cookie or third-party request is loaded before a visitor follows a link.
+
+Run `npm run sync:streams` to refresh the committed seed from YouTube's public playlist
+XML feed and download any new thumbnails. Normal local builds and tests use the seed
+and work offline. The feed contains up to 15 playlist entries; keep the playlist ordered
+newest first. The visible entries are additionally sorted by publication date. The
+full playlist remains available on YouTube beyond those entries.
+
+The existing Pages workflow checks the playlist every 30 minutes and before each deploy.
+Scheduled checks skip rebuilding and publishing when the playlist metadata is unchanged.
+GitHub may delay scheduled runs; new uploads appear after the next successful check
+and Pages publication. An open browser also refreshes the site's own JSON on returning
+to the tab and every 30 minutes. No YouTube API key is needed.
+
+On a YouTube error the workflow retains the last published snapshot, falling back to
+the repository seed if the live snapshot is unavailable. It never overwrites good data
+with an error page. An unavailable new thumbnail stops that deployment and leaves the
+existing live site intact. A genuinely empty public playlist shows an empty state and
+the YouTube button. Scheduled runs neither post comments nor send messages.
+
 ## Contact
 
 [contact@qo.ax](mailto:contact@qo.ax)

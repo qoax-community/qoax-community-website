@@ -339,10 +339,9 @@ test("gives every page a complete link preview and keeps social channels behind 
     assert.match(html, /<meta property="og:image" content="https:\/\/qo\.ax\/[^"]+"/, `${pathname} has an absolute og:image`);
     assert.match(html, /<meta name="twitter:card" content="summary_large_image"/, `${pathname} has a large twitter card`);
     assert.match(html, /<meta name="twitter:title" content="[^"]+"/, `${pathname} has twitter:title`);
-    // Social channels are configured through NEXT_PUBLIC_SOCIAL_* and are empty for now.
-    // Event pages link to the Qoax YouTube channel for their stream; that is not a footer social link.
-    const withoutStream = html.replaceAll("https://www.youtube.com/@QoaxCommunity", "");
-    assert.doesNotMatch(withoutStream, /facebook\.com|instagram\.com|linkedin\.com|youtube\.com|tiktok\.com/, `${pathname} shows no social links while env is empty`);
+    // Homepage and event stream links are content, separate from footer social settings.
+    const footer = html.match(/<footer\b[\s\S]*?<\/footer>/)?.[0] ?? "";
+    assert.doesNotMatch(footer, /facebook\.com|instagram\.com|linkedin\.com|youtube\.com|tiktok\.com/, `${pathname} shows no footer social links while env is empty`);
     assert.doesNotMatch(html, /google-site-verification/, `${pathname} has no verification tag while env is empty`);
   }
   assert.match(rendered["/about/"], /<meta property="og:title" content="About Qoax Community, a non-profit in Sofia"/);
@@ -369,17 +368,35 @@ test("gives every page a complete link preview and keeps social channels behind 
   assert.match(rendered["/"], /"sameAs":\["https:\/\/github\.com\/qoax-community"\]/);
 });
 
+test("exports real playlist videos and local thumbnails without loading an embedded player", async () => {
+  const home = await render("/");
+  const snapshot = JSON.parse(await readFile(new URL("../public/data/youtube-playlist.json", import.meta.url), "utf8"));
+  assert.match(home, /id="streams-title"/);
+  assert.match(home, /YouTube streams/);
+  assert.ok(home.includes(`https://www.youtube.com/playlist?list=${snapshot.playlistId}`));
+  assert.doesNotMatch(home, /<iframe\b|src="https:\/\/(?:i\.ytimg|www\.youtube)/);
+  for (const video of snapshot.videos.slice(0, 3)) {
+    assert.ok(home.includes(`watch?v=${video.id}&amp;list=${snapshot.playlistId}`));
+    await assert.doesNotReject(stat(new URL(`../out${video.thumbnail}`, import.meta.url)));
+  }
+});
+
 test("links upcoming events to the stream and never fakes a recording for past ones", async () => {
   const upcoming = ["/projects/john-atanasoff-game-jam-2026/"];
   for (const pathname of upcoming) {
     const html = await render(pathname);
-    assert.match(html, /<a[^>]*href="https:\/\/www\.youtube\.com\/@QoaxCommunity"[^>]*data-stream-link=""/, `${pathname} has a stream link`);
+    assert.match(html, /<a[^>]*href="https:\/\/www\.youtube\.com\/playlist\?list=PLNQyuRkW5vUw"[^>]*data-stream-link=""/, `${pathname} has a stream link`);
     assert.match(html, /<h3>Stream<\/h3>/, `${pathname} has a stream card`);
   }
   assert.match(await render("/projects/john-atanasoff-game-jam-2026/"), />Watch live on YouTube</);
   // Completed events without a known recording URL get no stream link at all.
-  for (const pathname of ["/projects/fmi-game-jam/", "/projects/atanasoff48/", "/projects/sofia-game-jam-2026/", "/projects/nasa-space-apps-2026/"]) {
+  for (const pathname of ["/projects/fmi-game-jam/", "/projects/atanasoff48/"]) {
     assert.doesNotMatch(await render(pathname), /data-stream-link/, `${pathname} has no invented recording link`);
+  }
+  for (const [slug, video] of [["sofia-game-jam-2026", "jpjpQi7ADZI"], ["nasa-space-apps-2026", "tKL2WClouPE"]]) {
+    const html = await render(`/projects/${slug}/`);
+    assert.match(html, new RegExp(`<a[^>]*href="https://www.youtube.com/watch\\?v=${video}"[^>]*data-stream-link`));
+    assert.match(html, />Watch the recording</);
   }
   // Non-event work has no stream.
   assert.doesNotMatch(await render("/projects/nsicc/"), /data-stream-link/);

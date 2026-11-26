@@ -209,7 +209,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <p>
                       {isCompletedEvent
                         ? "The event was streamed live. The recording is on YouTube."
-                        : "We plan to stream this event live on the Qoax YouTube channel."}
+                        : "Find our event broadcasts in the YouTube playlist."}
                     </p>
                     <div className={styles.sideLinks}>
                       <a href={stream.url} rel="noreferrer" target="_blank" data-stream-link="">

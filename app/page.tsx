@@ -7,6 +7,8 @@ import { Btn, Cta, PostCard, RecordRow, SecHead, Shell } from "./editorial";
 import { PhotoStagger, type StaggerPhoto } from "./photo-stagger";
 import { schoolPartners } from "./schools-data";
 import { siteAsset } from "./site-path";
+import { StreamsSection } from "./streams-section";
+import { STREAM_PLAYLIST_URL } from "./streams-data";
 import ed from "./editorial.module.css";
 
 export default function Home() {
@@ -45,6 +47,7 @@ export default function Home() {
             <div className={ed.heroActions}>
               <Btn href="/about" variant="ghost">About Qoax</Btn>
               <Btn href="/events">See upcoming events</Btn>
+              <Btn href={STREAM_PLAYLIST_URL} variant="ghost">YouTube streams</Btn>
             </div>
           </div>
         </div>
@@ -80,6 +83,8 @@ export default function Home() {
         }
         action={<Btn href="/events" variant="light">All events</Btn>}
       />
+
+      <StreamsSection />
 
       {/* 02 Journal */}
       <section className={ed.sec} aria-labelledby="journal-title">
